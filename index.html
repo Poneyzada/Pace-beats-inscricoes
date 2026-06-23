@@ -267,6 +267,7 @@
               <span>🕗 18:00</span>
               <span>📍 Sunna Beach Club</span>
             </div>
+            <a href="#" class="btn-wpp-treino" style="display:inline-block; margin-top:12px; color:var(--orange); font-size:0.85rem; font-weight:700; text-decoration:none;">Confirmar presença pelo WhatsApp →</a>
           </div>
         </div>
 
@@ -285,6 +286,7 @@
               <span>🕗 18:30</span>
               <span>📍 Sunna Beach Club</span>
             </div>
+            <a href="#" class="btn-wpp-treino" style="display:inline-block; margin-top:12px; color:var(--orange); font-size:0.85rem; font-weight:700; text-decoration:none;">Confirmar presença pelo WhatsApp →</a>
           </div>
         </div>
 
@@ -298,11 +300,12 @@
           <div class="cal-info">
             <div class="cal-badge treino">Treino</div>
             <h4 class="cal-title">Treino Preparatório #3</h4>
-            <p class="cal-desc">Último treino antes da semana da corrida. Simulação do percurso noturno.</p>
+            <p class="cal-desc">Simulado de percurso e alinhamento das equipes. Foco total na prova.</p>
             <div class="cal-meta">
               <span>🕗 18:00</span>
               <span>📍 Sunna Beach Club</span>
             </div>
+            <a href="#" class="btn-wpp-treino" data-msg="Olá! Gostaria de confirmar presença no Treino Preparatório #3" style="display:inline-block; margin-top:12px; color:var(--orange); font-size:0.85rem; font-weight:700; text-decoration:none;">Confirmar presença pelo WhatsApp →</a>
           </div>
         </div>
 
@@ -321,6 +324,7 @@
               <span>🕗 17:30</span>
               <span>📍 Sunna Beach Club</span>
             </div>
+            <a href="#" class="btn-wpp-treino" style="display:inline-block; margin-top:12px; color:var(--orange); font-size:0.85rem; font-weight:700; text-decoration:none;">Confirmar presença pelo WhatsApp →</a>
           </div>
         </div>
 
@@ -394,6 +398,11 @@
             <li>Hidratação no percurso</li>
             <li>Seguro esportivo</li>
             <li>Acesso à After Party</li>
+            <li class="missing">Kit Premium (camiseta + viseira)</li>
+            <li class="missing">Bag exclusiva Pace & Beats</li>
+            <li class="missing">Acesso prioritário à After Party</li>
+            <li class="missing">Fotos profissionais digitais</li>
+            <li class="missing">Brinde surpresa no kit</li>
           </ul>
           <a href="#" class="btn btn-outline btn-wpp" data-plan="1º Lote — R$89,90" data-items="Kit oficial, Número com chip, Medalha Finisher, Hidratação, Seguro, After Party">Inscrever-se via WhatsApp</a>
         </div>
@@ -435,6 +444,11 @@
             <li>Hidratação no percurso</li>
             <li>Seguro esportivo</li>
             <li>Acesso à After Party</li>
+            <li class="missing">Kit Premium (camiseta + viseira)</li>
+            <li class="missing">Bag exclusiva Pace & Beats</li>
+            <li class="missing">Acesso prioritário à After Party</li>
+            <li class="missing">Fotos profissionais digitais</li>
+            <li class="missing">Brinde surpresa no kit</li>
           </ul>
           <a href="#" class="btn btn-outline btn-wpp" data-plan="3º Lote — R$149,90" data-items="Kit oficial, Número com chip, Medalha Finisher, Hidratação, Seguro, After Party">Inscrever-se via WhatsApp</a>
         </div>
@@ -802,6 +816,19 @@
         };
         document.getElementById('selectedPlanDisplay').textContent = currentPlanData.plan;
         inscModal.style.display = 'flex';
+      });
+    });
+
+    // ── WhatsApp Treinões ──
+    document.querySelectorAll('.btn-wpp-treino').forEach(btn => {
+      btn.addEventListener('click', function(e) {
+        e.preventDefault();
+        const msgTreino = encodeURIComponent(
+          "Olá, tudo bem?\n" +
+          "Tenho interesse em participar do treinão Pace & Beats.\n\n" +
+          "#NINGUEMFICAPRATRAS🔥"
+        );
+        window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${msgTreino}`, '_blank');
       });
     });
 

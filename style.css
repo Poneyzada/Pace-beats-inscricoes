@@ -895,20 +895,17 @@ img {
 }
 
 .pricing-features {
-  flex-grow: 1;
+  list-style: none;
   margin-bottom: 32px;
+  text-align: left;
 }
 .pricing-features li {
+  margin-bottom: 12px;
+  color: var(--white-dim);
+  font-size: 0.9rem;
   display: flex;
   align-items: center;
   gap: 10px;
-  padding: 10px 0;
-  font-size: 0.9rem;
-  color: var(--white-muted);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.04);
-}
-.pricing-features li:last-child {
-  border-bottom: none;
 }
 .pricing-features li::before {
   content: '✓';
@@ -923,6 +920,15 @@ img {
   background: rgba(255, 107, 0, 0.1);
   border-radius: 50%;
   flex-shrink: 0;
+}
+.pricing-features li.missing {
+  text-decoration: line-through;
+  opacity: 0.5;
+}
+.pricing-features li.missing::before {
+  content: '✕';
+  color: var(--white-dim);
+  background: transparent;
 }
 
 .pricing-card .btn {
