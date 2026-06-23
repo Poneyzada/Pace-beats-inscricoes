@@ -7,6 +7,7 @@
   <meta name="description" content="Inscreva-se na Pace & Beats Run, a corrida noturna mais vibrante de Salvador! Percurso na Orla de Pituaçu, largada no Sunna Beach Club, com música ao vivo, kit exclusivo e muita energia.">
   <link rel="icon" href="logo.jpg.jpeg" type="image/jpeg">
   <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="mobile.css">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 </head>
@@ -14,11 +15,16 @@
 
   <!-- ═══════════ NAVBAR ═══════════ -->
   <nav class="navbar" id="navbar">
-    <div class="container">
+    <div class="container navbar-container">
       <a href="#" class="navbar-logo">
         <img src="logo.jpg.jpeg" alt="Pace & Beats Run">
       </a>
-      <div class="navbar-links" id="navLinks">
+      <div class="navbar-social" style="margin-left:16px;">
+        <a href="https://www.instagram.com/pacebeats.run?igsh=MXY2ZHl0bzJ6aHdwbw==" target="_blank" style="color:var(--white); font-size:1.4rem; transition:color 0.3s;" onmouseover="this.style.color='var(--orange)'" onmouseout="this.style.color='var(--white)'">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
+        </a>
+      </div>
+      <div class="navbar-links" style="margin-left:auto;" id="navLinks">
         <a href="#about">O Evento</a>
         <a href="#route">Percurso</a>
         <a href="#calendar">Calendário</a>
@@ -82,7 +88,7 @@
 
         <div class="hero-stats">
           <div class="hero-stat">
-            <h3 class="mystery-date" style="font-size:2.8rem;">??/07</h3>
+            <h3 class="mystery-date" style="font-size:2.8rem; filter:blur(4px);">??/07</h3>
             <p>Data Oficial</p>
           </div>
           <div class="hero-stat">
@@ -322,8 +328,8 @@
         <div class="cal-card featured reveal" data-category="corrida">
           <div class="cal-date">
             <span class="cal-day mystery-date">??</span>
-            <span class="cal-month mystery-date">JUL</span>
-            <span class="cal-weekday mystery-date">Sáb</span>
+            <span class="cal-month">JUL</span>
+            <span class="cal-weekday">Sáb</span>
           </div>
           <div class="cal-info">
             <div class="cal-badge corrida">🏁 Corrida Oficial</div>
@@ -343,8 +349,8 @@
         <div class="cal-card reveal" data-category="festa">
           <div class="cal-date">
             <span class="cal-day mystery-date">??</span>
-            <span class="cal-month mystery-date">JUL</span>
-            <span class="cal-weekday mystery-date">Sáb</span>
+            <span class="cal-month">JUL</span>
+            <span class="cal-weekday">Sáb</span>
           </div>
           <div class="cal-info">
             <div class="cal-badge festa">🎶 Festa</div>
@@ -358,17 +364,6 @@
         </div>
 
       </div>
-
-      <!-- Instrução de edição (visível apenas no código) -->
-      <!-- 
-        ╔══════════════════════════════════════════════════════════════╗
-        ║  PARA ADICIONAR NOVOS EVENTOS:                              ║
-        ║  Copie um bloco <div class="cal-card"> acima e cole aqui.  ║
-        ║  Mude: cal-day, cal-month, cal-weekday, cal-badge,         ║
-        ║        cal-title, cal-desc, cal-meta e data-category.      ║
-        ║  Categorias: treino | corrida | festa                      ║
-        ╚══════════════════════════════════════════════════════════════╝
-      -->
 
     </div>
   </section>
@@ -678,10 +673,9 @@
   <!-- ═══════════ JAVASCRIPT ═══════════ -->
   <script>
     // ══════════════════════════════════════════════
-    //  CONFIGURAÇÃO DO WHATSAPP
-    //  Troque o número abaixo pelo número real deles
+    //  WHATSAPP — NÚMERO PARA INSCRIÇÃO
     // ══════════════════════════════════════════════
-    const WHATSAPP_NUMBER = '5571999990000'; // formato: 55 + DDD + número
+    const WHATSAPP_NUMBER = '5521982638587'; // formato: 55 + DDD + número
 
     // ── Navbar Scroll Effect ──
     const navbar = document.getElementById('navbar');
