@@ -1,0 +1,871 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pace & Beats Run — Corrida Noturna em Salvador | Sunna Beach Club, Pituaçu</title>
+  <meta name="description" content="Inscreva-se na Pace & Beats Run, a corrida noturna mais vibrante de Salvador! Percurso na Orla de Pituaçu, largada no Sunna Beach Club, com música ao vivo, kit exclusivo e muita energia.">
+  <link rel="icon" href="logo.jpg.jpeg" type="image/jpeg">
+  <link rel="stylesheet" href="style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+</head>
+<body>
+
+  <!-- ═══════════ NAVBAR ═══════════ -->
+  <nav class="navbar" id="navbar">
+    <div class="container">
+      <a href="#" class="navbar-logo">
+        <img src="logo.jpg.jpeg" alt="Pace & Beats Run">
+      </a>
+      <div class="navbar-links" id="navLinks">
+        <a href="#about">O Evento</a>
+        <a href="#route">Percurso</a>
+        <a href="#calendar">Calendário</a>
+        <a href="#pricing">Inscrições</a>
+        <a href="#kit">Kit</a>
+        <a href="#faq">FAQ</a>
+      </div>
+      <div class="navbar-cta">
+        <a href="#pricing" class="btn btn-primary">Inscreva-se</a>
+      </div>
+      <div class="hamburger" id="hamburger">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Mobile Nav -->
+  <div class="mobile-nav" id="mobileNav">
+    <a href="#about" onclick="closeMenu()">O Evento</a>
+    <a href="#route" onclick="closeMenu()">Percurso</a>
+    <a href="#calendar" onclick="closeMenu()">Calendário</a>
+    <a href="#pricing" onclick="closeMenu()">Inscrições</a>
+    <a href="#kit" onclick="closeMenu()">Kit</a>
+    <a href="#faq" onclick="closeMenu()">FAQ</a>
+    <a href="#pricing" class="btn btn-primary" onclick="closeMenu()">Inscreva-se Agora</a>
+  </div>
+
+  <!-- ═══════════ HERO ═══════════ -->
+  <section class="hero" id="hero">
+    <!-- Hero Background -->
+    <div class="hero-fallback-bg"></div>
+
+    <div class="container">
+      <div class="hero-content">
+        <div class="hero-tag">
+          🌙 Corrida Noturna • Sunna Beach Club — Pituaçu
+        </div>
+
+        <h1 class="hero-title">
+          CORRA NO<br>
+          RITMO DA<br>
+          <span>NOITE</span>
+        </h1>
+
+        <p class="hero-description">
+          A corrida noturna que une esporte e música na orla mais bonita de Salvador. 
+          Vista a camisa, sinta a batida e cruze a linha de chegada com a energia 
+          que só a Bahia tem. Em breve no mês de Julho, Sunna Beach Club.
+        </p>
+
+        <div class="hero-buttons">
+          <a href="#pricing" class="btn btn-primary">
+            Garantir Minha Vaga →
+          </a>
+          <a href="#about" class="btn btn-outline">
+            Saiba Mais
+          </a>
+        </div>
+
+        <div class="hero-stats">
+          <div class="hero-stat">
+            <h3 class="mystery-date" style="font-size:2.8rem;">??/07</h3>
+            <p>Data Oficial</p>
+          </div>
+          <div class="hero-stat">
+            <h3>5K & 10K</h3>
+            <p>Percursos</p>
+          </div>
+          <div class="hero-stat">
+            <h3>3H+</h3>
+            <p>De Música Ao Vivo</p>
+          </div>
+          <div class="hero-stat">
+            <h3>1ª</h3>
+            <p>Edição</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════ TICKER ═══════════ -->
+  <div class="ticker">
+    <div class="ticker-track">
+      <span class="ticker-item">Pace & Beats Run</span>
+      <span class="ticker-item">Sunna Beach Club</span>
+      <span class="ticker-item">Pituaçu — Salvador</span>
+      <span class="ticker-item">Corrida Noturna</span>
+      <span class="ticker-item">5K & 10K</span>
+      <span class="ticker-item">Kit Exclusivo</span>
+      <span class="ticker-item">28 de Junho</span>
+      <span class="ticker-item">Medalha Finisher</span>
+      <span class="ticker-item">Pace & Beats Run</span>
+      <span class="ticker-item">Sunna Beach Club</span>
+      <span class="ticker-item">Pituaçu — Salvador</span>
+      <span class="ticker-item">Corrida Noturna</span>
+      <span class="ticker-item">5K & 10K</span>
+      <span class="ticker-item">Kit Exclusivo</span>
+      <span class="ticker-item">28 de Junho</span>
+      <span class="ticker-item">Medalha Finisher</span>
+    </div>
+  </div>
+
+  <!-- ═══════════ SOBRE O EVENTO ═══════════ -->
+  <section class="about" id="about">
+    <div class="container">
+      <div class="about-image reveal">
+        <video controls autoplay loop playsinline id="aboutVideo" style="position: relative; z-index: 2;">
+          <source src="video-hero-pace-beats.mp4" type="video/mp4">
+          Seu navegador não suporta vídeo.
+        </video>
+        <div class="about-badge">📍 Sunna Beach Club, Pituaçu</div>
+      </div>
+      <div class="about-text reveal">
+        <span class="section-tag">Sobre o Evento</span>
+        <h2 class="section-title">MAIS QUE UMA<br>CORRIDA, UMA<br><span>EXPERIÊNCIA</span></h2>
+        <p class="section-subtitle">
+          A Pace & Beats Run é a primeira corrida noturna de Salvador que combina 
+          performance esportiva com a energia contagiante da música ao vivo. 
+          Percorra a deslumbrante Orla de Pituaçu sob as estrelas, com largada e chegada 
+          no Sunna Beach Club, hidratação, segurança e muita vibe do início ao fim.
+        </p>
+
+        <div class="about-features">
+          <div class="about-feature">
+            <div class="icon">🎵</div>
+            <h4>Música Ao Vivo</h4>
+            <p>DJs e bandas ao longo do percurso</p>
+          </div>
+          <div class="about-feature">
+            <div class="icon">🏅</div>
+            <h4>Medalha Finisher</h4>
+            <p>Medalha exclusiva para todos que concluírem</p>
+          </div>
+          <div class="about-feature">
+            <div class="icon">💧</div>
+            <h4>Hidratação</h4>
+            <p>Pontos de água e isotônico no percurso</p>
+          </div>
+          <div class="about-feature">
+            <div class="icon">📸</div>
+            <h4>Fotos Profissionais</h4>
+            <p>Fotógrafos registrando cada momento</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════ PERCURSO ═══════════ -->
+  <section class="route" id="route">
+    <div class="container">
+      <div class="route-header reveal" style="text-align: center; margin-bottom: 48px;">
+        <span class="section-tag">Percurso</span>
+        <h2 class="section-title">ESCOLHA SUA <span>DISTÂNCIA</span></h2>
+        <p class="section-subtitle" style="margin: 0 auto;">Dois percursos incríveis pela orla de Pituaçu à noite. Seja você iniciante ou experiente, tem uma distância perfeita pra você.</p>
+      </div>
+
+      <div class="route-cards">
+        <div class="route-card reveal">
+          <div class="icon">🏃‍♀️</div>
+          <h3>Percurso Fun</h3>
+          <div class="distance">5K</div>
+          <p>Ideal para iniciantes e para quem quer curtir o percurso com mais tranquilidade. Saída e chegada no Sunna Beach Club.</p>
+        </div>
+        <div class="route-card reveal">
+          <div class="icon">🔥</div>
+          <h3>Percurso Performance</h3>
+          <div class="distance">10K</div>
+          <p>Para quem busca superar limites. Percurso completo com paisagens incríveis da orla noturna e pontos de apoio estratégicos.</p>
+        </div>
+        <div class="route-card reveal">
+          <div class="icon">🎉</div>
+          <h3>After Party</h3>
+          <div class="distance">∞</div>
+          <p>Depois da corrida, a festa não para! Show ao vivo no Sunna Beach Club, food trucks, espaço de recuperação e muita comemoração.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════ CONTADORES ═══════════ -->
+  <section class="counter-section">
+    <div class="container">
+      <div class="counter-grid">
+        <div class="counter-item reveal">
+          <h3><span class="counter" data-target="2000">0</span>+</h3>
+          <p>Vagas Disponíveis</p>
+        </div>
+        <div class="counter-item reveal">
+          <h3><span class="counter" data-target="10">0</span></h3>
+          <p>Pontos de Hidratação</p>
+        </div>
+        <div class="counter-item reveal">
+          <h3><span class="counter" data-target="5">0</span></h3>
+          <p>Palcos de Música</p>
+        </div>
+        <div class="counter-item reveal">
+          <h3><span class="counter" data-target="30">0</span>+</h3>
+          <p>Patrocinadores</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════ CALENDÁRIO DE EVENTOS ═══════════ -->
+  <section class="calendar-section" id="calendar">
+    <div class="container">
+      <div class="calendar-header reveal">
+        <span class="section-tag">Calendário</span>
+        <h2 class="section-title">PROGRAMAÇÃO <span>COMPLETA</span></h2>
+        <p class="section-subtitle" style="margin: 0 auto; text-align: center;">Treinos preparatórios e o grande dia. Confira as datas e venha se preparar com a gente!</p>
+      </div>
+
+      <!-- Filtro por categoria -->
+      <div class="calendar-filters reveal">
+        <button class="cal-filter active" data-filter="all">Todos</button>
+        <button class="cal-filter" data-filter="treino">Treinos</button>
+        <button class="cal-filter" data-filter="corrida">Corrida Oficial</button>
+        <button class="cal-filter" data-filter="festa">Festa</button>
+      </div>
+
+      <!-- Grade do Calendário -->
+      <div class="calendar-grid" id="calendarGrid">
+
+        <!-- ══ EVENTO 1 ══ -->
+        <div class="cal-card reveal" data-category="treino">
+          <div class="cal-date">
+            <span class="cal-day">14</span>
+            <span class="cal-month">JUN</span>
+            <span class="cal-weekday">Sáb</span>
+          </div>
+          <div class="cal-info">
+            <div class="cal-badge treino">Treino</div>
+            <h4 class="cal-title">Treino Preparatório #1</h4>
+            <p class="cal-desc">Primeiro treino coletivo para esquentar os motores. Aberto para todos os inscritos.</p>
+            <div class="cal-meta">
+              <span>🕗 18:00</span>
+              <span>📍 Sunna Beach Club</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- ══ EVENTO 2 ══ -->
+        <div class="cal-card reveal" data-category="treino">
+          <div class="cal-date">
+            <span class="cal-day">18</span>
+            <span class="cal-month">JUN</span>
+            <span class="cal-weekday">Qua</span>
+          </div>
+          <div class="cal-info">
+            <div class="cal-badge treino">Treino</div>
+            <h4 class="cal-title">Treino Preparatório #2</h4>
+            <p class="cal-desc">Treino de ritmo e resistência. Traga seu grupo e venha treinar junto!</p>
+            <div class="cal-meta">
+              <span>🕗 18:30</span>
+              <span>📍 Sunna Beach Club</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- ══ EVENTO 3 ══ -->
+        <div class="cal-card reveal" data-category="treino">
+          <div class="cal-date">
+            <span class="cal-day">21</span>
+            <span class="cal-month">JUN</span>
+            <span class="cal-weekday">Sáb</span>
+          </div>
+          <div class="cal-info">
+            <div class="cal-badge treino">Treino</div>
+            <h4 class="cal-title">Treino Preparatório #3</h4>
+            <p class="cal-desc">Último treino antes da semana da corrida. Simulação do percurso noturno.</p>
+            <div class="cal-meta">
+              <span>🕗 18:00</span>
+              <span>📍 Sunna Beach Club</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- ══ EVENTO 4 ══ -->
+        <div class="cal-card reveal" data-category="treino">
+          <div class="cal-date">
+            <span class="cal-day">25</span>
+            <span class="cal-month">JUN</span>
+            <span class="cal-weekday">Qua</span>
+          </div>
+          <div class="cal-info">
+            <div class="cal-badge treino">Treino</div>
+            <h4 class="cal-title">Treino Leve + Retirada de Kit</h4>
+            <p class="cal-desc">Treino leve de preparação final e início da retirada dos kits para inscritos.</p>
+            <div class="cal-meta">
+              <span>🕗 17:30</span>
+              <span>📍 Sunna Beach Club</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- ══ EVENTO 5 — DIA OFICIAL ══ -->
+        <div class="cal-card featured reveal" data-category="corrida">
+          <div class="cal-date">
+            <span class="cal-day mystery-date">??</span>
+            <span class="cal-month mystery-date">JUL</span>
+            <span class="cal-weekday mystery-date">Sáb</span>
+          </div>
+          <div class="cal-info">
+            <div class="cal-badge corrida">🏁 Corrida Oficial</div>
+            <h4 class="cal-title">PACE & BEATS RUN — 1ª Edição</h4>
+            <p class="cal-desc">O grande dia! Corrida noturna de 5K e 10K pela Orla de Pituaçu. A data oficial será revelada em breve. Largada no Sunna Beach Club com música ao vivo, after party e muito mais.</p>
+            <div class="cal-meta">
+              <span>🌙 18:00 — Abertura</span>
+              <span>🏃 19:00 — Largada 10K</span>
+              <span>🏃 19:15 — Largada 5K</span>
+              <span>🎶 20:30 — After Party</span>
+              <span>📍 Sunna Beach Club, Pituaçu</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- ══ EVENTO 6 — AFTER PARTY ══ -->
+        <div class="cal-card reveal" data-category="festa">
+          <div class="cal-date">
+            <span class="cal-day mystery-date">??</span>
+            <span class="cal-month mystery-date">JUL</span>
+            <span class="cal-weekday mystery-date">Sáb</span>
+          </div>
+          <div class="cal-info">
+            <div class="cal-badge festa">🎶 Festa</div>
+            <h4 class="cal-title">After Party — Pace & Beats</h4>
+            <p class="cal-desc">Após a corrida, a noite continua! Shows ao vivo, DJs, food trucks e espaço de recuperação no Sunna Beach Club.</p>
+            <div class="cal-meta">
+              <span>🕗 20:30 em diante</span>
+              <span>📍 Sunna Beach Club</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Instrução de edição (visível apenas no código) -->
+      <!-- 
+        ╔══════════════════════════════════════════════════════════════╗
+        ║  PARA ADICIONAR NOVOS EVENTOS:                              ║
+        ║  Copie um bloco <div class="cal-card"> acima e cole aqui.  ║
+        ║  Mude: cal-day, cal-month, cal-weekday, cal-badge,         ║
+        ║        cal-title, cal-desc, cal-meta e data-category.      ║
+        ║  Categorias: treino | corrida | festa                      ║
+        ╚══════════════════════════════════════════════════════════════╝
+      -->
+
+    </div>
+  </section>
+
+  <!-- ═══════════ PLANOS DE INSCRIÇÃO ═══════════ -->
+  <section class="pricing" id="pricing">
+    <div class="container">
+      <div class="pricing-header reveal">
+        <span class="section-tag">Inscrições</span>
+        <h2 class="section-title">ESCOLHA SEU <span>PLANO</span></h2>
+        <p class="section-subtitle" style="margin: 0 auto;">Garanta sua vaga com antecedência e pague menos. Quanto antes, melhor!</p>
+      </div>
+
+      <div class="pricing-grid">
+        <!-- Lote 1 -->
+        <div class="pricing-card reveal">
+          <div class="pricing-name">1º Lote</div>
+          <p class="pricing-desc">Primeiros a garantir pagam menos. Vagas limitadas!</p>
+          <div class="pricing-price">
+            <span class="currency">R$</span>
+            <span class="amount">89</span>
+            <span class="period">,90</span>
+          </div>
+          <ul class="pricing-features">
+            <li>Kit oficial da corrida (camiseta)</li>
+            <li>Número de peito com chip</li>
+            <li>Medalha Finisher exclusiva</li>
+            <li>Hidratação no percurso</li>
+            <li>Seguro esportivo</li>
+            <li>Acesso à After Party</li>
+          </ul>
+          <a href="#" class="btn btn-outline btn-wpp" data-plan="1º Lote — R$89,90" data-items="Kit oficial, Número com chip, Medalha Finisher, Hidratação, Seguro, After Party">Inscrever-se via WhatsApp</a>
+        </div>
+
+        <!-- Lote 2 — Featured -->
+        <div class="pricing-card featured reveal">
+          <div class="pricing-popular">🔥 Mais Popular</div>
+          <div class="pricing-name">2º Lote</div>
+          <p class="pricing-desc">O melhor custo-benefício. Inclui kit premium!</p>
+          <div class="pricing-price">
+            <span class="currency">R$</span>
+            <span class="amount">119</span>
+            <span class="period">,90</span>
+          </div>
+          <ul class="pricing-features">
+            <li>Tudo do 1º Lote</li>
+            <li>Kit Premium (camiseta + viseira)</li>
+            <li>Bag exclusiva Pace & Beats</li>
+            <li>Acesso prioritário à After Party</li>
+            <li>Fotos profissionais digitais</li>
+            <li>Brinde surpresa no kit</li>
+          </ul>
+          <a href="#" class="btn btn-primary btn-wpp" data-plan="2º Lote Premium — R$119,90" data-items="Kit Premium (camiseta + viseira), Bag exclusiva, Número com chip, Medalha Finisher, Hidratação, Seguro, After Party prioritário, Fotos profissionais, Brinde surpresa">Inscrever-se via WhatsApp →</a>
+        </div>
+
+        <!-- Lote 3 -->
+        <div class="pricing-card reveal">
+          <div class="pricing-name">3º Lote</div>
+          <p class="pricing-desc">Últimas vagas disponíveis. Corra para garantir!</p>
+          <div class="pricing-price">
+            <span class="currency">R$</span>
+            <span class="amount">149</span>
+            <span class="period">,90</span>
+          </div>
+          <ul class="pricing-features">
+            <li>Kit oficial da corrida (camiseta)</li>
+            <li>Número de peito com chip</li>
+            <li>Medalha Finisher exclusiva</li>
+            <li>Hidratação no percurso</li>
+            <li>Seguro esportivo</li>
+            <li>Acesso à After Party</li>
+          </ul>
+          <a href="#" class="btn btn-outline btn-wpp" data-plan="3º Lote — R$149,90" data-items="Kit oficial, Número com chip, Medalha Finisher, Hidratação, Seguro, After Party">Inscrever-se via WhatsApp</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════ KIT DO CORREDOR ═══════════ -->
+  <section class="kit" id="kit">
+    <div class="container">
+      <div class="kit-header reveal">
+        <span class="section-tag">Kit do Corredor</span>
+        <h2 class="section-title">O QUE VOCÊ <span>RECEBE</span></h2>
+        <p class="section-subtitle" style="margin: 0 auto;">Cada detalhe pensado para tornar sua experiência inesquecível.</p>
+      </div>
+
+      <div class="kit-grid">
+        <div class="kit-item reveal">
+          <div class="icon">👕</div>
+          <h4>Camiseta Oficial</h4>
+          <p>Tecido dry-fit exclusivo com design Pace & Beats</p>
+        </div>
+        <div class="kit-item reveal">
+          <div class="icon">🏅</div>
+          <h4>Medalha Finisher</h4>
+          <p>Medalha personalizada para quem cruza a linha</p>
+        </div>
+        <div class="kit-item reveal">
+          <div class="icon">🔢</div>
+          <h4>Número + Chip</h4>
+          <p>Cronometragem oficial por chip descartável</p>
+        </div>
+        <div class="kit-item reveal">
+          <div class="icon">🧢</div>
+          <h4>Viseira</h4>
+          <p>Viseira exclusiva (Kit Premium)</p>
+        </div>
+        <div class="kit-item reveal">
+          <div class="icon">🎒</div>
+          <h4>Bag Exclusiva</h4>
+          <p>Sacola personalizada Pace & Beats (Kit Premium)</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════ GALERIA ═══════════ -->
+  <section class="gallery" id="gallery">
+    <div class="container">
+      <div class="gallery-header reveal">
+        <span class="section-tag">Galeria</span>
+        <h2 class="section-title">SINTA A <span>ENERGIA</span></h2>
+        <p class="section-subtitle" style="margin: 0 auto;">Registros da preparação e do espírito que vai tomar conta da Orla de Pituaçu.</p>
+      </div>
+
+      <div class="gallery-grid">
+        <div class="gallery-item reveal">
+          <img src="ideia-pace-beats-page_files/bcf4607220dbd319f5017cdc93ea10c1.jpg" alt="Corrida Pace & Beats">
+        </div>
+        <div class="gallery-item reveal">
+          <img src="ideia-pace-beats-page_files/f1880658d6d8fe71f575a04e972630fb.jpg" alt="Preparação para corrida">
+        </div>
+        <div class="gallery-item reveal">
+          <img src="ideia-pace-beats-page_files/599cd5f8ed71f87e255a75c7582b4cfe.jpg" alt="Energia do evento">
+        </div>
+        <div class="gallery-item reveal">
+          <img src="ideia-pace-beats-page_files/4c40972ca4eafbae7540588cbe1dffb5.jpg" alt="Atletas se preparando">
+        </div>
+        <div class="gallery-item reveal">
+          <img src="ideia-pace-beats-page_files/8f21977a2d8c83d071ab9b010f9fe3d8.jpg" alt="Percurso da corrida">
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════ FAQ ═══════════ -->
+  <section class="faq" id="faq">
+    <div class="container">
+      <div class="faq-header reveal">
+        <span class="section-tag">FAQ</span>
+        <h2 class="section-title">PERGUNTAS <span>FREQUENTES</span></h2>
+      </div>
+
+      <div class="faq-list">
+        <div class="faq-item reveal">
+          <div class="faq-question" onclick="toggleFaq(this)">
+            <span>Onde acontece a corrida?</span>
+            <div class="faq-icon">+</div>
+          </div>
+          <div class="faq-answer">
+            <p>A Pace & Beats Run acontece na Orla de Pituaçu, em Salvador — BA, com largada e chegada no Sunna Beach Club.</p>
+          </div>
+        </div>
+
+        <div class="faq-item reveal">
+          <div class="faq-question" onclick="toggleFaq(this)">
+            <span>A corrida é noturna?</span>
+            <div class="faq-icon">+</div>
+          </div>
+          <div class="faq-answer">
+            <p>Sim! A Pace & Beats Run é uma corrida noturna. A abertura começa às 18h e as largadas acontecem às 19h (10K) e 19h15 (5K).</p>
+          </div>
+        </div>
+
+        <div class="faq-item reveal">
+          <div class="faq-question" onclick="toggleFaq(this)">
+            <span>Preciso ter experiência em corrida?</span>
+            <div class="faq-icon">+</div>
+          </div>
+          <div class="faq-answer">
+            <p>Não! O percurso de 5K é ideal para iniciantes. Você pode correr ou caminhar, o importante é participar e curtir a experiência. Temos treinos preparatórios antes do evento!</p>
+          </div>
+        </div>
+
+        <div class="faq-item reveal">
+          <div class="faq-question" onclick="toggleFaq(this)">
+            <span>Quando e onde retiro meu kit?</span>
+            <div class="faq-icon">+</div>
+          </div>
+          <div class="faq-answer">
+            <p>A retirada do kit acontecerá nos dias que antecedem a corrida no Sunna Beach Club. Confira o calendário para as datas exatas. Também será possível retirar no dia do evento.</p>
+          </div>
+        </div>
+
+        <div class="faq-item reveal">
+          <div class="faq-question" onclick="toggleFaq(this)">
+            <span>A corrida tem limite de idade?</span>
+            <div class="faq-icon">+</div>
+          </div>
+          <div class="faq-answer">
+            <p>Para participar é necessário ter pelo menos 16 anos. Menores de 18 anos precisam de autorização assinada pelos responsáveis.</p>
+          </div>
+        </div>
+
+        <div class="faq-item reveal">
+          <div class="faq-question" onclick="toggleFaq(this)">
+            <span>Posso transferir minha inscrição?</span>
+            <div class="faq-icon">+</div>
+          </div>
+          <div class="faq-answer">
+            <p>Sim, transferências são permitidas até 7 dias antes do evento, mediante solicitação pelo WhatsApp oficial da organização.</p>
+          </div>
+        </div>
+
+        <div class="faq-item reveal">
+          <div class="faq-question" onclick="toggleFaq(this)">
+            <span>Haverá estacionamento no local?</span>
+            <div class="faq-icon">+</div>
+          </div>
+          <div class="faq-answer">
+            <p>Sim, o Sunna Beach Club e a Orla de Pituaçu contam com estacionamento nas proximidades. Recomendamos chegar com antecedência.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════ CTA FINAL ═══════════ -->
+  <section class="cta-final">
+    <div class="container reveal">
+      <span class="section-tag">Vagas Limitadas</span>
+      <h2 class="section-title">NÃO FIQUE<br>DE <span>FORA</span></h2>
+      <p class="section-subtitle">
+        As inscrições estão abertas e as vagas são limitadas. 
+        Vista sua camisa, sinta a batida e venha fazer parte da maior 
+        corrida noturna de Salvador. A data oficial será revelada em breve!
+      </p>
+      <div class="cta-final-buttons">
+        <a href="#pricing" class="btn btn-primary">Garanta Sua Vaga Agora →</a>
+        <a href="https://instagram.com" target="_blank" class="btn btn-outline">📱 Siga no Instagram</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════ FOOTER ═══════════ -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <img src="logo.jpg.jpeg" alt="Pace & Beats Run">
+          <p>A corrida noturna que une esporte e música na orla mais bonita de Salvador. Pace & Beats Run — corra no ritmo da noite.</p>
+          <div class="footer-social">
+            <a href="#" aria-label="Instagram">📷</a>
+            <a href="#" aria-label="WhatsApp">💬</a>
+            <a href="#" aria-label="TikTok">🎵</a>
+            <a href="#" aria-label="YouTube">▶️</a>
+          </div>
+        </div>
+
+        <div class="footer-col">
+          <h4>Navegação</h4>
+          <a href="#about">O Evento</a>
+          <a href="#route">Percurso</a>
+          <a href="#calendar">Calendário</a>
+          <a href="#pricing">Inscrições</a>
+        </div>
+
+        <div class="footer-col">
+          <h4>Informações</h4>
+          <a href="#kit">Kit do Corredor</a>
+          <a href="#faq">Perguntas Frequentes</a>
+          <a href="#">Regulamento</a>
+          <a href="#">Política de Privacidade</a>
+        </div>
+
+        <div class="footer-col">
+          <h4>Contato</h4>
+          <a href="#">📍 Sunna Beach Club, Pituaçu — Salvador, BA</a>
+          <a href="#">📧 contato@paceandbeats.com.br</a>
+          <a href="#">📱 (71) 99999-0000</a>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <p>© 2026 Pace & Beats Run. Todos os direitos reservados.</p>
+        <p><a href="admin.html" style="color: var(--white-dim); transition: color 0.3s;" onmouseover="this.style.color='var(--orange)'" onmouseout="this.style.color='var(--white-dim)'">Feito por Tríade Studio</a></p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ═══════════ MODAL DE INSCRIÇÃO ═══════════ -->
+  <div class="modal-overlay" id="inscModal" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.85); z-index:9999; display:none; align-items:center; justify-content:center;">
+    <div style="background:#161616; border:1px solid #222; border-radius:20px; padding:40px 32px; width:100%; max-width:440px; position:relative; margin:20px;">
+      <button onclick="closeModal()" style="position:absolute; top:16px; right:20px; background:none; border:none; color:#888; font-size:1.5rem; cursor:pointer;">✕</button>
+      <h3 style="font-family:'Bebas Neue',sans-serif; font-size:1.6rem; letter-spacing:2px; margin-bottom:4px; text-align:center;">INSCRIÇÃO <span style="color:#FF6B00;">PACE & BEATS</span></h3>
+      <p style="color:#888; font-size:0.82rem; text-align:center; margin-bottom:24px;">Preencha seus dados para confirmar via WhatsApp</p>
+      <div id="selectedPlanDisplay" style="background:rgba(255,107,0,0.1); border:1px solid rgba(255,107,0,0.3); border-radius:12px; padding:12px 16px; margin-bottom:20px; text-align:center; font-weight:700; color:#FF6B00; font-size:0.9rem;"></div>
+      <input type="text" id="leadName" placeholder="Seu nome completo" style="width:100%; padding:14px 18px; border-radius:12px; border:1px solid #222; background:#0a0a0a; color:#fff; font-family:'Inter',sans-serif; font-size:0.9rem; outline:none; margin-bottom:12px;">
+      <input type="tel" id="leadPhone" placeholder="Telefone com DDD (71) 99999-0000" style="width:100%; padding:14px 18px; border-radius:12px; border:1px solid #222; background:#0a0a0a; color:#fff; font-family:'Inter',sans-serif; font-size:0.9rem; outline:none; margin-bottom:12px;">
+      <input type="email" id="leadEmail" placeholder="Seu email" style="width:100%; padding:14px 18px; border-radius:12px; border:1px solid #222; background:#0a0a0a; color:#fff; font-family:'Inter',sans-serif; font-size:0.9rem; outline:none; margin-bottom:20px;">
+      <button onclick="submitInscription()" style="width:100%; padding:16px; border-radius:50px; border:none; background:#FF6B00; color:#fff; font-family:'Inter',sans-serif; font-weight:700; font-size:0.9rem; letter-spacing:0.5px; text-transform:uppercase; cursor:pointer; transition:all 0.3s;">Confirmar via WhatsApp 💬</button>
+      <p id="modalError" style="color:#ef4444; font-size:0.78rem; text-align:center; margin-top:10px; display:none;">Preencha pelo menos nome e telefone.</p>
+    </div>
+  </div>
+
+  <!-- ═══════════ JAVASCRIPT ═══════════ -->
+  <script>
+    // ══════════════════════════════════════════════
+    //  CONFIGURAÇÃO DO WHATSAPP
+    //  Troque o número abaixo pelo número real deles
+    // ══════════════════════════════════════════════
+    const WHATSAPP_NUMBER = '5571999990000'; // formato: 55 + DDD + número
+
+    // ── Navbar Scroll Effect ──
+    const navbar = document.getElementById('navbar');
+    window.addEventListener('scroll', () => {
+      navbar.classList.toggle('scrolled', window.scrollY > 50);
+    });
+
+    // ── Hamburger Menu ──
+    const hamburger = document.getElementById('hamburger');
+    const mobileNav = document.getElementById('mobileNav');
+
+    hamburger.addEventListener('click', () => {
+      hamburger.classList.toggle('active');
+      mobileNav.classList.toggle('active');
+      document.body.style.overflow = mobileNav.classList.contains('active') ? 'hidden' : '';
+    });
+
+    function closeMenu() {
+      hamburger.classList.remove('active');
+      mobileNav.classList.remove('active');
+      document.body.style.overflow = '';
+    }
+
+    // ── Scroll Reveal ──
+    const revealElements = document.querySelectorAll('.reveal');
+    const revealObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('active');
+        }
+      });
+    }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+
+    revealElements.forEach(el => revealObserver.observe(el));
+
+    // ── FAQ Toggle ──
+    function toggleFaq(element) {
+      const faqItem = element.parentElement;
+      const isActive = faqItem.classList.contains('active');
+      document.querySelectorAll('.faq-item').forEach(item => item.classList.remove('active'));
+      if (!isActive) faqItem.classList.add('active');
+    }
+
+    // ── Counter Animation ──
+    const counters = document.querySelectorAll('.counter');
+    const counterObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          const counter = entry.target;
+          const target = +counter.dataset.target;
+          const duration = 2000;
+          const increment = target / (duration / 16);
+          let current = 0;
+          const updateCounter = () => {
+            current += increment;
+            if (current < target) {
+              counter.textContent = Math.ceil(current).toLocaleString('pt-BR');
+              requestAnimationFrame(updateCounter);
+            } else {
+              counter.textContent = target.toLocaleString('pt-BR');
+            }
+          };
+          updateCounter();
+          counterObserver.unobserve(counter);
+        }
+      });
+    }, { threshold: 0.5 });
+    counters.forEach(c => counterObserver.observe(c));
+
+    // ── Smooth Scroll ──
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function(e) {
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) {
+          e.preventDefault();
+          target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      });
+    });
+
+    // ── Parallax Hero ──
+    window.addEventListener('scroll', () => {
+      const hero = document.querySelector('.hero-content');
+      if (hero) {
+        const scroll = window.scrollY;
+        hero.style.transform = `translateY(${scroll * 0.15}px)`;
+        hero.style.opacity = 1 - scroll / 800;
+      }
+    });
+
+    // ── Calendar Filters ──
+    const filterBtns = document.querySelectorAll('.cal-filter');
+    const calCards = document.querySelectorAll('.cal-card');
+
+    filterBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        filterBtns.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        const filter = btn.dataset.filter;
+
+        calCards.forEach(card => {
+          if (filter === 'all' || card.dataset.category === filter) {
+            card.style.display = 'flex';
+            setTimeout(() => { card.style.opacity = '1'; card.style.transform = 'translateY(0)'; }, 50);
+          } else {
+            card.style.opacity = '0';
+            card.style.transform = 'translateY(20px)';
+            setTimeout(() => { card.style.display = 'none'; }, 300);
+          }
+        });
+      });
+    });
+
+    // ── Inscrição & Modal ──
+    const inscModal = document.getElementById('inscModal');
+    let currentPlanData = null;
+
+    document.querySelectorAll('.btn-wpp').forEach(btn => {
+      btn.addEventListener('click', function(e) {
+        e.preventDefault();
+        currentPlanData = {
+          plan: this.dataset.plan,
+          items: this.dataset.items
+        };
+        document.getElementById('selectedPlanDisplay').textContent = currentPlanData.plan;
+        inscModal.style.display = 'flex';
+      });
+    });
+
+    function closeModal() {
+      inscModal.style.display = 'none';
+      document.getElementById('modalError').style.display = 'none';
+    }
+
+    function submitInscription() {
+      const name = document.getElementById('leadName').value.trim();
+      const phone = document.getElementById('leadPhone').value.trim();
+      const email = document.getElementById('leadEmail').value.trim() || '-';
+
+      if (!name || !phone) {
+        document.getElementById('modalError').style.display = 'block';
+        return;
+      }
+
+      // Salvar Lead no LocalStorage
+      try {
+        const leads = JSON.parse(localStorage.getItem('pacebeats_leads')) || [];
+        leads.push({
+          name,
+          phone,
+          email,
+          plan: currentPlanData.plan,
+          date: new Date().toLocaleDateString('pt-BR'),
+          time: new Date().toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' })
+        });
+        localStorage.setItem('pacebeats_leads', JSON.stringify(leads));
+      } catch (e) {
+        console.error('Erro ao salvar lead:', e);
+      }
+
+      // Preparar Mensagem do WhatsApp
+      const message = encodeURIComponent(
+        `🏃 *PACE & BEATS RUN — Inscrição*\n\n` +
+        `Olá! Quero me inscrever na Pace & Beats Run!\n\n` +
+        `👤 *Nome:* ${name}\n` +
+        `📋 *Plano escolhido:* ${currentPlanData.plan}\n\n` +
+        `✅ *Incluso:*\n${currentPlanData.items.split(', ').map(i => `• ${i}`).join('\n')}\n\n` +
+        `📅 *Data da corrida:* A confirmar (Julho)\n` +
+        `📍 *Local:* Sunna Beach Club, Pituaçu — Salvador\n` +
+        `🌙 *Horário:* Corrida Noturna\n\n` +
+        `Gostaria de confirmar minha inscrição! 🔥`
+      );
+      
+      closeModal();
+      
+      // Limpar campos
+      document.getElementById('leadName').value = '';
+      document.getElementById('leadPhone').value = '';
+      document.getElementById('leadEmail').value = '';
+
+      // Abrir WhatsApp
+      window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${message}`, '_blank');
+    }
+  </script>
+
+</body>
+</html>

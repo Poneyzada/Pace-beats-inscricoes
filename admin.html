@@ -1,0 +1,739 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pace & Beats Run — Painel Administrativo</title>
+  <link rel="icon" href="logo.jpg.jpeg" type="image/jpeg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --black: #0a0a0a;
+      --black-light: #111111;
+      --black-card: #161616;
+      --black-border: #222222;
+      --orange: #FF6B00;
+      --orange-light: #FF8C33;
+      --orange-glow: rgba(255, 107, 0, 0.25);
+      --white: #FFFFFF;
+      --white-muted: #B0B0B0;
+      --white-dim: #888888;
+      --green: #22c55e;
+      --red: #ef4444;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--black);
+      color: var(--white);
+      min-height: 100vh;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ── Login Gate ── */
+    .login-gate {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      background: 
+        radial-gradient(ellipse at 50% 30%, rgba(255, 107, 0, 0.08) 0%, transparent 60%),
+        var(--black);
+    }
+
+    .login-box {
+      background: var(--black-card);
+      border: 1px solid var(--black-border);
+      border-radius: 20px;
+      padding: 48px 40px;
+      width: 100%;
+      max-width: 420px;
+      text-align: center;
+    }
+
+    .login-box img {
+      height: 60px;
+      margin: 0 auto 24px;
+      display: block;
+    }
+
+    .login-box h2 {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.8rem;
+      letter-spacing: 2px;
+      margin-bottom: 8px;
+    }
+
+    .login-box p {
+      color: var(--white-dim);
+      font-size: 0.85rem;
+      margin-bottom: 28px;
+    }
+
+    .login-input {
+      width: 100%;
+      padding: 14px 20px;
+      border-radius: 12px;
+      border: 1px solid var(--black-border);
+      background: var(--black);
+      color: var(--white);
+      font-family: 'Inter', sans-serif;
+      font-size: 0.95rem;
+      outline: none;
+      transition: border-color 0.3s;
+      margin-bottom: 16px;
+      text-align: center;
+      letter-spacing: 4px;
+    }
+    .login-input:focus {
+      border-color: var(--orange);
+    }
+    .login-input::placeholder {
+      letter-spacing: 1px;
+      color: var(--white-dim);
+    }
+
+    .login-btn {
+      width: 100%;
+      padding: 14px;
+      border-radius: 50px;
+      border: none;
+      background: var(--orange);
+      color: var(--white);
+      font-family: 'Inter', sans-serif;
+      font-weight: 700;
+      font-size: 0.9rem;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+    .login-btn:hover {
+      background: var(--orange-light);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 30px var(--orange-glow);
+    }
+
+    .login-error {
+      color: var(--red);
+      font-size: 0.8rem;
+      margin-top: 12px;
+      display: none;
+    }
+
+    /* ── Dashboard ── */
+    .dashboard {
+      display: none;
+      min-height: 100vh;
+    }
+
+    .dash-header {
+      background: var(--black-card);
+      border-bottom: 1px solid var(--black-border);
+      padding: 16px 32px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .dash-header-left {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .dash-header img {
+      height: 40px;
+    }
+
+    .dash-header h1 {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.4rem;
+      letter-spacing: 2px;
+    }
+    .dash-header h1 span {
+      color: var(--orange);
+    }
+
+    .dash-header-right {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .dash-btn {
+      padding: 10px 20px;
+      border-radius: 50px;
+      border: 1px solid var(--black-border);
+      background: var(--black);
+      color: var(--white-muted);
+      font-family: 'Inter', sans-serif;
+      font-size: 0.8rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .dash-btn:hover {
+      border-color: var(--orange);
+      color: var(--orange);
+    }
+    .dash-btn.primary {
+      background: var(--orange);
+      border-color: var(--orange);
+      color: var(--white);
+    }
+    .dash-btn.primary:hover {
+      background: var(--orange-light);
+    }
+    .dash-btn.danger {
+      color: var(--red);
+    }
+    .dash-btn.danger:hover {
+      border-color: var(--red);
+    }
+
+    /* ── Stats Cards ── */
+    .dash-stats {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 16px;
+      padding: 28px 32px;
+    }
+
+    .stat-card {
+      background: var(--black-card);
+      border: 1px solid var(--black-border);
+      border-radius: 16px;
+      padding: 24px;
+      transition: all 0.3s;
+    }
+    .stat-card:hover {
+      border-color: rgba(255, 107, 0, 0.3);
+    }
+
+    .stat-card .stat-label {
+      font-size: 0.75rem;
+      color: var(--white-dim);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      font-weight: 600;
+      margin-bottom: 8px;
+    }
+
+    .stat-card .stat-value {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 2.5rem;
+      color: var(--orange);
+      letter-spacing: 2px;
+      line-height: 1;
+    }
+
+    /* ── Search & Filters ── */
+    .dash-toolbar {
+      padding: 0 32px 20px;
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+
+    .search-input {
+      flex: 1;
+      min-width: 250px;
+      padding: 12px 20px;
+      border-radius: 12px;
+      border: 1px solid var(--black-border);
+      background: var(--black-card);
+      color: var(--white);
+      font-family: 'Inter', sans-serif;
+      font-size: 0.9rem;
+      outline: none;
+      transition: border-color 0.3s;
+    }
+    .search-input:focus {
+      border-color: var(--orange);
+    }
+    .search-input::placeholder {
+      color: var(--white-dim);
+    }
+
+    .filter-select {
+      padding: 12px 20px;
+      border-radius: 12px;
+      border: 1px solid var(--black-border);
+      background: var(--black-card);
+      color: var(--white);
+      font-family: 'Inter', sans-serif;
+      font-size: 0.85rem;
+      outline: none;
+      cursor: pointer;
+    }
+    .filter-select option {
+      background: var(--black-card);
+    }
+
+    /* ── Table ── */
+    .dash-table-wrap {
+      padding: 0 32px 40px;
+      overflow-x: auto;
+    }
+
+    .dash-table {
+      width: 100%;
+      border-collapse: separate;
+      border-spacing: 0;
+      background: var(--black-card);
+      border-radius: 16px;
+      overflow: hidden;
+      border: 1px solid var(--black-border);
+    }
+
+    .dash-table thead th {
+      background: var(--black-border);
+      padding: 14px 20px;
+      text-align: left;
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: var(--white-muted);
+      white-space: nowrap;
+    }
+
+    .dash-table tbody tr {
+      border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+      transition: background 0.2s;
+    }
+    .dash-table tbody tr:hover {
+      background: rgba(255, 107, 0, 0.04);
+    }
+    .dash-table tbody tr:last-child {
+      border-bottom: none;
+    }
+
+    .dash-table td {
+      padding: 14px 20px;
+      font-size: 0.88rem;
+      color: var(--white-muted);
+      white-space: nowrap;
+    }
+
+    .dash-table .name-cell {
+      color: var(--white);
+      font-weight: 600;
+    }
+
+    .plan-badge {
+      display: inline-block;
+      padding: 4px 12px;
+      border-radius: 50px;
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+    }
+    .plan-badge.lote1 {
+      background: rgba(34, 197, 94, 0.12);
+      color: #22c55e;
+    }
+    .plan-badge.lote2 {
+      background: rgba(255, 107, 0, 0.15);
+      color: var(--orange);
+    }
+    .plan-badge.lote3 {
+      background: rgba(168, 85, 247, 0.12);
+      color: #a855f7;
+    }
+
+    .action-btn {
+      padding: 6px 14px;
+      border-radius: 8px;
+      border: 1px solid var(--black-border);
+      background: transparent;
+      color: var(--white-muted);
+      font-size: 0.78rem;
+      cursor: pointer;
+      transition: all 0.2s;
+      margin-right: 4px;
+    }
+    .action-btn:hover {
+      border-color: var(--orange);
+      color: var(--orange);
+    }
+    .action-btn.wpp {
+      color: #25d366;
+    }
+    .action-btn.wpp:hover {
+      border-color: #25d366;
+      background: rgba(37, 211, 102, 0.08);
+    }
+    .action-btn.delete {
+      color: var(--red);
+    }
+    .action-btn.delete:hover {
+      border-color: var(--red);
+      background: rgba(239, 68, 68, 0.08);
+    }
+
+    .empty-state {
+      text-align: center;
+      padding: 60px 20px;
+      color: var(--white-dim);
+    }
+    .empty-state .icon {
+      font-size: 3rem;
+      margin-bottom: 16px;
+    }
+    .empty-state h3 {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.5rem;
+      letter-spacing: 1px;
+      margin-bottom: 8px;
+      color: var(--white-muted);
+    }
+
+    /* ── Responsivo ── */
+    @media (max-width: 768px) {
+      .dash-header {
+        padding: 12px 16px;
+        flex-wrap: wrap;
+        gap: 12px;
+      }
+      .dash-stats {
+        padding: 20px 16px;
+        grid-template-columns: repeat(2, 1fr);
+      }
+      .dash-toolbar {
+        padding: 0 16px 16px;
+      }
+      .dash-table-wrap {
+        padding: 0 16px 32px;
+      }
+      .dash-header-right {
+        flex-wrap: wrap;
+      }
+    }
+
+    .back-link {
+      color: var(--white-dim);
+      font-size: 0.8rem;
+      text-decoration: none;
+      transition: color 0.3s;
+    }
+    .back-link:hover {
+      color: var(--orange);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ═══ LOGIN GATE ═══ -->
+  <div class="login-gate" id="loginGate">
+    <div class="login-box">
+      <img src="logo.jpg.jpeg" alt="Pace & Beats Run">
+      <h2>PAINEL ADMINISTRATIVO</h2>
+      <p>Acesso restrito à equipe Pace & Beats Run</p>
+      <input type="password" class="login-input" id="passwordInput" placeholder="Senha de acesso" autofocus>
+      <button class="login-btn" onclick="tryLogin()">Acessar Painel →</button>
+      <p class="login-error" id="loginError">❌ Senha incorreta. Tente novamente.</p>
+    </div>
+  </div>
+
+  <!-- ═══ DASHBOARD ═══ -->
+  <div class="dashboard" id="dashboard">
+
+    <!-- Header -->
+    <div class="dash-header">
+      <div class="dash-header-left">
+        <img src="logo.jpg.jpeg" alt="Logo">
+        <h1>PAINEL <span>CRM</span></h1>
+      </div>
+      <div class="dash-header-right">
+        <a href="index.html" class="back-link">← Voltar ao site</a>
+        <button class="dash-btn" onclick="exportCSV()">📊 Exportar CSV</button>
+        <button class="dash-btn" onclick="exportPDF()">📄 Exportar PDF</button>
+        <button class="dash-btn danger" onclick="logout()">Sair</button>
+      </div>
+    </div>
+
+    <!-- Stats -->
+    <div class="dash-stats">
+      <div class="stat-card">
+        <div class="stat-label">Total de Leads</div>
+        <div class="stat-value" id="statTotal">0</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">1º Lote</div>
+        <div class="stat-value" id="statLote1">0</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">2º Lote Premium</div>
+        <div class="stat-value" id="statLote2">0</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">3º Lote</div>
+        <div class="stat-value" id="statLote3">0</div>
+      </div>
+    </div>
+
+    <!-- Toolbar -->
+    <div class="dash-toolbar">
+      <input type="text" class="search-input" id="searchInput" placeholder="🔍 Buscar por nome, telefone ou email..." oninput="renderTable()">
+      <select class="filter-select" id="filterPlan" onchange="renderTable()">
+        <option value="all">Todos os planos</option>
+        <option value="1º Lote">1º Lote</option>
+        <option value="2º Lote Premium">2º Lote Premium</option>
+        <option value="3º Lote">3º Lote</option>
+      </select>
+      <button class="dash-btn primary" onclick="addManualLead()">+ Adicionar Lead</button>
+    </div>
+
+    <!-- Table -->
+    <div class="dash-table-wrap">
+      <table class="dash-table">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Nome</th>
+            <th>Telefone</th>
+            <th>Email</th>
+            <th>Plano</th>
+            <th>Data</th>
+            <th>Ações</th>
+          </tr>
+        </thead>
+        <tbody id="leadsTableBody">
+        </tbody>
+      </table>
+    </div>
+
+  </div>
+
+  <script>
+    // ══════════════════════════════════════════════
+    //  CONFIGURAÇÃO — MUDE A SENHA AQUI
+    // ══════════════════════════════════════════════
+    const ADMIN_PASSWORD = 'pacebeats2026';
+
+    // ── Storage Key ──
+    const STORAGE_KEY = 'pacebeats_leads';
+
+    // ── Login ──
+    function tryLogin() {
+      const pwd = document.getElementById('passwordInput').value;
+      if (pwd === ADMIN_PASSWORD) {
+        document.getElementById('loginGate').style.display = 'none';
+        document.getElementById('dashboard').style.display = 'block';
+        sessionStorage.setItem('pb_auth', '1');
+        renderTable();
+        updateStats();
+      } else {
+        document.getElementById('loginError').style.display = 'block';
+        document.getElementById('passwordInput').value = '';
+        document.getElementById('passwordInput').focus();
+      }
+    }
+
+    // Enter key on password
+    document.getElementById('passwordInput').addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') tryLogin();
+    });
+
+    // Check session
+    if (sessionStorage.getItem('pb_auth') === '1') {
+      document.getElementById('loginGate').style.display = 'none';
+      document.getElementById('dashboard').style.display = 'block';
+      renderTable();
+      updateStats();
+    }
+
+    function logout() {
+      sessionStorage.removeItem('pb_auth');
+      location.reload();
+    }
+
+    // ── Leads CRUD ──
+    function getLeads() {
+      try {
+        return JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
+      } catch {
+        return [];
+      }
+    }
+
+    function saveLeads(leads) {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(leads));
+    }
+
+    function deleteLead(index) {
+      if (!confirm('Tem certeza que deseja remover este lead?')) return;
+      const leads = getLeads();
+      leads.splice(index, 1);
+      saveLeads(leads);
+      renderTable();
+      updateStats();
+    }
+
+    function addManualLead() {
+      const name = prompt('Nome completo:');
+      if (!name) return;
+      const phone = prompt('Telefone (com DDD):');
+      if (!phone) return;
+      const email = prompt('Email:') || '-';
+      const plan = prompt('Plano (1º Lote / 2º Lote Premium / 3º Lote):') || '1º Lote';
+
+      const leads = getLeads();
+      leads.push({
+        name,
+        phone,
+        email,
+        plan,
+        date: new Date().toLocaleDateString('pt-BR'),
+        time: new Date().toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' })
+      });
+      saveLeads(leads);
+      renderTable();
+      updateStats();
+    }
+
+    // ── Render ──
+    function updateStats() {
+      const leads = getLeads();
+      document.getElementById('statTotal').textContent = leads.length;
+      document.getElementById('statLote1').textContent = leads.filter(l => l.plan.includes('1º')).length;
+      document.getElementById('statLote2').textContent = leads.filter(l => l.plan.includes('2º')).length;
+      document.getElementById('statLote3').textContent = leads.filter(l => l.plan.includes('3º')).length;
+    }
+
+    function renderTable() {
+      const leads = getLeads();
+      const search = document.getElementById('searchInput').value.toLowerCase();
+      const filterPlan = document.getElementById('filterPlan').value;
+      const tbody = document.getElementById('leadsTableBody');
+
+      let filtered = leads.filter(l => {
+        const matchSearch = !search ||
+          l.name.toLowerCase().includes(search) ||
+          l.phone.includes(search) ||
+          l.email.toLowerCase().includes(search);
+        const matchPlan = filterPlan === 'all' || l.plan.includes(filterPlan.split(' ')[0]);
+        return matchSearch && matchPlan;
+      });
+
+      if (filtered.length === 0) {
+        tbody.innerHTML = `
+          <tr><td colspan="7">
+            <div class="empty-state">
+              <div class="icon">📋</div>
+              <h3>Nenhum Lead Encontrado</h3>
+              <p>Os leads de inscrição aparecerão aqui quando alguém se inscrever pelo site.</p>
+            </div>
+          </td></tr>`;
+        return;
+      }
+
+      tbody.innerHTML = filtered.map((lead, i) => {
+        const planClass = lead.plan.includes('1º') ? 'lote1' : lead.plan.includes('2º') ? 'lote2' : 'lote3';
+        const cleanPhone = lead.phone.replace(/\D/g, '');
+        const wppPhone = cleanPhone.startsWith('55') ? cleanPhone : '55' + cleanPhone;
+
+        return `
+          <tr>
+            <td style="color: var(--white-dim);">${i + 1}</td>
+            <td class="name-cell">${lead.name}</td>
+            <td>${lead.phone}</td>
+            <td>${lead.email}</td>
+            <td><span class="plan-badge ${planClass}">${lead.plan}</span></td>
+            <td>${lead.date} ${lead.time || ''}</td>
+            <td>
+              <button class="action-btn wpp" onclick="openWpp('${wppPhone}', '${lead.name}')" title="WhatsApp">💬</button>
+              <button class="action-btn delete" onclick="deleteLead(${leads.indexOf(lead)})" title="Remover">🗑️</button>
+            </td>
+          </tr>`;
+      }).join('');
+    }
+
+    function openWpp(phone, name) {
+      const msg = encodeURIComponent(`Olá ${name}! Tudo bem? Aqui é da equipe Pace & Beats Run 🏃🔥`);
+      window.open(`https://wa.me/${phone}?text=${msg}`, '_blank');
+    }
+
+    // ── Export CSV ──
+    function exportCSV() {
+      const leads = getLeads();
+      if (leads.length === 0) { alert('Nenhum lead para exportar.'); return; }
+
+      const header = 'Nome,Telefone,Email,Plano,Data\n';
+      const rows = leads.map(l =>
+        `"${l.name}","${l.phone}","${l.email}","${l.plan}","${l.date} ${l.time || ''}"`
+      ).join('\n');
+
+      const blob = new Blob(['\uFEFF' + header + rows], { type: 'text/csv;charset=utf-8;' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `pace-beats-leads-${new Date().toISOString().slice(0, 10)}.csv`;
+      a.click();
+      URL.revokeObjectURL(url);
+    }
+
+    // ── Export PDF ──
+    function exportPDF() {
+      const leads = getLeads();
+      if (leads.length === 0) { alert('Nenhum lead para exportar.'); return; }
+
+      const printWin = window.open('', '_blank');
+      printWin.document.write(`
+        <html>
+        <head>
+          <title>Pace & Beats Run — Leads</title>
+          <style>
+            body { font-family: Arial, sans-serif; padding: 32px; color: #111; }
+            h1 { font-size: 22px; margin-bottom: 4px; }
+            p.sub { color: #666; font-size: 13px; margin-bottom: 24px; }
+            table { width: 100%; border-collapse: collapse; font-size: 13px; }
+            th { background: #FF6B00; color: white; padding: 10px 12px; text-align: left; font-size: 11px; text-transform: uppercase; letter-spacing: 1px; }
+            td { padding: 10px 12px; border-bottom: 1px solid #eee; }
+            tr:nth-child(even) { background: #f9f9f9; }
+            .footer { margin-top: 32px; font-size: 11px; color: #999; text-align: center; }
+          </style>
+        </head>
+        <body>
+          <h1>🏃 Pace & Beats Run — Leads de Inscrição</h1>
+          <p class="sub">Exportado em ${new Date().toLocaleDateString('pt-BR')} às ${new Date().toLocaleTimeString('pt-BR')} • Total: ${leads.length} leads</p>
+          <table>
+            <tr><th>#</th><th>Nome</th><th>Telefone</th><th>Email</th><th>Plano</th><th>Data</th></tr>
+            ${leads.map((l, i) => `
+              <tr>
+                <td>${i + 1}</td>
+                <td><strong>${l.name}</strong></td>
+                <td>${l.phone}</td>
+                <td>${l.email}</td>
+                <td>${l.plan}</td>
+                <td>${l.date} ${l.time || ''}</td>
+              </tr>
+            `).join('')}
+          </table>
+          <div class="footer">Pace & Beats Run — Sunna Beach Club, Pituaçu — Salvador, BA</div>
+        </body>
+        </html>
+      `);
+      printWin.document.close();
+      setTimeout(() => { printWin.print(); }, 500);
+    }
+
+    // ── Init ──
+    updateStats();
+  </script>
+
+</body>
+</html>
