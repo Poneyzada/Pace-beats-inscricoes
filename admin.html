@@ -472,15 +472,15 @@
         <div class="stat-value" id="statTotal">0</div>
       </div>
       <div class="stat-card">
-        <div class="stat-label">1º Lote</div>
+        <div class="stat-label">Cria da Base</div>
         <div class="stat-value" id="statLote1">0</div>
       </div>
       <div class="stat-card">
-        <div class="stat-label">2º Lote Premium</div>
+        <div class="stat-label">Cria Pro</div>
         <div class="stat-value" id="statLote2">0</div>
       </div>
       <div class="stat-card">
-        <div class="stat-label">3º Lote</div>
+        <div class="stat-label">Cria Lendário</div>
         <div class="stat-value" id="statLote3">0</div>
       </div>
     </div>
@@ -490,9 +490,9 @@
       <input type="text" class="search-input" id="searchInput" placeholder="🔍 Buscar por nome, telefone ou email..." oninput="renderTable()">
       <select class="filter-select" id="filterPlan" onchange="renderTable()">
         <option value="all">Todos os planos</option>
-        <option value="1º Lote">1º Lote</option>
-        <option value="2º Lote Premium">2º Lote Premium</option>
-        <option value="3º Lote">3º Lote</option>
+        <option value="Cria da Base">Cria da Base</option>
+        <option value="Cria Pro">Cria Pro</option>
+        <option value="Cria Lendário">Cria Lendário</option>
       </select>
       <button class="dash-btn primary" onclick="addManualLead()">+ Adicionar Lead</button>
     </div>
@@ -589,7 +589,7 @@
       const phone = prompt('Telefone (com DDD):');
       if (!phone) return;
       const email = prompt('Email:') || '-';
-      const plan = prompt('Plano (1º Lote / 2º Lote Premium / 3º Lote):') || '1º Lote';
+      const plan = prompt('Plano (Cria da Base / Cria Pro / Cria Lendário):') || 'Cria da Base';
 
       const leads = getLeads();
       leads.push({
@@ -609,9 +609,9 @@
     function updateStats() {
       const leads = getLeads();
       document.getElementById('statTotal').textContent = leads.length;
-      document.getElementById('statLote1').textContent = leads.filter(l => l.plan.includes('1º')).length;
-      document.getElementById('statLote2').textContent = leads.filter(l => l.plan.includes('2º')).length;
-      document.getElementById('statLote3').textContent = leads.filter(l => l.plan.includes('3º')).length;
+      document.getElementById('statLote1').textContent = leads.filter(l => l.plan.toLowerCase().includes('base')).length;
+      document.getElementById('statLote2').textContent = leads.filter(l => l.plan.toLowerCase().includes('pro')).length;
+      document.getElementById('statLote3').textContent = leads.filter(l => l.plan.toLowerCase().includes('lend')).length;
     }
 
     function renderTable() {
@@ -625,7 +625,7 @@
           l.name.toLowerCase().includes(search) ||
           l.phone.includes(search) ||
           l.email.toLowerCase().includes(search);
-        const matchPlan = filterPlan === 'all' || l.plan.includes(filterPlan.split(' ')[0]);
+        const matchPlan = filterPlan === 'all' || l.plan.toLowerCase().includes(filterPlan.split(' ')[1]?.toLowerCase() || filterPlan.toLowerCase());
         return matchSearch && matchPlan;
       });
 
@@ -642,7 +642,7 @@
       }
 
       tbody.innerHTML = filtered.map((lead, i) => {
-        const planClass = lead.plan.includes('1º') ? 'lote1' : lead.plan.includes('2º') ? 'lote2' : 'lote3';
+        const planClass = lead.plan.toLowerCase().includes('base') ? 'lote1' : lead.plan.toLowerCase().includes('pro') ? 'lote2' : 'lote3';
         const cleanPhone = lead.phone.replace(/\D/g, '');
         const wppPhone = cleanPhone.startsWith('55') ? cleanPhone : '55' + cleanPhone;
 
