@@ -56,7 +56,15 @@
 
   <!-- ═══════════ HERO ═══════════ -->
   <section class="hero" id="hero">
-    <!-- Hero Background -->
+    <!-- Video Backgrounds -->
+    <div class="hero-video-bg">
+      <video autoplay muted loop playsinline id="heroVideoDesktop" class="d-desktop">
+        <source src="heroD1-desktop.mp4" type="video/mp4">
+      </video>
+      <video autoplay muted loop playsinline id="heroVideoMobile" class="d-mobile">
+        <source src="heroD1-mobile.mp4" type="video/mp4">
+      </video>
+    </div>
     <div class="hero-fallback-bg"></div>
 
     <div class="container">
@@ -754,11 +762,18 @@
 
     // ── Parallax Hero ──
     window.addEventListener('scroll', () => {
+      const scroll = window.scrollY;
       const hero = document.querySelector('.hero-content');
       if (hero) {
-        const scroll = window.scrollY;
         hero.style.transform = `translateY(${scroll * 0.15}px)`;
         hero.style.opacity = 1 - scroll / 800;
+      }
+      
+      const heroVideo = document.querySelector('.hero-video-bg');
+      if (heroVideo) {
+        // O vídeo se move um pouco mais devagar e ganha um leve zoom ao rolar para baixo
+        heroVideo.style.transform = `translateY(${scroll * 0.3}px) scale(${1 + scroll * 0.0006})`;
+        heroVideo.style.opacity = 1 - scroll / 900;
       }
     });
 

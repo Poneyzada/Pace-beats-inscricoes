@@ -18,6 +18,12 @@
 }
 
 @media (max-width: 768px) {
+  .d-desktop {
+    display: none !important;
+  }
+  .d-mobile {
+    display: block !important;
+  }
   .navbar-links, .navbar-cta {
     display: none;
   }
