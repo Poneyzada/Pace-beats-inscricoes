@@ -353,6 +353,14 @@
       background: rgba(168, 85, 247, 0.12);
       color: #a855f7;
     }
+    .plan-badge.treino {
+      background: rgba(59, 130, 246, 0.15);
+      color: #3b82f6;
+    }
+    .plan-badge.drop {
+      background: rgba(236, 72, 153, 0.15);
+      color: #ec4899;
+    }
 
     .action-btn {
       padding: 6px 14px;
@@ -489,10 +497,13 @@
     <div class="dash-toolbar">
       <input type="text" class="search-input" id="searchInput" placeholder="🔍 Buscar por nome, telefone ou email..." oninput="renderTable()">
       <select class="filter-select" id="filterPlan" onchange="renderTable()">
-        <option value="all">Todos os planos</option>
-        <option value="Cria da Base">Cria da Base</option>
-        <option value="Cria Pro">Cria Pro</option>
-        <option value="Cria Lendário">Cria Lendário</option>
+        <option value="all">Todos os contatos</option>
+        <option value="Squad">Apenas Squads</option>
+        <option value="Treino">Apenas Treinos</option>
+        <option value="Drop">Apenas Drops (Camisa)</option>
+        <option value="Cria da Base">Squad: Cria da Base</option>
+        <option value="Cria Pro">Squad: Cria Pro</option>
+        <option value="Cria Lendário">Squad: Cria Lendário</option>
       </select>
       <button class="dash-btn primary" onclick="addManualLead()">+ Adicionar Lead</button>
     </div>
@@ -506,7 +517,8 @@
             <th>Nome</th>
             <th>Telefone</th>
             <th>Email</th>
-            <th>Plano</th>
+            <th>Tipo</th>
+            <th>Interesse / Plano</th>
             <th>Data</th>
             <th>Ações</th>
           </tr>
@@ -589,13 +601,15 @@
       const phone = prompt('Telefone (com DDD):');
       if (!phone) return;
       const email = prompt('Email:') || '-';
-      const plan = prompt('Plano (Cria da Base / Cria Pro / Cria Lendário):') || 'Cria da Base';
+      const type = prompt('Tipo (Squad / Treino / Drop):') || 'Squad';
+      const plan = prompt('Interesse / Plano (Cria da Base / Cria Pro / Cria Lendário / Nome do Treino):') || 'Cria da Base';
 
       const leads = getLeads();
       leads.push({
         name,
         phone,
         email,
+        type,
         plan,
         date: new Date().toLocaleDateString('pt-BR'),
         time: new Date().toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' })
@@ -605,13 +619,12 @@
       updateStats();
     }
 
-    // ── Render ──
     function updateStats() {
       const leads = getLeads();
       document.getElementById('statTotal').textContent = leads.length;
-      document.getElementById('statLote1').textContent = leads.filter(l => l.plan.toLowerCase().includes('base')).length;
-      document.getElementById('statLote2').textContent = leads.filter(l => l.plan.toLowerCase().includes('pro')).length;
-      document.getElementById('statLote3').textContent = leads.filter(l => l.plan.toLowerCase().includes('lend')).length;
+      document.getElementById('statLote1').textContent = leads.filter(l => (l.type === 'Squad' || !l.type) && l.plan.toLowerCase().includes('base')).length;
+      document.getElementById('statLote2').textContent = leads.filter(l => (l.type === 'Squad' || !l.type) && l.plan.toLowerCase().includes('pro')).length;
+      document.getElementById('statLote3').textContent = leads.filter(l => (l.type === 'Squad' || !l.type) && l.plan.toLowerCase().includes('lend')).length;
     }
 
     function renderTable() {
@@ -625,13 +638,22 @@
           l.name.toLowerCase().includes(search) ||
           l.phone.includes(search) ||
           l.email.toLowerCase().includes(search);
-        const matchPlan = filterPlan === 'all' || l.plan.toLowerCase().includes(filterPlan.split(' ')[1]?.toLowerCase() || filterPlan.toLowerCase());
+        
+        let matchPlan = false;
+        const leadType = l.type || 'Squad';
+        if (filterPlan === 'all') {
+          matchPlan = true;
+        } else if (filterPlan === 'Squad' || filterPlan === 'Treino' || filterPlan === 'Drop') {
+          matchPlan = (leadType === filterPlan);
+        } else {
+          matchPlan = l.plan && l.plan.toLowerCase().includes(filterPlan.toLowerCase());
+        }
         return matchSearch && matchPlan;
       });
 
       if (filtered.length === 0) {
         tbody.innerHTML = `
-          <tr><td colspan="7">
+          <tr><td colspan="8">
             <div class="empty-state">
               <div class="icon">📋</div>
               <h3>Nenhum Lead Encontrado</h3>
@@ -642,9 +664,24 @@
       }
 
       tbody.innerHTML = filtered.map((lead, i) => {
-        const planClass = lead.plan.toLowerCase().includes('base') ? 'lote1' : lead.plan.toLowerCase().includes('pro') ? 'lote2' : 'lote3';
+        const leadType = lead.type || 'Squad';
         const cleanPhone = lead.phone.replace(/\D/g, '');
         const wppPhone = cleanPhone.startsWith('55') ? cleanPhone : '55' + cleanPhone;
+
+        let typeBadge = '';
+        let planBadge = '';
+
+        if (leadType === 'Squad') {
+          typeBadge = `<span class="plan-badge lote2">Squad</span>`;
+          const planClass = lead.plan.toLowerCase().includes('base') ? 'lote1' : lead.plan.toLowerCase().includes('pro') ? 'lote2' : 'lote3';
+          planBadge = `<span class="plan-badge ${planClass}">${lead.plan}</span>`;
+        } else if (leadType === 'Treino') {
+          typeBadge = `<span class="plan-badge treino">Treino</span>`;
+          planBadge = `<span style="font-weight: 500; font-size: 0.85rem; color: #3b82f6;">${lead.plan}</span>`;
+        } else if (leadType === 'Drop') {
+          typeBadge = `<span class="plan-badge drop">Drop</span>`;
+          planBadge = `<span style="font-weight: 500; font-size: 0.85rem; color: #ec4899;">${lead.plan}</span>`;
+        }
 
         return `
           <tr>
@@ -652,7 +689,8 @@
             <td class="name-cell">${lead.name}</td>
             <td>${lead.phone}</td>
             <td>${lead.email}</td>
-            <td><span class="plan-badge ${planClass}">${lead.plan}</span></td>
+            <td>${typeBadge}</td>
+            <td>${planBadge}</td>
             <td>${lead.date} ${lead.time || ''}</td>
             <td>
               <button class="action-btn wpp" onclick="openWpp('${wppPhone}', '${lead.name}')" title="WhatsApp">💬</button>
@@ -667,14 +705,13 @@
       window.open(`https://wa.me/${phone}?text=${msg}`, '_blank');
     }
 
-    // ── Export CSV ──
     function exportCSV() {
       const leads = getLeads();
       if (leads.length === 0) { alert('Nenhum lead para exportar.'); return; }
 
-      const header = 'Nome,Telefone,Email,Plano,Data\n';
+      const header = 'Nome,Telefone,Email,Tipo,Interesse/Plano,Data\n';
       const rows = leads.map(l =>
-        `"${l.name}","${l.phone}","${l.email}","${l.plan}","${l.date} ${l.time || ''}"`
+        `"${l.name}","${l.phone}","${l.email}","${l.type || 'Squad'}","${l.plan}","${l.date} ${l.time || ''}"`
       ).join('\n');
 
       const blob = new Blob(['\uFEFF' + header + rows], { type: 'text/csv;charset=utf-8;' });
@@ -686,7 +723,6 @@
       URL.revokeObjectURL(url);
     }
 
-    // ── Export PDF ──
     function exportPDF() {
       const leads = getLeads();
       if (leads.length === 0) { alert('Nenhum lead para exportar.'); return; }
@@ -711,13 +747,14 @@
           <h1>🏃 Pace & Beats Run — Leads de Inscrição</h1>
           <p class="sub">Exportado em ${new Date().toLocaleDateString('pt-BR')} às ${new Date().toLocaleTimeString('pt-BR')} • Total: ${leads.length} leads</p>
           <table>
-            <tr><th>#</th><th>Nome</th><th>Telefone</th><th>Email</th><th>Plano</th><th>Data</th></tr>
+            <tr><th>#</th><th>Nome</th><th>Telefone</th><th>Email</th><th>Tipo</th><th>Interesse / Plano</th><th>Data</th></tr>
             ${leads.map((l, i) => `
               <tr>
                 <td>${i + 1}</td>
                 <td><strong>${l.name}</strong></td>
                 <td>${l.phone}</td>
                 <td>${l.email}</td>
+                <td>${l.type || 'Squad'}</td>
                 <td>${l.plan}</td>
                 <td>${l.date} ${l.time || ''}</td>
               </tr>
@@ -731,7 +768,6 @@
       setTimeout(() => { printWin.print(); }, 500);
     }
 
-    // ── Init ──
     updateStats();
   </script>
 

@@ -785,44 +785,50 @@
       });
     });
 
-    // ── Inscrição & Modal ──
+    // ── Inscrição & Modal Geral ──
     const inscModal = document.getElementById('inscModal');
-    let currentPlanData = null;
+    let currentLeadData = null;
 
+    // Abrir modal geral
+    function openLeadModal(type, title, items = '') {
+      currentLeadData = { type, title, items };
+      
+      // Ajustar textos do modal dinamicamente
+      const displayDiv = document.getElementById('selectedPlanDisplay');
+      if (type === 'Squad') {
+        displayDiv.textContent = `SQUAD: ${title}`;
+      } else if (type === 'Treino') {
+        displayDiv.textContent = `TREINO: ${title}`;
+      } else if (type === 'Drop') {
+        displayDiv.textContent = `VESTUÁRIO: ${title}`;
+      }
+      
+      inscModal.style.display = 'flex';
+    }
+
+    // Gatilho: Squads (Planos)
     document.querySelectorAll('.btn-wpp').forEach(btn => {
       btn.addEventListener('click', function(e) {
         e.preventDefault();
-        currentPlanData = {
-          plan: this.dataset.plan,
-          items: this.dataset.items
-        };
-        document.getElementById('selectedPlanDisplay').textContent = currentPlanData.plan;
-        inscModal.style.display = 'flex';
+        openLeadModal('Squad', this.dataset.plan, this.dataset.items);
       });
     });
 
-    // ── WhatsApp Treinões ──
+    // Gatilho: Treinões (Calendário)
     document.querySelectorAll('.btn-wpp-treino').forEach(btn => {
       btn.addEventListener('click', function(e) {
         e.preventDefault();
-        const msgTreino = encodeURIComponent(
-          "Olá, tudo bem?\n" +
-          "Tenho interesse em participar do treinão Pace & Beats.\n\n" +
-          "#NINGUEMFICAPRATRAS🔥"
-        );
-        window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${msgTreino}`, '_blank');
+        const card = this.closest('.cal-card');
+        const trainingName = card ? card.querySelector('.cal-title').textContent : 'Treinão Pace & Beats';
+        openLeadModal('Treino', trainingName);
       });
     });
 
-    // ── WhatsApp Drops ──
+    // Gatilho: Drops (Camisas)
     document.querySelectorAll('.btn-wpp-drop').forEach(btn => {
       btn.addEventListener('click', function(e) {
         e.preventDefault();
-        const msgDrop = encodeURIComponent(
-          "Olá, tudo bem?\n" +
-          "Tenho interesse no drop da nova camisa Pace & Beats! Como faço para garantir a minha? ⚫🧡"
-        );
-        window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${msgDrop}`, '_blank');
+        openLeadModal('Drop', 'Manto do Movimento (Camiseta Dry-Fit)');
       });
     });
 
@@ -841,14 +847,15 @@
         return;
       }
 
-      // Salvar Lead no LocalStorage
+      // Salvar Lead no LocalStorage (ou enviar para Planilha)
       try {
         const leads = JSON.parse(localStorage.getItem('pacebeats_leads')) || [];
         leads.push({
           name,
           phone,
           email,
-          plan: currentPlanData.plan,
+          plan: currentLeadData.title,
+          type: currentLeadData.type,
           date: new Date().toLocaleDateString('pt-BR'),
           time: new Date().toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' })
         });
@@ -857,16 +864,32 @@
         console.error('Erro ao salvar lead:', e);
       }
 
-      // Preparar Mensagem do WhatsApp
-      const message = encodeURIComponent(
-        `🏃 *PACE & BEATS — Assessoria / Squad*\n\n` +
-        `Olá! Quero entrar para a Assessoria Pace & Beats!\n\n` +
-        `👤 *Nome:* ${name}\n` +
-        `📋 *Squad escolhido:* ${currentPlanData.plan}\n\n` +
-        `✅ *Benefícios inclusos:*\n${currentPlanData.items.split(', ').map(i => `• ${i}`).join('\n')}\n\n` +
-        `Gostaria de confirmar minha inscrição e dar início aos treinos! 🔥`
-      );
-      
+      // Preparar Mensagem do WhatsApp baseada no tipo
+      let messageText = '';
+      if (currentLeadData.type === 'Squad') {
+        messageText = `🏃 *PACE & BEATS — Assessoria / Squad*\n\n` +
+          `Olá! Quero entrar para a Assessoria Pace & Beats!\n\n` +
+          `👤 *Nome:* ${name}\n` +
+          `📋 *Squad escolhido:* ${currentLeadData.title}\n\n` +
+          `✅ *Benefícios inclusos:*\n${currentLeadData.items.split(', ').map(i => `• ${i}`).join('\n')}\n\n` +
+          `Gostaria de confirmar minha inscrição e dar início aos treinos! 🔥`;
+      } else if (currentLeadData.type === 'Treino') {
+        messageText = `🏃 *PACE & BEATS — Treinão*\n\n` +
+          `Olá, tudo bem?\n` +
+          `Tenho interesse em participar do *${currentLeadData.title}*!\n\n` +
+          `👤 *Nome:* ${name}\n` +
+          `📱 *Telefone:* ${phone}\n\n` +
+          `#NINGUEMFICAPRATRAS🔥`;
+      } else if (currentLeadData.type === 'Drop') {
+        messageText = `👕 *PACE & BEATS — Drop de Vestuário*\n\n` +
+          `Olá, tudo bem?\n` +
+          `Tenho interesse no drop da nova camisa Pace & Beats!\n\n` +
+          `👤 *Nome:* ${name}\n` +
+          `📱 *Telefone:* ${phone}\n\n` +
+          `Quero garantir meu Manto do Movimento ⚫🧡`;
+      }
+
+      const message = encodeURIComponent(messageText);
       closeModal();
       
       // Limpar campos
