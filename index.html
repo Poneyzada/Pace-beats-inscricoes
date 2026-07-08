@@ -87,9 +87,9 @@
           <a href="#pricing" class="btn btn-primary">
             Fazer Parte da Comunidade (Planos)
           </a>
-          <a href="experience.html" class="btn btn-outline">
+          <button onclick="openExpModal('beach')" class="btn btn-outline">
             Conhecer Nossa Rotina
-          </a>
+          </button>
         </div>
 
         <div class="hero-stats">
@@ -174,18 +174,18 @@
       </div>
 
       <div class="route-cards" style="grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); max-width: 900px; margin: 48px auto 0;">
-        <a href="experience.html?tab=beach" class="route-card reveal" style="text-decoration: none; display: block; color: inherit;">
+        <div onclick="openExpModal('beach')" class="route-card reveal" style="cursor: pointer; text-decoration: none; display: block; color: inherit;">
           <div class="icon">☀</div>
           <h3>Beach Experience</h3>
           <div class="distance" style="font-size: 1.5rem; margin: 8px 0 16px; color: var(--orange);">Domingos — 6h30</div>
           <p>Nosso clássico matinal. Corrida de 5k ou 10k seguida de funcional na areia, altinha, networking, fotos profissionais e um cardápio especial de pós-treino no Sunna. Onde a energia da corrida encontra a vibe da praia. <strong style="color: var(--orange); display: block; margin-top: 12px; font-size: 0.85rem; letter-spacing: 1px; text-transform: uppercase;">Conhecer Experiência →</strong></p>
-        </a>
-        <a href="experience.html?tab=night" class="route-card reveal" style="text-decoration: none; display: block; color: inherit;">
+        </div>
+        <div onclick="openExpModal('night')" class="route-card reveal" style="cursor: pointer; text-decoration: none; display: block; color: inherit;">
           <div class="icon">🌃</div>
           <h3>Corre Noturno & Beats</h3>
           <div class="distance" style="font-size: 1.5rem; margin: 8px 0 16px; color: var(--orange);">Sextas-feiras</div>
           <p>O seu "sextou" diferente. Onde a corrida encontra a pista de dança. Vista o seu outfit preto e venha soltar o peso da semana na pista, terminando com nosso After Run comandado por DJs ao vivo. <strong style="color: var(--orange); display: block; margin-top: 12px; font-size: 0.85rem; letter-spacing: 1px; text-transform: uppercase;">Conhecer Experiência →</strong></p>
-        </a>
+        </div>
       </div>
     </div>
   </section>
@@ -915,6 +915,178 @@
       // Abrir WhatsApp
       window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${message}`, '_blank');
     }
+
+    // ── Experience Modal (Nike NTC Style) ──
+    const expModal = document.getElementById('expModal');
+
+    function openExpModal(tabId) {
+      expModal.style.display = 'flex';
+      switchModalTab(tabId);
+      document.body.style.overflow = 'hidden'; // block page scroll
+      
+      // Reiniciar play de vídeo se pausado
+      const activeVideo = tabId === 'beach' ? document.getElementById('expVideoBeach') : document.getElementById('expVideoNight');
+      if (activeVideo) {
+        activeVideo.currentTime = 0;
+        activeVideo.play().catch(() => {});
+      }
+    }
+
+    function closeExpModalFunc() {
+      expModal.style.display = 'none';
+      document.body.style.overflow = ''; // restore page scroll
+      
+      // Pausar vídeos para economizar CPU
+      document.getElementById('expVideoBeach').pause();
+      document.getElementById('expVideoNight').pause();
+    }
+
+    function switchModalTab(tabId) {
+      const btnBeach = document.getElementById('tabBtnBeach');
+      const btnNight = document.getElementById('tabBtnNight');
+      const panelBeach = document.getElementById('panelBeach');
+      const panelNight = document.getElementById('panelNight');
+      const videoBeach = document.getElementById('expVideoBeach');
+      const videoNight = document.getElementById('expVideoNight');
+
+      if (tabId === 'beach') {
+        btnBeach.classList.add('active');
+        btnNight.classList.remove('active');
+        panelBeach.style.display = 'grid';
+        panelNight.style.display = 'none';
+        
+        videoNight.pause();
+        videoBeach.currentTime = 0;
+        videoBeach.play().catch(() => {});
+      } else {
+        btnNight.classList.add('active');
+        btnBeach.classList.remove('active');
+        panelNight.style.display = 'grid';
+        panelBeach.style.display = 'none';
+        
+        videoBeach.pause();
+        videoNight.currentTime = 0;
+        videoNight.play().catch(() => {});
+      }
+    }
+
+    function handleModalCta(targetId) {
+      closeExpModalFunc();
+      setTimeout(() => {
+        const target = document.querySelector(targetId);
+        if (target) {
+          target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      }, 300);
+    }
+  </script>
+
+  <!-- ═══════════ EXPERIENCE SHOWCASE MODAL ═══════════ -->
+  <div class="modal" id="expModal" style="display: none; align-items: center; justify-content: center; z-index: 2000; padding: 20px;">
+    <div class="modal-content" style="max-width: 1050px; width: 100%; max-height: 90vh; overflow-y: auto; background: #0c0c0c; border: 1px solid var(--black-border); border-radius: 24px; padding: 0; position: relative; box-shadow: 0 20px 80px rgba(0,0,0,0.8);">
+      <button onclick="closeExpModalFunc()" style="position: absolute; top: 20px; right: 24px; font-size: 2.2rem; background: none; border: none; color: var(--white); cursor: pointer; z-index: 100;">&times;</button>
+      <div style="padding: 40px 40px 24px; border-bottom: 1px solid var(--black-border); text-align: center;">
+        <h2 style="font-family: var(--font-display); font-size: clamp(1.6rem, 3.5vw, 2.2rem); text-transform: uppercase; margin-bottom: 16px; letter-spacing: 1px; color: var(--white);">A Experiência de Rua</h2>
+        <div style="display: inline-flex; background: rgba(255,255,255,0.03); border: 1px solid var(--black-border); padding: 4px; border-radius: 100px; gap: 8px;">
+          <button class="tab-btn-modal active" id="tabBtnBeach" onclick="switchModalTab('beach')">Beach Experience</button>
+          <button class="tab-btn-modal" id="tabBtnNight" onclick="switchModalTab('night')">Corre Noturno & Beats</button>
+        </div>
+      </div>
+      <div style="padding: 40px;">
+        <!-- BEACH EXPERIENCE PANEL -->
+        <div class="exp-modal-grid" id="panelBeach" style="display: grid; gap: 40px;">
+          <div>
+            <span style="display: inline-block; background: rgba(255, 107, 0, 0.1); border: 1px solid rgba(255, 107, 0, 0.3); color: var(--orange); padding: 6px 16px; border-radius: 50px; font-size: 0.75rem; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 20px;">Domingos às 6h30</span>
+            <h3 style="font-family: var(--font-display); font-size: clamp(2rem, 3vw, 2.5rem); line-height: 1.1; margin-bottom: 20px; text-transform: uppercase;">Beach Experience ☀</h3>
+            <p style="font-size: 1rem; line-height: 1.7; color: var(--white-dim); margin-bottom: 30px;">
+              Nosso clássico encontro matinal de domingo na Orla de Pituaçu. Começamos o dia com uma corrida de 5k ou 10k ao nascer do sol, seguida por um circuito funcional integrado de alta energia na areia. Um espaço para se conectar, treinar forte e curtir a praia.
+            </p>
+            <div style="margin-bottom: 30px; background: rgba(255, 255, 255, 0.02); border: 1px solid var(--black-border); border-radius: 16px; padding: 24px;">
+              <h4 style="font-family: var(--font-display); font-size: 1.1rem; letter-spacing: 1px; color: var(--orange); margin-bottom: 16px; text-transform: uppercase;">O que você recebe:</h4>
+              <ul style="list-style: none; display: flex; flex-direction: column; gap: 12px; padding: 0; margin: 0;">
+                <li style="display: flex; align-items: center; gap: 12px; font-size: 0.95rem; color: var(--white-muted);"><span style="color: var(--orange); font-weight: 800;">✓</span> Corrida de rua guiada (5K ou 10K)</li>
+                <li style="display: flex; align-items: center; gap: 12px; font-size: 0.95rem; color: var(--white-muted);"><span style="color: var(--orange); font-weight: 800;">✓</span> Treino funcional dinâmico na areia</li>
+                <li style="display: flex; align-items: center; gap: 12px; font-size: 0.95rem; color: var(--white-muted);"><span style="color: var(--orange); font-weight: 800;">✓</span> Altinha, música e networking pós-treino</li>
+                <li style="display: flex; align-items: center; gap: 12px; font-size: 0.95rem; color: var(--white-muted);"><span style="color: var(--orange); font-weight: 800;">✓</span> Fotos e vídeos profissionais inclusos</li>
+                <li style="display: flex; align-items: center; gap: 12px; font-size: 0.95rem; color: var(--white-muted);"><span style="color: var(--orange); font-weight: 800;">✓</span> Desconto especial no cardápio pós-treino do Sunna</li>
+              </ul>
+            </div>
+            <div style="margin-bottom: 30px; background: rgba(255, 255, 255, 0.02); border: 1px solid rgba(255, 107, 0, 0.2); border-radius: 16px; padding: 24px;">
+              <h4 style="font-family: var(--font-display); font-size: 1.1rem; letter-spacing: 1px; color: var(--orange); margin-bottom: 8px; text-transform: uppercase;">Como acessar:</h4>
+              <p style="font-size: 0.95rem; color: var(--white-dim); line-height: 1.6; margin: 0;">
+                O Beach Experience está incluso em todos os nossos <strong>Planos de Assessoria (Cria)</strong>. Se você não é membro fixo, pode garantir seu convite avulso para treinos específicos diretamente com nosso time.
+              </p>
+            </div>
+            <div style="display: flex; gap: 16px; flex-wrap: wrap;">
+              <button onclick="handleModalCta('#pricing')" class="btn btn-primary">Fazer Parte do Squad</button>
+              <a href="https://wa.me/5521982638587?text=Ol%C3%A1%21+Quero+saber+mais+sobre+a+Beach+Experience+de+domingo+e+garantir+meu+convite+avulso." target="_blank" class="btn btn-outline" style="text-decoration: none;">Comprar Treino Avulso</a>
+            </div>
+          </div>
+          <div style="display: flex; flex-direction: column; gap: 20px;">
+            <div style="border-radius: 16px; overflow: hidden; border: 1px solid var(--black-border); aspect-ratio: 16/9; background: #000;">
+              <video id="expVideoBeach" autoplay muted loop playsinline style="width: 100%; height: 100%; object-fit: cover;">
+                <source src="video-hero-pace-beats.mp4" type="video/mp4">
+              </video>
+            </div>
+            <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px;">
+              <div style="border-radius: 12px; overflow: hidden; aspect-ratio: 1; border: 1px solid var(--black-border);"><img src="ideia-pace-beats-page_files/f1880658d6d8fe71f575a04e972630fb.jpg" style="width: 100%; height: 100%; object-fit: cover;"></div>
+              <div style="border-radius: 12px; overflow: hidden; aspect-ratio: 1; border: 1px solid var(--black-border);"><img src="ideia-pace-beats-page_files/8f21977a2d8c83d071ab9b010f9fe3d8.jpg" style="width: 100%; height: 100%; object-fit: cover;"></div>
+              <div style="border-radius: 12px; overflow: hidden; aspect-ratio: 1; border: 1px solid var(--black-border);"><img src="ideia-pace-beats-page_files/91f1ddda996d0b5ee010f88cec2816df.jpg" style="width: 100%; height: 100%; object-fit: cover;"></div>
+              <div style="border-radius: 12px; overflow: hidden; aspect-ratio: 1; border: 1px solid var(--black-border);"><img src="ideia-pace-beats-page_files/4c40972ca4eafbae7540588cbe1dffb5.jpg" style="width: 100%; height: 100%; object-fit: cover;"></div>
+              <div style="border-radius: 12px; overflow: hidden; aspect-ratio: 1; border: 1px solid var(--black-border);"><img src="ideia-pace-beats-page_files/bcf4607220dbd319f5017cdc93ea10c1.jpg" style="width: 100%; height: 100%; object-fit: cover;"></div>
+              <div style="border-radius: 12px; overflow: hidden; aspect-ratio: 1; border: 1px solid var(--black-border);"><img src="ideia-pace-beats-page_files/c2a480e2df6c3981e1511ce123feae95.jpg" style="width: 100%; height: 100%; object-fit: cover;"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- CORRE NOTURNO PANEL -->
+        <div class="exp-modal-grid" id="panelNight" style="display: none; gap: 40px;">
+          <div>
+            <span style="display: inline-block; background: rgba(255, 107, 0, 0.1); border: 1px solid rgba(255, 107, 0, 0.3); color: var(--orange); padding: 6px 16px; border-radius: 50px; font-size: 0.75rem; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 20px;">Sextas-feiras</span>
+            <h3 style="font-family: var(--font-display); font-size: clamp(2rem, 3vw, 2.5rem); line-height: 1.1; margin-bottom: 20px; text-transform: uppercase;">Corre Noturno & Beats 🌃</h3>
+            <p style="font-size: 1rem; line-height: 1.7; color: var(--white-dim); margin-bottom: 30px;">
+              O seu "sextou" definitivo. Quando a noite cai na orla de Salvador, nós vestimos preto e ocupamos a rua. Uma corrida vibrante que une esporte, energia de rua e música, terminando com uma festa oficial comandada por DJs no Sunna Beach Club.
+            </p>
+            <div style="margin-bottom: 30px; background: rgba(255, 255, 255, 0.02); border: 1px solid var(--black-border); border-radius: 16px; padding: 24px;">
+              <h4 style="font-family: var(--font-display); font-size: 1.1rem; letter-spacing: 1px; color: var(--orange); margin-bottom: 16px; text-transform: uppercase;">O que você recebe:</h4>
+              <ul style="list-style: none; display: flex; flex-direction: column; gap: 12px; padding: 0; margin: 0;">
+                <li style="display: flex; align-items: center; gap: 12px; font-size: 0.95rem; color: var(--white-muted);"><span style="color: var(--orange); font-weight: 800;">✓</span> Corrida noturna na orla</li>
+                <li style="display: flex; align-items: center; gap: 12px; font-size: 0.95rem; color: var(--white-muted);"><span style="color: var(--orange); font-weight: 800;">✓</span> Hidratação ao longo do percurso</li>
+                <li style="display: flex; align-items: center; gap: 12px; font-size: 0.95rem; color: var(--white-muted);"><span style="color: var(--orange); font-weight: 800;">✓</span> Acesso exclusivo ao pós-corre (After Run) no Sunna</li>
+                <li style="display: flex; align-items: center; gap: 12px; font-size: 0.95rem; color: var(--white-muted);"><span style="color: var(--orange); font-weight: 800;">✓</span> DJs locais ao vivo, DJs comandando a pista</li>
+                <li style="display: flex; align-items: center; gap: 12px; font-size: 0.95rem; color: var(--white-muted);"><span style="color: var(--orange); font-weight: 800;">✓</span> Fotos profissionais sob as luzes da noite</li>
+              </ul>
+            </div>
+            <div style="margin-bottom: 30px; background: rgba(255, 255, 255, 0.02); border: 1px solid rgba(255, 107, 0, 0.2); border-radius: 16px; padding: 24px;">
+              <h4 style="font-family: var(--font-display); font-size: 1.1rem; letter-spacing: 1px; color: var(--orange); margin-bottom: 8px; text-transform: uppercase;">Como acessar:</h4>
+              <p style="font-size: 0.95rem; color: var(--white-dim); line-height: 1.6; margin: 0;">
+                O Corre Noturno é gratuito para membros do plano <strong>Cria Lendário</strong> e assessoria ativa. Para participantes gerais e convidados externos, a participação e acesso ao After Party exige a compra antecipada do convite de evento.
+              </p>
+            </div>
+            <div style="display: flex; gap: 16px; flex-wrap: wrap;">
+              <button onclick="handleModalCta('#pricing')" class="btn btn-primary">Fazer Parte do Squad</button>
+              <a href="https://wa.me/5521982638587?text=Ol%C3%A1%21+Quero+saber+mais+sobre+o+Corre+Noturno+%26+Beats+de+sexta+e+garantir+meu+convite+avulso." target="_blank" class="btn btn-outline" style="text-decoration: none;">Garantir Ingresso do Evento</a>
+            </div>
+          </div>
+          <div style="display: flex; flex-direction: column; gap: 20px;">
+            <div style="border-radius: 16px; overflow: hidden; border: 1px solid var(--black-border); aspect-ratio: 16/9; background: #000;">
+              <video id="expVideoNight" autoplay muted loop playsinline style="width: 100%; height: 100%; object-fit: cover;">
+                <source src="video-hero-pace-beats.mp4" type="video/mp4">
+              </video>
+            </div>
+            <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px;">
+              <div style="border-radius: 12px; overflow: hidden; aspect-ratio: 1; border: 1px solid var(--black-border);"><img src="ideia-pace-beats-page_files/599cd5f8ed71f87e255a75c7582b4cfe.jpg" style="width: 100%; height: 100%; object-fit: cover;"></div>
+              <div style="border-radius: 12px; overflow: hidden; aspect-ratio: 1; border: 1px solid var(--black-border);"><img src="ideia-pace-beats-page_files/00de04a4cdd755f1910d523be0c42421.jpg" style="width: 100%; height: 100%; object-fit: cover;"></div>
+              <div style="border-radius: 12px; overflow: hidden; aspect-ratio: 1; border: 1px solid var(--black-border);"><img src="ideia-pace-beats-page_files/649ec8e9233b218bbce2bb789a1af499.jpg" style="width: 100%; height: 100%; object-fit: cover;"></div>
+              <div style="border-radius: 12px; overflow: hidden; aspect-ratio: 1; border: 1px solid var(--black-border);"><img src="ideia-pace-beats-page_files/87ecb7a071abaa61977abb16b2fd9159.jpg" style="width: 100%; height: 100%; object-fit: cover;"></div>
+              <div style="border-radius: 12px; overflow: hidden; aspect-ratio: 1; border: 1px solid var(--black-border);"><img src="ideia-pace-beats-page_files/977a0a53f736c4b3349c97c722e87bdb.jpg" style="width: 100%; height: 100%; object-fit: cover;"></div>
+              <div style="border-radius: 12px; overflow: hidden; aspect-ratio: 1; border: 1px solid var(--black-border);"><img src="ideia-pace-beats-page_files/a164c738c4e06b1f40894f41ab66cfca.jpg" style="width: 100%; height: 100%; object-fit: cover;"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
   </script>
 
 </body>

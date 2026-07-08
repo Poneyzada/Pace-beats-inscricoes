@@ -1316,3 +1316,33 @@ img {
   pointer-events: none;
   z-index: 0;
 }
+
+/* ── Experience Modal Layout (Nike NTC Style) ── */
+.exp-modal-grid {
+  display: grid;
+  grid-template-columns: 1.1fr 0.9fr;
+  gap: 45px;
+  align-items: start;
+}
+.tab-btn-modal {
+  background: transparent;
+  color: var(--white-muted);
+  border: none;
+  font-family: var(--font-body);
+  font-weight: 700;
+  text-transform: uppercase;
+  font-size: 0.8rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+.tab-btn-modal.active {
+  background: var(--orange) !important;
+  color: var(--white) !important;
+  box-shadow: 0 4px 15px var(--orange-glow);
+}
+@media (max-width: 991px) {
+  .exp-modal-grid {
+    grid-template-columns: 1fr;
+    gap: 30px;
+  }
+}
