@@ -381,7 +381,7 @@ img {
 
 .hero-buttons {
   display: flex;
-  gap: 16px;
+  gap: 20px 24px;
   flex-wrap: wrap;
   animation: fadeInUp 0.8s ease 0.6s forwards;
   opacity: 0;
@@ -1142,7 +1142,7 @@ img {
 
 .cta-final-buttons {
   display: flex;
-  gap: 16px;
+  gap: 20px 24px;
   justify-content: center;
   flex-wrap: wrap;
 }
