@@ -92,6 +92,24 @@
   .kit-grid {
     grid-template-columns: repeat(2, 1fr);
   }
+
+  /* Encolher espaçamentos/paddings gerais no mobile */
+  .about,
+  .route,
+  .calendar-section,
+  .pricing,
+  .kit,
+  .gallery,
+  .faq,
+  .cta-final {
+    padding: 40px 0 !important;
+  }
+  .counter-section {
+    padding: 30px 0 !important;
+  }
+  .footer {
+    padding: 40px 0 20px !important;
+  }
 }
 
 @media (max-width: 480px) {
