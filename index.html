@@ -917,28 +917,32 @@
     }
 
     // ── Experience Modal (Nike NTC Style) ──
-    const expModal = document.getElementById('expModal');
-
     function openExpModal(tabId) {
-      expModal.style.display = 'flex';
-      switchModalTab(tabId);
-      document.body.style.overflow = 'hidden'; // block page scroll
-      
-      // Reiniciar play de vídeo se pausado
-      const activeVideo = tabId === 'beach' ? document.getElementById('expVideoBeach') : document.getElementById('expVideoNight');
-      if (activeVideo) {
-        activeVideo.currentTime = 0;
-        activeVideo.play().catch(() => {});
+      const expModal = document.getElementById('expModal');
+      if (expModal) {
+        expModal.style.display = 'flex';
+        switchModalTab(tabId);
+        document.body.style.overflow = 'hidden'; // block page scroll
+        
+        // Reiniciar play de vídeo se pausado
+        const activeVideo = tabId === 'beach' ? document.getElementById('expVideoBeach') : document.getElementById('expVideoNight');
+        if (activeVideo) {
+          activeVideo.currentTime = 0;
+          activeVideo.play().catch(() => {});
+        }
       }
     }
 
     function closeExpModalFunc() {
-      expModal.style.display = 'none';
-      document.body.style.overflow = ''; // restore page scroll
-      
-      // Pausar vídeos para economizar CPU
-      document.getElementById('expVideoBeach').pause();
-      document.getElementById('expVideoNight').pause();
+      const expModal = document.getElementById('expModal');
+      if (expModal) {
+        expModal.style.display = 'none';
+        document.body.style.overflow = ''; // restore page scroll
+        
+        // Pausar vídeos para economizar CPU
+        document.getElementById('expVideoBeach').pause();
+        document.getElementById('expVideoNight').pause();
+      }
     }
 
     function switchModalTab(tabId) {
