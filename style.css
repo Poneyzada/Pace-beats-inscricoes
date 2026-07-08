@@ -334,7 +334,7 @@ img {
     radial-gradient(ellipse at 70% 30%, rgba(255, 107, 0, 0.15) 0%, transparent 60%),
     radial-gradient(ellipse at 20% 80%, rgba(255, 107, 0, 0.08) 0%, transparent 50%),
     var(--black);
-  z-index: 0;
+  z-index: -1;
 }
 
 .hero-content {
