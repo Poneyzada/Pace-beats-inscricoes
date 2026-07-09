@@ -335,6 +335,7 @@
       <div class="pricing-grid">
         <!-- Cria da Base -->
         <div class="pricing-card reveal" style="position: relative; opacity: 0.85;">
+          <div style="position: absolute; top: 12px; right: 16px; background: var(--orange); color: var(--white); font-size: 0.75rem; font-weight: 800; padding: 4px 10px; border-radius: 50px; text-transform: uppercase; letter-spacing: 1px; box-shadow: 0 4px 10px rgba(255, 107, 0, 0.3); z-index: 10;">EM BREVE!!!</div>
           <div class="pricing-name">Cria da Base</div>
           <p class="pricing-desc">A porta de entrada para quem quer consistência. Nunca mais corra sozinho.</p>
           <div class="pricing-price">
@@ -359,7 +360,11 @@
 
         <!-- Cria Pro -->
         <div class="pricing-card featured reveal" style="position: relative; opacity: 0.95;">
-          <div class="pricing-popular">⚡ Mais Recomendado</div>
+          <!-- Tags empilhadas verticalmente para evitar sobreposição -->
+          <div style="position: absolute; top: -12px; right: 24px; display: flex; flex-direction: column; gap: 6px; align-items: flex-end; z-index: 10;">
+            <div class="pricing-popular" style="position: static; margin: 0;">⚡ Mais Recomendado</div>
+            <div style="background: var(--orange); color: var(--white); font-size: 0.75rem; font-weight: 800; padding: 4px 10px; border-radius: 50px; text-transform: uppercase; letter-spacing: 1px; box-shadow: 0 4px 10px rgba(255, 107, 0, 0.3);">EM BREVE!!!</div>
+          </div>
           <div class="pricing-name">Cria Pro</div>
           <p class="pricing-desc">Para quem já pegou o ritmo e quer amassar nos treinos com o seu Squad.</p>
           <div class="pricing-price">
@@ -384,6 +389,7 @@
 
         <!-- Cria Lendário -->
         <div class="pricing-card reveal" style="position: relative; opacity: 0.85;">
+          <div style="position: absolute; top: 12px; right: 16px; background: var(--orange); color: var(--white); font-size: 0.75rem; font-weight: 800; padding: 4px 10px; border-radius: 50px; text-transform: uppercase; letter-spacing: 1px; box-shadow: 0 4px 10px rgba(255, 107, 0, 0.3); z-index: 10;">EM BREVE!!!</div>
           <div class="pricing-name">Cria Lendário</div>
           <p class="pricing-desc">O topo do nosso movimento. Alta performance e acompanhamento VIP.</p>
           <div class="pricing-price">
