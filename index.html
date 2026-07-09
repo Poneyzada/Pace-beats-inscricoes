@@ -422,8 +422,11 @@
   <section class="kit" id="drops" style="position: relative; overflow: hidden;">
     <!-- Visual Animado das Camisas no Fundo (Zoom no CSS para cortar o boné do topo do vídeo) -->
     <div style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 1; opacity: 0.12; pointer-events: none; overflow: hidden;">
-      <video autoplay muted loop playsinline class="drops-video">
-        <source src="heroD1-desktop.mp4" type="video/mp4">
+      <video autoplay muted loop playsinline class="drops-video d-desktop" id="dropsVideoDesktop">
+        <source src="desktop-certo.mp4" type="video/mp4">
+      </video>
+      <video autoplay muted loop playsinline class="drops-video d-mobile" id="dropsVideoMobile">
+        <source src="mobile-certo.mp4" type="video/mp4">
       </video>
     </div>
 

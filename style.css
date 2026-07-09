@@ -956,16 +956,6 @@ img {
   height: 100%;
   object-fit: cover;
   filter: grayscale(1);
-  transform: scale(1.22);
-  transform-origin: bottom center;
-  transition: transform 0.3s ease;
-}
-
-@media (max-width: 768px) {
-  .drops-video {
-    transform: scale(1.35);
-    transform-origin: bottom center;
-  }
 }
 
 .kit {
