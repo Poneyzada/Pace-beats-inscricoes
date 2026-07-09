@@ -968,9 +968,34 @@ img {
 .kit {
   padding: 100px 0;
 }
-.kit-header {
-  text-align: center;
-  margin-bottom: 48px;
+.kit-container {
+  display: grid;
+  grid-template-columns: 1.2fr 1fr;
+  gap: 60px;
+  align-items: center;
+  max-width: 1050px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+.kit-info-col h2 span {
+  color: var(--orange);
+}
+
+@media (max-width: 768px) {
+  .kit-container {
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
+  .kit-info-col {
+    text-align: center;
+  }
+  .kit-info-col h2 {
+    text-align: center !important;
+  }
+  .kit-poster-col {
+    max-width: 340px !important;
+  }
 }
 
 .kit-grid {

@@ -25,11 +25,11 @@
         </a>
       </div>
       <div class="navbar-links" style="margin-left: auto; margin-right: 48px;" id="navLinks">
+        <a href="#drops">Drops</a>
         <a href="#about">O Manifesto</a>
         <a href="#routine">A Nossa Casa</a>
         <a href="#calendar">Programação</a>
         <a href="#pricing">Assessoria</a>
-        <a href="#drops">Drops</a>
         <a href="#faq">FAQ</a>
       </div>
       <div class="navbar-cta" style="display: flex; align-items: center;">
@@ -45,11 +45,11 @@
 
   <!-- Mobile Nav -->
   <div class="mobile-nav" id="mobileNav">
+    <a href="#drops" onclick="closeMenu()">Drops</a>
     <a href="#about" onclick="closeMenu()">O Manifesto</a>
     <a href="#routine" onclick="closeMenu()">A Nossa Casa</a>
     <a href="#calendar" onclick="closeMenu()">Programação</a>
     <a href="#pricing" onclick="closeMenu()">Assessoria</a>
-    <a href="#drops" onclick="closeMenu()">Drops</a>
     <a href="#faq" onclick="closeMenu()">FAQ</a>
     <a href="#pricing" class="btn btn-primary" onclick="closeMenu()">Fazer Parte</a>
   </div>
@@ -118,6 +118,51 @@
       <span class="ticker-item">Julho (Em Breve)</span>
     </div>
   </div>
+
+  <!-- ═══════════ A CULTURA (DROPS) ═══════════ -->
+  <section class="kit" id="drops" style="position: relative; overflow: hidden;">
+    <!-- Visual Animado das Camisas no Fundo -->
+    <div style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 1; opacity: 0.08; pointer-events: none; overflow: hidden;">
+      <video autoplay muted loop playsinline class="drops-video d-desktop" id="dropsVideoDesktop">
+        <source src="desktop-certo.mp4" type="video/mp4">
+      </video>
+      <video autoplay muted loop playsinline class="drops-video d-mobile" id="dropsVideoMobile">
+        <source src="mobile-certo7.mp4" type="video/mp4">
+      </video>
+    </div>
+
+    <div class="container" style="position: relative; z-index: 2;">
+      <div class="kit-container">
+        
+        <!-- Coluna de informações (Esquerda) -->
+        <div class="kit-info-col reveal" style="display: flex; flex-direction: column; justify-content: center;">
+          <span class="section-tag" style="margin: 0 0 16px 0;">A Cultura</span>
+          <h2 class="section-title" style="text-align: left; margin-bottom: 24px;">O MANTO DO <br><span>MOVIMENTO</span></h2>
+          
+          <p style="font-size: 1.05rem; line-height: 1.7; color: var(--white-dim); margin-bottom: 24px;">
+            Muito mais que uma camiseta de treino, o nosso manto oficial. Desenvolvida em tecido Dry-Fit tecnológico de alta respirabilidade e caimento impecável, ela carrega a identidade e a energia da nossa Crew.
+          </p>
+          
+          <div style="background: rgba(255, 107, 0, 0.03); border: 1px solid rgba(255, 107, 0, 0.15); border-radius: 16px; padding: 24px; margin-bottom: 30px;">
+            <h4 style="font-family: var(--font-display); font-size: 1.1rem; color: var(--orange); margin-bottom: 8px; text-transform: uppercase; letter-spacing: 1px;">Acesso Prioritário</h4>
+            <p style="font-size: 0.95rem; color: var(--white-muted); line-height: 1.6; margin: 0;">
+              Membros do Grupo Oficial e alunos da assessoria (Cria) têm direito a acesso antecipado exclusivo e desconto no primeiro lote.
+            </p>
+          </div>
+          
+          <div>
+            <a href="https://wa.me/557183988270?text=Quero+garantir+o+meu+Manto+Pace+%26+Beats%21" target="_blank" class="btn btn-primary btn-wpp-drop" style="display: inline-flex; width: auto; text-decoration: none;">GARANTIR MEU MANTO</a>
+          </div>
+        </div>
+        
+        <!-- Coluna do Poster (Direita) -->
+        <div class="kit-poster-col reveal" style="position: relative; border-radius: 20px; overflow: hidden; border: 1px solid var(--black-border); box-shadow: 0 20px 50px rgba(0,0,0,0.6); aspect-ratio: 9/16; max-width: 420px; margin: 0 auto; width: 100%;">
+          <img src="poster-camisa.jpg" alt="Manto Pace & Beats Poster" style="width: 100%; height: 100%; object-fit: cover; display: block;">
+        </div>
+        
+      </div>
+    </div>
+  </section>
 
   <!-- ═══════════ SOBRE O EVENTO ═══════════ -->
   <section class="about" id="about">
@@ -404,50 +449,11 @@
             <li>Massagem</li>
             <li>Foco em metas de longo prazo (21/42km)</li>
             <li>Banheira de Gelo</li>
-            <li class="highlight">Acesso Antecipado aos Drops (Diferencial)</li>
+            <li class="highlight">Acesso Antecipado aos Drops</li>
             <li class="highlight">Possibilidade de evolução para Staff</li>
           </ul>
           <a href="#" class="btn btn-outline btn-wpp" data-plan="[LISTA DE ESPERA] Cria Lendário" data-items="Planilha digital, Suporte da liderança, Integração à comunidade, Acompanhamento de métricas, Evolução contínua, Desafios exclusivos, Acesso Antecipado aos Drops, Possibilidade de evolução para Staff" style="width: 100%; justify-content: center; display: inline-flex;">EM BREVE!!! (Lista de Espera)</a>
         </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ═══════════ A CULTURA (DROPS) ═══════════ -->
-  <section class="kit" id="drops" style="position: relative; overflow: hidden;">
-    <!-- Visual Animado das Camisas no Fundo (Zoom no CSS para cortar o boné do topo do vídeo) -->
-    <div style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 1; opacity: 0.12; pointer-events: none; overflow: hidden;">
-      <video autoplay muted loop playsinline class="drops-video d-desktop" id="dropsVideoDesktop">
-        <source src="desktop-certo.mp4" type="video/mp4">
-      </video>
-      <video autoplay muted loop playsinline class="drops-video d-mobile" id="dropsVideoMobile">
-        <source src="mobile-certo7.mp4" type="video/mp4">
-      </video>
-    </div>
-
-    <div class="container" style="position: relative; z-index: 2;">
-      <div class="kit-header reveal">
-        <span class="section-tag">A Cultura</span>
-        <h2 class="section-title">O MANTO DO <span>MOVIMENTO</span></h2>
-        <p class="section-subtitle" style="margin: 0 auto; max-width: 800px;">
-          Peças exclusivas para quem tem orgulho de fazer parte de tudo isso
-        </p>
-      </div>
-
-      <div class="kit-grid" style="margin-bottom: 40px; max-width: 320px; margin: 0 auto 40px; gap: 24px;">
-        <div class="kit-item reveal">
-          <div class="icon">👕</div>
-          <h4>Camiseta Dry-Fit</h4>
-          <p>Design exclusivo em preto e laranja com alta respirabilidade</p>
-        </div>
-      </div>
-
-      <div class="reveal" style="text-align: center;">
-        <div style="display: inline-block; background: rgba(255, 107, 0, 0.1); border: 1px solid rgba(255, 107, 0, 0.3); border-radius: 12px; padding: 16px 24px; margin-bottom: 24px; color: var(--white-muted); font-size: 0.95rem;">
-          Membros do Grupo terão acesso a pré-venda antecipada dos nossos produtos
-        </div>
-        <br>
-        <a href="#" class="btn btn-primary btn-wpp-drop">GARANTIR MEU MANTO</a>
       </div>
     </div>
   </section>
