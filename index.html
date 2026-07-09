@@ -1049,6 +1049,13 @@
         }
       }, 300);
     }
+
+    function openLeadModalFromExp() {
+      closeExpModalFunc();
+      setTimeout(() => {
+        openLeadModal('GeralSquad', 'Escolha seu Squad');
+      }, 300);
+    }
   </script>
 
   <!-- ═══════════ EXPERIENCE SHOWCASE MODAL ═══════════ -->
@@ -1088,7 +1095,7 @@
               </p>
             </div>
             <div style="display: flex; gap: 16px; flex-wrap: wrap;">
-              <button onclick="handleModalCta('#pricing')" class="btn btn-primary">Fazer Parte do Squad</button>
+              <button onclick="openLeadModalFromExp()" class="btn btn-primary" style="border: none; cursor: pointer;">Fazer Parte do Squad</button>
               <a href="https://wa.me/5521982638587?text=Ol%C3%A1%21+Quero+saber+mais+sobre+a+Beach+Experience+de+domingo+e+garantir+meu+convite+avulso." target="_blank" class="btn btn-outline" style="text-decoration: none;">Comprar Treino Avulso</a>
             </div>
           </div>
