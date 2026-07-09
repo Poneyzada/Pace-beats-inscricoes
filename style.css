@@ -960,8 +960,8 @@ img {
 
 @media (max-width: 768px) {
   .drops-video {
-    transform: scale(1.3);
-    object-position: 35% center;
+    transform: scale(1.48);
+    object-position: 28% center;
   }
 }
 
