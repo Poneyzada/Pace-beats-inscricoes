@@ -936,6 +936,14 @@ img {
   color: var(--white-dim);
   background: transparent;
 }
+.pricing-features li.highlight {
+  color: var(--white);
+  font-weight: 700;
+}
+.pricing-features li.highlight::before {
+  background: var(--orange);
+  color: var(--white);
+}
 
 .pricing-card .btn {
   width: 100%;
