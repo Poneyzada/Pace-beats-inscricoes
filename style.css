@@ -1043,8 +1043,8 @@ img {
 
 .gallery-grid {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  grid-template-rows: repeat(2, 250px);
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(3, 250px);
   gap: 16px;
 }
 .gallery-grid .gallery-item:nth-child(1) {
