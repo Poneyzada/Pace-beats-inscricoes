@@ -963,7 +963,7 @@ img {
 
 @media (max-width: 768px) {
   .drops-video {
-    transform: scale(1.6);
+    transform: scale(1.35);
     transform-origin: bottom center;
   }
 }
