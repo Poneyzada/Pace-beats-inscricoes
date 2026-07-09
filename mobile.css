@@ -12,9 +12,6 @@
     grid-template-columns: repeat(2, 1fr);
     grid-template-rows: auto;
   }
-  .gallery-grid .gallery-item:nth-child(1) {
-    grid-column: 1 / -1;
-  }
 }
 
 @media (max-width: 768px) {
@@ -83,10 +80,6 @@
   .gallery-grid {
     grid-template-columns: 1fr;
     grid-template-rows: auto;
-  }
-  .gallery-grid .gallery-item:nth-child(1) {
-    grid-column: 1;
-    grid-row: 1;
   }
 
   .kit-grid {
