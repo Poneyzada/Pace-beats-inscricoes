@@ -158,7 +158,7 @@
   <section class="about" id="about">
     <div class="container">
       <div class="about-image reveal">
-        <video controls autoplay loop playsinline id="aboutVideo" style="position: relative; z-index: 2;">
+        <video controls autoplay playsinline id="aboutVideo" style="position: relative; z-index: 2;">
           <source src="video-hero-pace-beats.mp4" type="video/mp4">
           Seu navegador não suporta vídeo.
         </video>
@@ -344,7 +344,12 @@
             <a href="https://wa.me/5521982638587?text=Quero+confirmar+presen%C3%A7a+no+Run+Club+do+dia+31%2F07%21" target="_blank" class="btn-wpp-treino" style="display:inline-block; margin-top:12px; color:var(--orange); font-size:0.85rem; font-weight:700; text-decoration:none;">Confirmar presença pelo WhatsApp →</a>
           </div>
         </div>
+      </div>
 
+      <div style="text-align: center; margin-top: 32px;">
+        <button id="btnToggleCal" class="btn btn-outline" style="display: inline-flex; align-items: center; gap: 8px;">
+          Ver mais datas +
+        </button>
       </div>
 
     </div>
@@ -464,15 +469,6 @@
           <img src="colagem-galera.jpg" alt="Pace & Beats Colagem">
         </div>
         <div class="gallery-item reveal">
-          <img src="energia.jpg" alt="Pace & Beats Energia">
-        </div>
-        <div class="gallery-item reveal">
-          <img src="ngmficapratras.jpg" alt="Pace & Beats Ninguém Fica Pra Trás">
-        </div>
-        <div class="gallery-item reveal">
-          <img src="staff-corre.jpg" alt="Pace & Beats Staff Corre">
-        </div>
-        <div class="gallery-item reveal">
           <img src="energia-dia.jpg" alt="Pace & Beats Energia Dia 1">
         </div>
         <div class="gallery-item reveal">
@@ -580,7 +576,7 @@
         Escolha o seu plano, integre-se ao time e comece a treinar com o nosso movimento.
       </p>
       <div class="cta-final-buttons">
-        <a href="https://chat.whatsapp.com/C3OQIP9dLvX4x0o02CG0NI?mode=gi_t" target="_blank" class="btn btn-primary">Fazer parte do Squad agora</a>
+        <a href="#pricing" class="btn btn-primary">Fazer parte do Squad agora</a>
         <a href="https://www.instagram.com/pacebeats.run?igsh=MXY2ZHl0bzJ6aHdwbw==" target="_blank" class="btn btn-outline">📱 Siga no Instagram</a>
       </div>
     </div>
@@ -751,26 +747,69 @@
       }
     });
 
-    // ── Calendar Filters ──
-    const filterBtns = document.querySelectorAll('.cal-filter');
+    // ── Calendar Filters & Show More ──
+    const btnToggleCal = document.getElementById('btnToggleCal');
     const calCards = document.querySelectorAll('.cal-card');
+    const filterBtns = document.querySelectorAll('.cal-filter');
+    let activeFilter = 'all';
+    let calExpanded = false;
+
+    function updateCalendarVisibility() {
+      let visibleCount = 0;
+      calCards.forEach(card => {
+        const matchesFilter = (activeFilter === 'all' || card.dataset.category === activeFilter);
+        
+        if (matchesFilter) {
+          if (calExpanded || visibleCount < 3) {
+            card.style.display = 'flex';
+            setTimeout(() => {
+              card.style.opacity = '1';
+              card.style.transform = 'translateY(0)';
+            }, 50);
+            visibleCount++;
+          } else {
+            card.style.opacity = '0';
+            card.style.transform = 'translateY(20px)';
+            setTimeout(() => {
+              card.style.display = 'none';
+            }, 300);
+          }
+        } else {
+          card.style.opacity = '0';
+          card.style.transform = 'translateY(20px)';
+          setTimeout(() => {
+            card.style.display = 'none';
+          }, 300);
+        }
+      });
+
+      const totalMatching = Array.from(calCards).filter(c => activeFilter === 'all' || c.dataset.category === activeFilter).length;
+      if (totalMatching <= 3) {
+        btnToggleCal.style.display = 'none';
+      } else {
+        btnToggleCal.style.display = 'inline-flex';
+        btnToggleCal.innerHTML = calExpanded ? 'Ver menos -' : 'Ver mais datas +';
+      }
+    }
+
+    // Inicializar visibilidade
+    updateCalendarVisibility();
+
+    btnToggleCal.addEventListener('click', () => {
+      calExpanded = !calExpanded;
+      updateCalendarVisibility();
+      if (!calExpanded) {
+        document.getElementById('calendar').scrollIntoView({ behavior: 'smooth' });
+      }
+    });
 
     filterBtns.forEach(btn => {
       btn.addEventListener('click', () => {
         filterBtns.forEach(b => b.classList.remove('active'));
         btn.classList.add('active');
-        const filter = btn.dataset.filter;
-
-        calCards.forEach(card => {
-          if (filter === 'all' || card.dataset.category === filter) {
-            card.style.display = 'flex';
-            setTimeout(() => { card.style.opacity = '1'; card.style.transform = 'translateY(0)'; }, 50);
-          } else {
-            card.style.opacity = '0';
-            card.style.transform = 'translateY(20px)';
-            setTimeout(() => { card.style.display = 'none'; }, 300);
-          }
-        });
+        activeFilter = btn.dataset.filter;
+        calExpanded = false;
+        updateCalendarVisibility();
       });
     });
 
