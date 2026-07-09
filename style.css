@@ -958,6 +958,13 @@ img {
   filter: grayscale(1);
 }
 
+@media (max-width: 768px) {
+  .drops-video {
+    transform: scale(1.3);
+    object-position: 35% center;
+  }
+}
+
 .kit {
   padding: 100px 0;
 }
