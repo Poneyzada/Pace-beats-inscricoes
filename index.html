@@ -441,10 +441,10 @@
 
       <div class="reveal" style="text-align: center;">
         <div style="display: inline-block; background: rgba(255, 107, 0, 0.1); border: 1px solid rgba(255, 107, 0, 0.3); border-radius: 12px; padding: 16px 24px; margin-bottom: 24px; color: var(--white-muted); font-size: 0.95rem;">
-          ⚠️ <strong>Alerta VIP:</strong> Membros do plano <strong>Cria Lendário</strong> têm Acesso Antecipado aos Drops.
+          Membros do Grupo terão acesso a pré-venda antecipada dos nossos produtos
         </div>
         <br>
-        <a href="#" class="btn btn-primary btn-wpp-drop">Garantir a Nova Camisa ⚫</a>
+        <a href="#" class="btn btn-primary btn-wpp-drop">Garantir minha Vaga</a>
       </div>
     </div>
   </section>
@@ -460,19 +460,28 @@
 
       <div class="gallery-grid">
         <div class="gallery-item reveal">
-          <img src="ideia-pace-beats-page_files/bcf4607220dbd319f5017cdc93ea10c1.jpg" alt="Corrida Pace & Beats">
+          <img src="ideia-pace-beats-page_files/media__1783524397189.jpg" alt="Pace & Beats Crew 1">
         </div>
         <div class="gallery-item reveal">
-          <img src="ideia-pace-beats-page_files/f1880658d6d8fe71f575a04e972630fb.jpg" alt="Preparação para corrida">
+          <img src="ideia-pace-beats-page_files/media__1783524402763.jpg" alt="Pace & Beats Crew 2">
         </div>
         <div class="gallery-item reveal">
-          <img src="ideia-pace-beats-page_files/599cd5f8ed71f87e255a75c7582b4cfe.jpg" alt="Energia do evento">
+          <img src="ideia-pace-beats-page_files/media__1783524409794.jpg" alt="Pace & Beats Crew 3">
         </div>
         <div class="gallery-item reveal">
-          <img src="ideia-pace-beats-page_files/4c40972ca4eafbae7540588cbe1dffb5.jpg" alt="Atletas se preparando">
+          <img src="ideia-pace-beats-page_files/media__1783524414810.jpg" alt="Pace & Beats Crew 4">
         </div>
         <div class="gallery-item reveal">
-          <img src="ideia-pace-beats-page_files/8f21977a2d8c83d071ab9b010f9fe3d8.jpg" alt="Percurso da corrida">
+          <img src="ideia-pace-beats-page_files/media__1783524420713.jpg" alt="Pace & Beats Crew 5">
+        </div>
+        <div class="gallery-item reveal">
+          <img src="ideia-pace-beats-page_files/media__1783524432248.jpg" alt="Pace & Beats Crew 6">
+        </div>
+        <div class="gallery-item reveal">
+          <img src="ideia-pace-beats-page_files/media__1783524436239.jpg" alt="Pace & Beats Crew 7">
+        </div>
+        <div class="gallery-item reveal">
+          <img src="ideia-pace-beats-page_files/media__1783526935838.jpg" alt="Pace & Beats Crew 8">
         </div>
       </div>
     </div>
@@ -513,7 +522,7 @@
             <div class="faq-icon">+</div>
           </div>
           <div class="faq-answer">
-            <p>Ao entrar na assessoria, você é alocado em um Squad oficial (Cria da Base, Cria Pro, Cria Lendário) e ajuda sua equipe nos desafios mensais e disputas territoriais por bairros de Salvador.</p>
+            <p>Ao entrar na assessoria, você é alocado em um Squad oficial (Cria da Base, Cria Pro, Cria Lendário) e ajuda sua equipe nos desafios mensais, para concorrer a prêmios.</p>
           </div>
         </div>
 
@@ -543,7 +552,7 @@
             <div class="faq-icon">+</div>
           </div>
           <div class="faq-answer">
-            <p>Sim! Membros ativos dos nossos Squads (especialmente o plano <strong>Cria Lendário</strong>) possuem Acesso Antecipado e descontos exclusivos em todos os nossos lançamentos e Drops de vestuário oficial da marca.</p>
+            <p>Sim! Membros ativos dos nossos Squads possuem Acesso Antecipado e descontos exclusivos em todos os nossos lançamentos e Drops de vestuário oficial da marca.</p>
           </div>
         </div>
 
@@ -570,7 +579,7 @@
         Escolha o seu plano, integre-se ao time e comece a treinar com o nosso movimento.
       </p>
       <div class="cta-final-buttons">
-        <a href="#pricing" class="btn btn-primary">Fazer Parte do Squad Agora →</a>
+        <a href="https://chat.whatsapp.com/C3OQIP9dLvX4x0o02CG0NI?mode=gi_t" target="_blank" class="btn btn-primary">Fazer parte do Squad agora</a>
         <a href="https://www.instagram.com/pacebeats.run?igsh=MXY2ZHl0bzJ6aHdwbw==" target="_blank" class="btn btn-outline">📱 Siga no Instagram</a>
       </div>
     </div>
@@ -642,7 +651,8 @@
     // ══════════════════════════════════════════════
     //  WHATSAPP — NÚMERO PARA INSCRIÇÃO
     // ══════════════════════════════════════════════
-    const WHATSAPP_NUMBER = '5521982638587'; // formato: 55 + DDD + número
+    const WHATSAPP_NUMBER = '5521982638587'; // formato: 55 + DDD + número (Jota / Geral)
+    const WHATSAPP_COMERCIAL = '5521982638587'; // TODO: Substituir pelo número do Comercial quando fornecido (Vendas)
 
     // ── Navbar Scroll Effect ──
     const navbar = document.getElementById('navbar');
@@ -842,14 +852,39 @@
         console.error('Erro ao salvar lead:', e);
       }
 
+      if (currentLeadData.type === 'Drop') {
+        closeModal();
+        // Limpar campos
+        document.getElementById('leadName').value = '';
+        document.getElementById('leadPhone').value = '';
+        document.getElementById('leadEmail').value = '';
+        
+        // Redirecionar para o grupo do whatsapp de pré-venda
+        window.open('https://chat.whatsapp.com/I38pjVSNtCL4rGEweQLKKa?mode=gi_t', '_blank');
+        return;
+      }
+
       // Preparar Mensagem do WhatsApp baseada no tipo
       let messageText = '';
+      let targetPhone = WHATSAPP_NUMBER;
+
       if (currentLeadData.type === 'Squad') {
-        messageText = `🏃 *PACE & BEATS — Assessoria / Squad*\n\n` +
-          `Olá! Quero entrar para a Assessoria Pace & Beats!\n\n` +
+        targetPhone = WHATSAPP_COMERCIAL;
+        
+        let planTitleFormatted = currentLeadData.title.replace('[LISTA DE ESPERA] ', '');
+        if (planTitleFormatted === 'Cria da Base') planTitleFormatted += ' — R$89,90/mês';
+        else if (planTitleFormatted === 'Cria Pro') planTitleFormatted += ' — R$119,90/mês';
+        else if (planTitleFormatted === 'Cria Lendário') planTitleFormatted += ' — R$149,90/mês';
+
+        const itemsList = currentLeadData.items
+          ? currentLeadData.items.split(', ').map(i => `• ${i}`).join('\n')
+          : '• Planilha digital\n• Suporte da liderança\n• Integração à comunidade\n• Acompanhamento de métricas\n• Evolução contínua\n• Desafios exclusivos';
+
+        messageText = `🏃 *PACE CREW — Assessoria / Squad*\n\n` +
+          `Olá! Quero entrar para a Assessoria Pace Crew!\n\n` +
           `👤 *Nome:* ${name}\n` +
-          `📋 *Squad escolhido:* ${currentLeadData.title}\n\n` +
-          `✅ *Benefícios inclusos:*\n${currentLeadData.items.split(', ').map(i => `• ${i}`).join('\n')}\n\n` +
+          `📋 *Squad escolhido:* ${planTitleFormatted}\n\n` +
+          `✅ *Benefícios inclusos:*\n${itemsList}\n\n` +
           `Gostaria de confirmar minha inscrição e dar início aos treinos! 🔥`;
       } else if (currentLeadData.type === 'Treino') {
         messageText = `🏃 *PACE & BEATS — Treinão*\n\n` +
@@ -858,13 +893,6 @@
           `👤 *Nome:* ${name}\n` +
           `📱 *Telefone:* ${phone}\n\n` +
           `#NINGUEMFICAPRATRAS🔥`;
-      } else if (currentLeadData.type === 'Drop') {
-        messageText = `👕 *PACE & BEATS — Drop de Vestuário*\n\n` +
-          `Olá, tudo bem?\n` +
-          `Tenho interesse no drop da nova camisa Pace & Beats!\n\n` +
-          `👤 *Nome:* ${name}\n` +
-          `📱 *Telefone:* ${phone}\n\n` +
-          `Quero garantir meu Manto do Movimento ⚫🧡`;
       }
 
       const message = encodeURIComponent(messageText);
@@ -876,7 +904,7 @@
       document.getElementById('leadEmail').value = '';
 
       // Abrir WhatsApp
-      window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${message}`, '_blank');
+      window.open(`https://wa.me/${targetPhone}?text=${message}`, '_blank');
     }
 
     // ── Experience Modal (Nike NTC Style) ──
