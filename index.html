@@ -61,9 +61,7 @@
   <section class="hero" id="hero">
     <!-- Video Backgrounds -->
     <div class="hero-video-bg">
-      <video autoplay muted loop playsinline id="heroVideo" poster="colagem-galera.webp">
-        <source src="hero-principal-pro.mp4" type="video/mp4">
-      </video>
+      <video autoplay muted loop playsinline id="heroVideo" poster="colagem-galera.webp"></video>
     </div>
     <div class="hero-fallback-bg"></div>
 
@@ -655,6 +653,16 @@
     // ══════════════════════════════════════════════
     const WHATSAPP_NUMBER = '5521982638587'; // formato: 55 + DDD + número (Jota / Geral)
     const WHATSAPP_COMERCIAL = '5571983988270'; // Número do comercial de Vendas (Pace Crew Vendas)
+
+    // ── Injetar vídeo do Hero apenas no Desktop para otimização mobile ──
+    const heroVideo = document.getElementById('heroVideo');
+    if (heroVideo && window.innerWidth >= 768) {
+      const source = document.createElement('source');
+      source.src = 'hero-principal-pro.mp4';
+      source.type = 'video/mp4';
+      heroVideo.appendChild(source);
+      heroVideo.load();
+    }
 
     // ── Navbar Scroll Effect ──
     const navbar = document.getElementById('navbar');
