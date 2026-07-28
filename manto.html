@@ -1,0 +1,982 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Manto do Movimento — Pace & Beats Run | Drop Oficial</title>
+  <meta name="description" content="Garanta o Manto Oficial da Pace & Beats Run. Camiseta Dry-Fit tecnológica de alta respirabilidade, modelagem streetwear e edição limitada.">
+  <link rel="icon" href="logo.jpg.jpeg" type="image/jpeg">
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="mobile.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@300;400;500;600;700;800;900&family=Outfit:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  
+  <style>
+    /* ── Drop Layout Specifics ── */
+    .drop-hero {
+      padding-top: 130px;
+      padding-bottom: 80px;
+      min-height: 100vh;
+      background: 
+        radial-gradient(ellipse at 80% 20%, rgba(255, 107, 0, 0.12) 0%, transparent 60%),
+        radial-gradient(ellipse at 20% 80%, rgba(255, 107, 0, 0.05) 0%, transparent 50%),
+        var(--black);
+    }
+
+    .drop-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 50px;
+      align-items: start;
+    }
+
+    /* Galeria do Produto */
+    .product-gallery {
+      position: sticky;
+      top: 110px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .main-image-container {
+      width: 100%;
+      aspect-ratio: 4/5;
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      border: 1px solid var(--black-border);
+      background: var(--black-card);
+      position: relative;
+      box-shadow: 0 20px 50px rgba(0,0,0,0.7);
+    }
+
+    .main-image-container img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.5s ease;
+    }
+
+    .main-image-container:hover img {
+      transform: scale(1.03);
+    }
+
+    .gallery-thumbs {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
+    }
+
+    .thumb-item {
+      aspect-ratio: 1;
+      border-radius: var(--radius);
+      overflow: hidden;
+      border: 2px solid var(--black-border);
+      cursor: pointer;
+      opacity: 0.6;
+      transition: var(--transition);
+      background: var(--black-card);
+    }
+
+    .thumb-item.active, .thumb-item:hover {
+      opacity: 1;
+      border-color: var(--orange);
+    }
+
+    .thumb-item img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    /* Detalhes do Produto */
+    .product-details {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .product-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(255, 107, 0, 0.1);
+      border: 1px solid rgba(255, 107, 0, 0.3);
+      color: var(--orange);
+      padding: 6px 16px;
+      border-radius: 50px;
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      margin-bottom: 16px;
+      width: fit-content;
+    }
+
+    .product-title {
+      font-family: var(--font-display);
+      font-size: clamp(2.5rem, 5vw, 3.8rem);
+      line-height: 1.05;
+      text-transform: uppercase;
+      margin-bottom: 12px;
+      letter-spacing: 1px;
+    }
+
+    .product-subtitle {
+      font-size: 1.05rem;
+      color: var(--white-muted);
+      line-height: 1.6;
+      margin-bottom: 24px;
+    }
+
+    /* Caixa de Preço */
+    .price-box {
+      background: var(--black-card);
+      border: 1px solid var(--black-border);
+      border-radius: var(--radius-lg);
+      padding: 20px 24px;
+      margin-bottom: 28px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+
+    .price-values {
+      display: flex;
+      align-items: baseline;
+      gap: 12px;
+    }
+
+    .original-price {
+      font-size: 1.1rem;
+      color: var(--white-dim);
+      text-decoration: line-through;
+    }
+
+    .current-price {
+      font-family: var(--font-display);
+      font-size: 2.8rem;
+      color: var(--orange);
+      letter-spacing: 1px;
+      line-height: 1;
+    }
+
+    .discount-badge {
+      background: #22c55e20;
+      border: 1px solid #22c55e50;
+      color: #22c55e;
+      padding: 4px 12px;
+      border-radius: 50px;
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+    }
+
+    /* Seletor de Tamanhos */
+    .section-label {
+      font-size: 0.8rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: var(--white-muted);
+      margin-bottom: 12px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .size-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
+      margin-bottom: 28px;
+    }
+
+    .size-btn {
+      background: var(--black-card);
+      border: 1px solid var(--black-border);
+      color: var(--white);
+      padding: 14px;
+      border-radius: var(--radius);
+      font-family: var(--font-body);
+      font-weight: 800;
+      font-size: 1.1rem;
+      cursor: pointer;
+      transition: var(--transition);
+      text-align: center;
+    }
+
+    .size-btn:hover {
+      border-color: var(--orange);
+      color: var(--orange);
+    }
+
+    .size-btn.active {
+      background: var(--orange);
+      border-color: var(--orange);
+      color: var(--white);
+      box-shadow: 0 0 20px var(--orange-glow);
+    }
+
+    /* Caixa do Cupom de Desconto / Staff */
+    .coupon-card {
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid var(--black-border);
+      border-radius: var(--radius-lg);
+      padding: 20px;
+      margin-bottom: 28px;
+    }
+
+    .coupon-input-group {
+      display: flex;
+      gap: 10px;
+    }
+
+    .coupon-input {
+      flex: 1;
+      background: var(--black);
+      border: 1px solid var(--black-border);
+      color: var(--white);
+      padding: 12px 16px;
+      border-radius: var(--radius);
+      font-family: var(--font-body);
+      font-size: 0.95rem;
+      text-transform: uppercase;
+      outline: none;
+      transition: var(--transition);
+    }
+
+    .coupon-input:focus {
+      border-color: var(--orange);
+    }
+
+    .apply-coupon-btn {
+      background: var(--black-card);
+      border: 1px solid var(--orange);
+      color: var(--orange);
+      padding: 12px 20px;
+      border-radius: var(--radius);
+      font-weight: 700;
+      font-size: 0.85rem;
+      cursor: pointer;
+      transition: var(--transition);
+      text-transform: uppercase;
+    }
+
+    .apply-coupon-btn:hover {
+      background: var(--orange);
+      color: var(--white);
+    }
+
+    .coupon-feedback {
+      margin-top: 10px;
+      font-size: 0.8rem;
+      display: none;
+      font-weight: 600;
+    }
+
+    .coupon-feedback.success {
+      color: #22c55e;
+      display: block;
+    }
+
+    .coupon-feedback.error {
+      color: #ef4444;
+      display: block;
+    }
+
+    /* Formulário do Comprador */
+    .checkout-form-box {
+      background: var(--black-card);
+      border: 1px solid var(--black-border);
+      border-radius: var(--radius-lg);
+      padding: 28px;
+      margin-bottom: 32px;
+    }
+
+    .form-group {
+      margin-bottom: 16px;
+    }
+
+    .form-group label {
+      display: block;
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      color: var(--white-muted);
+      margin-bottom: 6px;
+      letter-spacing: 0.5px;
+    }
+
+    .form-input {
+      width: 100%;
+      background: var(--black);
+      border: 1px solid var(--black-border);
+      color: var(--white);
+      padding: 14px 18px;
+      border-radius: var(--radius);
+      font-family: var(--font-body);
+      font-size: 0.95rem;
+      outline: none;
+      transition: var(--transition);
+    }
+
+    .form-input:focus {
+      border-color: var(--orange);
+    }
+
+    /* Botões de Ação de Pagamento */
+    .payment-buttons {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .btn-mercadopago {
+      background: #009EE3;
+      color: #FFFFFF;
+      border: none;
+      padding: 18px 24px;
+      border-radius: 50px;
+      font-family: var(--font-body);
+      font-weight: 800;
+      font-size: 1rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      transition: var(--transition);
+      box-shadow: 0 10px 30px rgba(0, 158, 227, 0.3);
+    }
+
+    .btn-mercadopago:hover {
+      background: #0087C3;
+      transform: translateY(-2px);
+      box-shadow: 0 15px 35px rgba(0, 158, 227, 0.4);
+    }
+
+    .btn-whatsapp-direct {
+      background: #25D366;
+      color: #FFFFFF;
+      border: none;
+      padding: 18px 24px;
+      border-radius: 50px;
+      font-family: var(--font-body);
+      font-weight: 800;
+      font-size: 0.95rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      transition: var(--transition);
+      text-decoration: none;
+      box-shadow: 0 10px 30px rgba(37, 211, 102, 0.25);
+    }
+
+    .btn-whatsapp-direct:hover {
+      background: #20ba5a;
+      transform: translateY(-2px);
+    }
+
+    /* Especificações Técnicas da Peça */
+    .specs-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+      margin-top: 40px;
+      padding-top: 30px;
+      border-top: 1px solid var(--black-border);
+    }
+
+    .spec-card {
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid var(--black-border);
+      border-radius: var(--radius);
+      padding: 16px;
+      text-align: center;
+    }
+
+    .spec-card h4 {
+      color: var(--orange);
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      margin-bottom: 4px;
+    }
+
+    .spec-card p {
+      color: var(--white-muted);
+      font-size: 0.8rem;
+      margin: 0;
+    }
+
+    /* Modal de Recibo / Confirmação de Pedido */
+    .order-modal {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.9);
+      z-index: 99999;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    .receipt-card {
+      background: var(--black-card);
+      border: 1px solid var(--black-border);
+      border-radius: var(--radius-lg);
+      padding: 40px 32px;
+      width: 100%;
+      max-width: 500px;
+      position: relative;
+    }
+
+    @media (max-width: 900px) {
+      .drop-grid {
+        grid-template-columns: 1fr;
+        gap: 32px;
+      }
+      .product-gallery {
+        position: relative;
+        top: 0;
+      }
+      .specs-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ═══════════ NAVBAR ═══════════ -->
+  <nav class="navbar scrolled" id="navbar">
+    <div class="container navbar-container">
+      <div class="navbar-brand" style="display: flex; align-items: center; gap: 16px;">
+        <a href="index.html" class="navbar-logo" style="display: flex; align-items: center;">
+          <img src="logo.jpg.jpeg" alt="Pace & Beats Run" style="height: 48px; object-fit: contain;">
+        </a>
+        <a href="https://www.instagram.com/pacebeats.run?igsh=MXY2ZHl0bzJ6aHdwbw==" target="_blank" style="color: var(--white); display: flex; align-items: center; transition: color 0.3s;" onmouseover="this.style.color='var(--orange)'" onmouseout="this.style.color='var(--white)'">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
+        </a>
+      </div>
+      
+      <div class="navbar-links" style="margin-left: auto; margin-right: 32px;">
+        <a href="index.html#drops">← Voltar ao Site Principal</a>
+        <a href="#detalhes">Detalhes</a>
+        <a href="#tabela-medidas">Guia de Tamanhos</a>
+      </div>
+
+      <div class="navbar-cta">
+        <a href="#checkout" class="btn btn-primary">Garantir Meu Manto</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ═══════════ DROP HERO ═══════════ -->
+  <section class="drop-hero">
+    <div class="container">
+      <div class="drop-grid">
+        
+        <!-- Galeria do Produto (Esquerda) -->
+        <div class="product-gallery">
+          <div class="main-image-container">
+            <img id="mainProductImg" src="poster-camisa.webp" alt="Manto Pace & Beats Dry-Fit">
+          </div>
+          <div class="gallery-thumbs">
+            <div class="thumb-item active" onclick="setMainImage('poster-camisa.webp', this)">
+              <img src="poster-camisa.webp" alt="Visão Geral">
+            </div>
+            <div class="thumb-item" onclick="setMainImage('colagem-galera.webp', this)">
+              <img src="colagem-galera.webp" alt="Uso em Treino">
+            </div>
+            <div class="thumb-item" onclick="setMainImage('tosta-branco.webp', this)">
+              <img src="tosta-branco.webp" alt="Caimento no Corpo">
+            </div>
+            <div class="thumb-item" onclick="setMainImage('staff-corre.webp', this)">
+              <img src="staff-corre.webp" alt="Detalhes">
+            </div>
+          </div>
+        </div>
+
+        <!-- Formulário de Compra & Detalhes (Direita) -->
+        <div class="product-details" id="checkout">
+          <div class="product-tag">
+            <span>⚫</span> DROP EXCLUSIVO 01 • EDIÇÃO LIMITADA
+          </div>
+
+          <h1 class="product-title">
+            O MANTO DO <span style="color: var(--orange);">MOVIMENTO</span>
+          </h1>
+
+          <p class="product-subtitle">
+            Desenvolvida em tecido Dry-Fit tecnológico de alta respirabilidade e secagem ultrarrápida. Caimento streetwear impecável para correr na rua ou dominar a cidade.
+          </p>
+
+          <!-- Caixa de Preço -->
+          <div class="price-box">
+            <div>
+              <span class="section-label" style="margin-bottom: 4px;">Valor Oficial</span>
+              <div class="price-values">
+                <span class="original-price" id="displaySubtotal">R$ 119,90</span>
+                <span class="current-price" id="displayTotal">R$ 99,90</span>
+              </div>
+            </div>
+            <span class="discount-badge" id="displayBadge">Lote Promocional</span>
+          </div>
+
+          <!-- Seleção de Tamanho -->
+          <div>
+            <div class="section-label">
+              <span>Selecione o Tamanho (Variação):</span>
+              <a href="#tabela-medidas" style="color: var(--orange); text-decoration: none; font-size: 0.75rem;">Ver Guia de Medidas 📏</a>
+            </div>
+            <div class="size-grid">
+              <button type="button" class="size-btn" onclick="selectSize('P', this)">P</button>
+              <button type="button" class="size-btn active" onclick="selectSize('M', this)">M</button>
+              <button type="button" class="size-btn" onclick="selectSize('G', this)">G</button>
+              <button type="button" class="size-btn" onclick="selectSize('GG', this)">GG</button>
+            </div>
+          </div>
+
+          <!-- Cupom de Desconto / Staff -->
+          <div class="coupon-card">
+            <div class="section-label" style="margin-bottom: 8px;">
+              <span>Possui Cupom ou Indicação de Staff?</span>
+            </div>
+            <div class="coupon-input-group">
+              <input type="text" id="couponInput" class="coupon-input" placeholder="Ex: STAFFTOSTA, STAFFJOTA" autocomplete="off">
+              <button type="button" class="apply-coupon-btn" onclick="applyCouponManual()">Aplicar</button>
+            </div>
+            <div class="coupon-feedback" id="couponFeedback"></div>
+          </div>
+
+          <!-- Dados do Cliente (Checkout Specs) -->
+          <div class="checkout-form-box">
+            <h3 style="font-family: var(--font-display); font-size: 1.3rem; letter-spacing: 1px; color: var(--orange); margin-bottom: 20px; text-transform: uppercase;">
+              Dados para <span style="color: var(--white);">o Pedido:</span>
+            </h3>
+
+            <div class="form-group">
+              <label for="clientName">Nome Completo:</label>
+              <input type="text" id="clientName" class="form-input" placeholder="Digite seu nome completo">
+            </div>
+
+            <div class="form-group">
+              <label for="clientPhone">WhatsApp (com DDD):</label>
+              <input type="tel" id="clientPhone" class="form-input" placeholder="(71) 99999-0000">
+            </div>
+
+            <div class="form-group">
+              <label for="clientEmail">E-mail para Recibo:</label>
+              <input type="email" id="clientEmail" class="form-input" placeholder="seuemail@exemplo.com">
+            </div>
+
+            <p id="formError" style="color: #ef4444; font-size: 0.8rem; font-weight: 600; display: none; margin-top: 10px;">
+              ⚠️ Preencha seu nome e WhatsApp para prosseguir com o pagamento.
+            </p>
+          </div>
+
+          <!-- Botões de Ação de Pagamento -->
+          <div class="payment-buttons">
+            <button type="button" onclick="processMercadoPagoCheckout()" class="btn-mercadopago">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 14.5h-2v-2h2v2zm0-4h-2V7h2v5.5z"/></svg>
+              Pagar via Mercado Pago / Pix Instantâneo
+            </button>
+
+            <button type="button" onclick="processWhatsAppCheckout()" class="btn-whatsapp-direct">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981z"/></svg>
+              Finalizar Pedido pelo WhatsApp
+            </button>
+          </div>
+
+          <!-- Especificações Técnicas -->
+          <div class="specs-grid" id="detalhes">
+            <div class="spec-card">
+              <h4>Tecido Dry-Fit</h4>
+              <p>100% Poliéster Tecnológico com microfuros para evaporação do suor.</p>
+            </div>
+            <div class="spec-card">
+              <h4>Modelagem Run</h4>
+              <p>Corte ergonômico que não prende o movimento dos braços.</p>
+            </div>
+            <div class="spec-card">
+              <h4>Estampa Silk HD</h4>
+              <p>Alta durabilidade, resistente a dezenas de lavagens sem desbotar.</p>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════ TABELA DE MEDIDAS ═══════════ -->
+  <section style="padding: 60px 0; background: var(--black-light); border-top: 1px solid var(--black-border);" id="tabela-medidas">
+    <div class="container" style="max-width: 800px;">
+      <div style="text-align: center; margin-bottom: 32px;">
+        <span class="section-tag">Guia de Tamanhos</span>
+        <h2 class="section-title">TABELA DE <span>MEDIDAS</span></h2>
+        <p style="color: var(--white-dim); font-size: 0.95rem;">Confira a largura e o comprimento antes de escolher o seu Manto.</p>
+      </div>
+
+      <div style="background: var(--black-card); border: 1px solid var(--black-border); border-radius: var(--radius-lg); overflow: hidden;">
+        <table style="width: 100%; border-collapse: collapse; text-align: center; font-size: 0.95rem;">
+          <thead>
+            <tr style="background: rgba(255,107,0,0.1); color: var(--orange); border-bottom: 1px solid var(--black-border);">
+              <th style="padding: 16px;">Tamanho</th>
+              <th style="padding: 16px;">Largura (cm)</th>
+              <th style="padding: 16px;">Comprimento (cm)</th>
+              <th style="padding: 16px;">Indicado para</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr style="border-bottom: 1px solid var(--black-border); color: var(--white-muted);">
+              <td style="padding: 16px; font-weight: 800; color: var(--white);">P</td>
+              <td style="padding: 16px;">50 cm</td>
+              <td style="padding: 16px;">68 cm</td>
+              <td style="padding: 16px;">Até 65 kg</td>
+            </tr>
+            <tr style="border-bottom: 1px solid var(--black-border); color: var(--white-muted);">
+              <td style="padding: 16px; font-weight: 800; color: var(--white);">M</td>
+              <td style="padding: 16px;">53 cm</td>
+              <td style="padding: 16px;">71 cm</td>
+              <td style="padding: 16px;">66 kg a 78 kg</td>
+            </tr>
+            <tr style="border-bottom: 1px solid var(--black-border); color: var(--white-muted);">
+              <td style="padding: 16px; font-weight: 800; color: var(--white);">G</td>
+              <td style="padding: 16px;">56 cm</td>
+              <td style="padding: 16px;">74 cm</td>
+              <td style="padding: 16px;">79 kg a 90 kg</td>
+            </tr>
+            <tr style="color: var(--white-muted);">
+              <td style="padding: 16px; font-weight: 800; color: var(--white);">GG</td>
+              <td style="padding: 16px;">59 cm</td>
+              <td style="padding: 16px;">77 cm</td>
+              <td style="padding: 16px;">Acima de 90 kg</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════ FOOTER ═══════════ -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <img src="logo.jpg.jpeg" alt="Pace & Beats Run" style="height: 50px; margin-bottom: 16px; object-fit: contain;">
+          <p>Movimento de corrida de rua em Salvador. Treinos noturnos, assessoria comunidade e eventos exclusivos.</p>
+        </div>
+
+        <div class="footer-col">
+          <h4>Navegação</h4>
+          <a href="index.html">Página Principal</a>
+          <a href="#checkout">Comprar Manto</a>
+          <a href="#tabela-medidas">Guia de Tamanhos</a>
+        </div>
+
+        <div class="footer-col">
+          <h4>Contato Comercial</h4>
+          <a href="#">📍 Sunna Beach Club, Pituaçu — Salvador, BA</a>
+          <a href="#">📧 contato@paceandbeats.com.br</a>
+          <a href="https://wa.me/5571983988270" target="_blank">📱 (71) 98398-8270</a>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <p>© 2026 Pace & Beats Run. Todos os direitos reservados.</p>
+        <p><a href="admin.html" style="color: var(--white-dim); transition: color 0.3s;" onmouseover="this.style.color='var(--orange)'" onmouseout="this.style.color='var(--white-dim)'">Painel de Vendas / CRM</a></p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ═══════════ MODAL DE CONFIRMAÇÃO DO PEDIDO (ESPECIFICAÇÃO TÉCNICA) ═══════════ -->
+  <div class="order-modal" id="orderModal">
+    <div class="receipt-card">
+      <button onclick="closeOrderModal()" style="position: absolute; top: 16px; right: 20px; background: none; border: none; color: #888; font-size: 1.5rem; cursor: pointer;">✕</button>
+
+      <div style="text-align: center; margin-bottom: 24px;">
+        <span style="display: inline-block; background: #22c55e20; border: 1px solid #22c55e50; color: #22c55e; padding: 6px 16px; border-radius: 50px; font-size: 0.75rem; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; margin-bottom: 12px;">
+          ✓ Pedido Registrado com Sucesso
+        </span>
+        <h3 style="font-family: var(--font-display); font-size: 1.8rem; letter-spacing: 1px; margin-bottom: 4px;">RECIBO DO <span style="color: var(--orange);">PEDIDO</span></h3>
+        <p style="color: var(--white-dim); font-size: 0.82rem;">Guarde o ID do seu pedido abaixo para consulta</p>
+      </div>
+
+      <div id="receiptContent" style="background: rgba(0,0,0,0.5); border: 1px solid var(--black-border); border-radius: 16px; padding: 20px; margin-bottom: 24px; font-size: 0.9rem; line-height: 1.7;">
+        <!-- Injetado via JS -->
+      </div>
+
+      <div style="display: flex; flex-direction: column; gap: 12px;">
+        <a id="btnPayMercadoPagoModal" href="#" target="_blank" class="btn-mercadopago" style="text-decoration: none;">
+          Pagar Agora via Mercado Pago (Pix/Cartão) 💳
+        </a>
+        <button type="button" onclick="closeOrderModal()" class="btn btn-outline" style="width: 100%;">
+          Fechar Recibo
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════ JAVASCRIPT & REGRAS DE NEGÓCIO ═══════════ -->
+  <script>
+    // ══════════════════════════════════════════════
+    // CONFIGURAÇÕES DO MANTO & CUPONS DOS STAFFS
+    // ══════════════════════════════════════════════
+    const PRODUCT_SPEC = {
+      id: "MANTO-DRYFIT-01",
+      name: "Manto do Movimento (Camiseta Dry-Fit)",
+      priceSubtotal: 119.90, // valor_subtotal
+      defaultPriceTotal: 99.90, // preco padrao de lançamento
+    };
+
+    // Cupons Válidos dos Staffs e Promocionais
+    const VALID_COUPONS = {
+      "STAFFTOSTA": { discount: 20.00, staffName: "Tosta" },
+      "TOSTA": { discount: 20.00, staffName: "Tosta" },
+      "STAFFJOTA": { discount: 20.00, staffName: "Jota" },
+      "JOTA": { discount: 20.00, staffName: "Jota" },
+      "STAFFCAROL": { discount: 20.00, staffName: "Carol" },
+      "CAROL": { discount: 20.00, staffName: "Carol" },
+      "PACE10": { discount: 10.00, staffName: "Pace & Beats" },
+      "CRIAVIP": { discount: 20.00, staffName: "Comunidade Cria" }
+    };
+
+    // Estado da Compra
+    let selectedSize = "M";
+    let activeCoupon = null;
+    let appliedDiscount = 20.00; // Desconto inicial promocional de R$20 (119.90 -> 99.90)
+
+    // ── Alterar imagem principal na galeria ──
+    function setMainImage(src, thumbElement) {
+      document.getElementById('mainProductImg').src = src;
+      document.querySelectorAll('.thumb-item').forEach(el => el.classList.remove('active'));
+      if (thumbElement) thumbElement.classList.add('active');
+    }
+
+    // ── Selecionar Tamanho (Variação P, M, G, GG) ──
+    function selectSize(size, btnElement) {
+      selectedSize = size;
+      document.querySelectorAll('.size-btn').forEach(el => el.classList.remove('active'));
+      if (btnElement) btnElement.classList.add('active');
+    }
+
+    // ── Calcular e Atualizar Valores na Tela ──
+    function updatePriceDisplay() {
+      const subtotal = PRODUCT_SPEC.priceSubtotal;
+      const total = Math.max(0, subtotal - appliedDiscount);
+
+      document.getElementById('displaySubtotal').innerText = `R$ ${subtotal.toFixed(2).replace('.', ',')}`;
+      document.getElementById('displayTotal').innerText = `R$ ${total.toFixed(2).replace('.', ',')}`;
+
+      const badge = document.getElementById('displayBadge');
+      if (activeCoupon) {
+        badge.innerText = `Cupom ${activeCoupon.code} (-R$ ${appliedDiscount.toFixed(2).replace('.', ',')})`;
+        badge.style.background = '#22c55e20';
+        badge.style.color = '#22c55e';
+      } else {
+        badge.innerText = `Lote Promocional (-R$ ${appliedDiscount.toFixed(2).replace('.', ',')})`;
+      }
+    }
+
+    // ── Aplicar Cupom Manualmente ou via URL (?ref=tosta) ──
+    function applyCouponCode(codeStr) {
+      if (!codeStr) return;
+      const cleanCode = codeStr.trim().toUpperCase();
+      const feedback = document.getElementById('couponFeedback');
+      
+      if (VALID_COUPONS[cleanCode]) {
+        activeCoupon = {
+          code: cleanCode,
+          discount: VALID_COUPONS[cleanCode].discount,
+          staffName: VALID_COUPONS[cleanCode].staffName
+        };
+        appliedDiscount = activeCoupon.discount;
+        document.getElementById('couponInput').value = cleanCode;
+        feedback.className = "coupon-feedback success";
+        feedback.innerText = `✓ Cupom ${cleanCode} ativado! Indicação de ${activeCoupon.staffName} (R$ ${appliedDiscount.toFixed(2).replace('.', ',')} de desconto).`;
+        updatePriceDisplay();
+      } else {
+        feedback.className = "coupon-feedback error";
+        feedback.innerText = `❌ Cupom "${cleanCode}" inválido ou expirado. Usando desconto padrão da pré-venda.`;
+      }
+    }
+
+    function applyCouponManual() {
+      const val = document.getElementById('couponInput').value;
+      applyCouponCode(val);
+    }
+
+    // ── Verificar parâmetros da URL ao carregar (?ref=tosta ou ?cupom=STAFFJOTA) ──
+    window.addEventListener('DOMContentLoaded', () => {
+      const urlParams = new URLSearchParams(window.location.search);
+      const refParam = urlParams.get('ref') || urlParams.get('cupom') || urlParams.get('staff');
+
+      if (refParam) {
+        // Tentar formatar como STAFF + NOME se o usuário passou apenas o nome do vendedor
+        let possibleCode = refParam.toUpperCase();
+        if (VALID_COUPONS[possibleCode]) {
+          applyCouponCode(possibleCode);
+        } else if (VALID_COUPONS[`STAFF${possibleCode}`]) {
+          applyCouponCode(`STAFF${possibleCode}`);
+        }
+      }
+      updatePriceDisplay();
+    });
+
+    // ══════════════════════════════════════════════
+    // ARQUITETURA DO BANCO DE DADOS (PDF ESPECIFICAÇÃO)
+    // ══════════════════════════════════════════════
+    function generateOrderSpecData() {
+      const name = document.getElementById('clientName').value.trim();
+      const phone = document.getElementById('clientPhone').value.trim();
+      const email = document.getElementById('clientEmail').value.trim();
+
+      if (!name || !phone) {
+        document.getElementById('formError').style.display = 'block';
+        return null;
+      }
+      document.getElementById('formError').style.display = 'none';
+
+      const orderId = `ORD-MANTO-${Date.now()}`;
+      const subtotal = PRODUCT_SPEC.priceSubtotal;
+      const discount = appliedDiscount;
+      const totalPaid = Math.max(0, subtotal - discount);
+      const couponCode = activeCoupon ? activeCoupon.code : "PROMO_PREVENDA";
+
+      // Objeto congelado do Pedido (Tabela: pedidos)
+      const orderRecord = {
+        id: orderId,
+        cliente_nome: name,
+        cliente_telefone: phone,
+        cliente_email: email || "Não informado",
+        valor_subtotal: subtotal,
+        valor_desconto: discount,
+        valor_total_pago: totalPaid,
+        codigo_promocional: couponCode,
+        status_pagamento: "PENDENTE",
+        criado_em: new Date().toISOString()
+      };
+
+      // Objeto congelado dos Itens do Pedido (Tabela: itens_pedido)
+      const itemRecord = {
+        id: `ITEM-${Date.now()}`,
+        pedido_id: orderId,
+        produto_id: PRODUCT_SPEC.id,
+        quantidade: 1,
+        tamanho_variacao: selectedSize, // Regra de Variação (P, M, G, GG)
+        preco_unitario_historico: subtotal
+      };
+
+      // Salvar no LocalStorage (CRM do Site `admin.html`)
+      saveOrderToCRM(orderRecord, itemRecord);
+
+      return { order: orderRecord, item: itemRecord };
+    }
+
+    function saveOrderToCRM(order, item) {
+      try {
+        const STORAGE_KEY = 'pacebeats_leads';
+        const existingLeads = JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
+        
+        const newLead = {
+          id: order.id,
+          name: order.cliente_nome,
+          phone: order.cliente_telefone,
+          email: order.cliente_email,
+          type: "Drop",
+          title: `Manto Pace & Beats (Tamanho: ${item.tamanho_variacao})`,
+          plan: `Drop Manto - Tam ${item.tamanho_variacao} [Cupom: ${order.codigo_promocional}]`,
+          subtotal: order.valor_subtotal,
+          discount: order.valor_desconto,
+          total: order.valor_total_pago,
+          coupon: order.codigo_promocional,
+          size: item.tamanho_variacao,
+          status: order.status_pagamento,
+          date: order.criado_em
+        };
+
+        existingLeads.unshift(newLead);
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(existingLeads));
+      } catch(e) {
+        console.error("Erro ao registrar pedido no CRM local:", e);
+      }
+    }
+
+    // ══════════════════════════════════════════════
+    // PROCESSAMENTO DO CHECKOUT (MERCADO PAGO OU WHATSAPP)
+    // ══════════════════════════════════════════════
+
+    // Fluxo 1: Mercado Pago (Pix/Cartão)
+    function processMercadoPagoCheckout() {
+      const data = generateOrderSpecData();
+      if (!data) return;
+
+      const { order, item } = data;
+
+      // Link de Pagamento do Mercado Pago ou API Checkout Pro
+      const mercadopagoUrl = `https://www.mercadopago.com.br/checkout/v1/redirect?pref_id=DROP_MANTO_PACEBEATS&external_reference=${order.id}`;
+
+      // Montar Recibo Visual para o usuário
+      const html = `
+        <p>🆔 <strong>ID do Pedido:</strong> <span style="color:var(--orange);">${order.id}</span></p>
+        <p>👤 <strong>Cliente:</strong> ${order.cliente_nome}</p>
+        <p>📱 <strong>WhatsApp:</strong> ${order.cliente_telefone}</p>
+        <p>👕 <strong>Produto:</strong> ${PRODUCT_SPEC.name}</p>
+        <p>📏 <strong>Tamanho Escolhido:</strong> <strong style="color:var(--white); font-size:1.1rem; background:rgba(255,107,0,0.2); padding:2px 8px; border-radius:4px;">${item.tamanho_variacao}</strong></p>
+        <p>🏷️ <strong>Cupom / Indicação:</strong> ${order.codigo_promocional}</p>
+        <hr style="border-color:var(--black-border); margin:12px 0;">
+        <p>💵 <strong>Subtotal:</strong> R$ ${order.valor_subtotal.toFixed(2).replace('.', ',')}</p>
+        <p>🎁 <strong>Desconto Aplicado:</strong> -R$ ${order.valor_desconto.toFixed(2).replace('.', ',')}</p>
+        <p style="font-size:1.1rem;">🔥 <strong>Valor Total Final:</strong> <strong style="color:var(--orange); font-size:1.4rem;">R$ ${order.valor_total_pago.toFixed(2).replace('.', ',')}</strong></p>
+        <p style="font-size:0.78rem; color:var(--white-dim); margin-top:8px;">Status no Banco: <span style="color:#eab308; font-weight:700;">AGUARDANDO PAGAMENTO (PENDENTE)</span></p>
+      `;
+
+      document.getElementById('receiptContent').innerHTML = html;
+      document.getElementById('btnPayMercadoPagoModal').href = mercadopagoUrl;
+      document.getElementById('orderModal').style.display = 'flex';
+    }
+
+    // Fluxo 2: Checkout Direto pelo WhatsApp Comercial
+    function processWhatsAppCheckout() {
+      const data = generateOrderSpecData();
+      if (!data) return;
+
+      const { order, item } = data;
+
+      const messageText = `👕 *PACE & BEATS — Pedido do Manto Oficial*\n\n` +
+        `Olá! Acabei de registrar meu pedido para a nova camisa Pace & Beats!\n\n` +
+        `👤 *Nome:* ${order.cliente_nome}\n` +
+        `📱 *WhatsApp:* ${order.cliente_telefone}\n` +
+        `📧 *E-mail:* ${order.cliente_email}\n\n` +
+        `📦 *Item:* 1x ${PRODUCT_SPEC.name}\n` +
+        `📏 *Tamanho Escolhido:* ${item.tamanho_variacao}\n` +
+        `🏷️ *Cupom / Staff:* ${order.codigo_promocional}\n\n` +
+        `💵 *Subtotal:* R$ ${order.valor_subtotal.toFixed(2).replace('.', ',')}\n` +
+        `🎁 *Desconto:* R$ ${order.valor_desconto.toFixed(2).replace('.', ',')}\n` +
+        `🔥 *Valor Total a Pagar:* R$ ${order.valor_total_pago.toFixed(2).replace('.', ',')}\n\n` +
+        `🆔 *ID do Pedido:* ${order.id}\n\n` +
+        `Gostaria de receber o código PIX / Link do Mercado Pago para efetuar o pagamento! 🚀`;
+
+      const encoded = encodeURIComponent(messageText);
+      const targetPhone = "5571983988270"; // Comercial Pace Crew Vendas
+
+      window.open(`https://wa.me/${targetPhone}?text=${encoded}`, '_blank');
+    }
+
+    function closeOrderModal() {
+      document.getElementById('orderModal').style.display = 'none';
+    }
+  </script>
+</body>
+</html>
