@@ -927,20 +927,21 @@
       // Link de Pagamento do Mercado Pago ou API Checkout Pro
       const mercadopagoUrl = `https://www.mercadopago.com.br/checkout/v1/redirect?pref_id=DROP_MANTO_PACEBEATS&external_reference=${order.id}`;
 
-      // Montar Recibo Visual para o usuário
-      const html = `
-        <p>🆔 <strong>ID do Pedido:</strong> <span style="color:var(--orange);">${order.id}</span></p>
-        <p>👤 <strong>Cliente:</strong> ${order.cliente_nome}</p>
-        <p>📱 <strong>WhatsApp:</strong> ${order.cliente_telefone}</p>
-        <p>👕 <strong>Produto:</strong> ${PRODUCT_SPEC.name}</p>
-        <p>📏 <strong>Tamanho Escolhido:</strong> <strong style="color:var(--white); font-size:1.1rem; background:rgba(255,107,0,0.2); padding:2px 8px; border-radius:4px;">${item.tamanho_variacao}</strong></p>
-        <p>🏷️ <strong>Cupom / Indicação:</strong> ${order.codigo_promocional}</p>
-        <hr style="border-color:var(--black-border); margin:12px 0;">
-        <p>💵 <strong>Subtotal:</strong> R$ ${order.valor_subtotal.toFixed(2).replace('.', ',')}</p>
-        <p>🎁 <strong>Desconto Aplicado:</strong> -R$ ${order.valor_desconto.toFixed(2).replace('.', ',')}</p>
-        <p style="font-size:1.1rem;">🔥 <strong>Valor Total Final:</strong> <strong style="color:var(--orange); font-size:1.4rem;">R$ ${order.valor_total_pago.toFixed(2).replace('.', ',')}</strong></p>
-        <p style="font-size:0.78rem; color:var(--white-dim); margin-top:8px;">Status no Banco: <span style="color:#eab308; font-weight:700;">AGUARDANDO PAGAMENTO (PENDENTE)</span></p>
-      `;
+        const couponDisplay = activeCoupon ? `${order.codigo_promocional} (Vendedor: ${activeCoupon.staffName})` : order.codigo_promocional;
+
+        const html = `
+          <p>🆔 <strong>ID do Pedido:</strong> <span style="color:var(--orange);">${order.id}</span></p>
+          <p>👤 <strong>Cliente:</strong> ${order.cliente_nome}</p>
+          <p>📱 <strong>WhatsApp:</strong> ${order.cliente_telefone}</p>
+          <p>👕 <strong>Produto:</strong> ${PRODUCT_SPEC.name}</p>
+          <p>📏 <strong>Tamanho Escolhido:</strong> <strong style="color:var(--white); font-size:1.1rem; background:rgba(255,107,0,0.2); padding:2px 8px; border-radius:4px;">${item.tamanho_variacao}</strong></p>
+          <p>🏷️ <strong>Cupom / Indicação:</strong> <strong style="color:var(--orange);">${couponDisplay}</strong></p>
+          <hr style="border-color:var(--black-border); margin:12px 0;">
+          <p>💵 <strong>Subtotal:</strong> R$ ${order.valor_subtotal.toFixed(2).replace('.', ',')}</p>
+          <p>🎁 <strong>Desconto Aplicado:</strong> -R$ ${order.valor_desconto.toFixed(2).replace('.', ',')}</p>
+          <p style="font-size:1.1rem;">🔥 <strong>Valor Total Final:</strong> <strong style="color:var(--orange); font-size:1.4rem;">R$ ${order.valor_total_pago.toFixed(2).replace('.', ',')}</strong></p>
+          <p style="font-size:0.78rem; color:var(--white-dim); margin-top:8px;">Status no Banco: <span style="color:#eab308; font-weight:700;">AGUARDANDO PAGAMENTO (PENDENTE)</span></p>
+        `;
 
       document.getElementById('receiptContent').innerHTML = html;
       document.getElementById('btnPayMercadoPagoModal').href = mercadopagoUrl;
