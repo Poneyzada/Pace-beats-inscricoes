@@ -64,8 +64,8 @@
 
     .gallery-thumbs {
       display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 12px;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 10px;
     }
 
     .thumb-item {
@@ -439,6 +439,13 @@
       position: relative;
     }
 
+    /* Tabela Responsiva Mobile */
+    .table-responsive {
+      width: 100%;
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+    }
+
     @media (max-width: 900px) {
       .drop-grid {
         grid-template-columns: 1fr;
@@ -450,6 +457,13 @@
       }
       .specs-grid {
         grid-template-columns: 1fr;
+      }
+      .table-responsive table {
+        min-width: 540px;
+        font-size: 0.85rem !important;
+      }
+      .table-responsive th, .table-responsive td {
+        padding: 12px 8px !important;
       }
     }
   </style>
@@ -488,20 +502,23 @@
         <!-- Galeria do Produto (Esquerda) -->
         <div class="product-gallery">
           <div class="main-image-container">
-            <img id="mainProductImg" src="poster-camisa.webp" alt="Manto Pace & Beats Dry-Fit">
+            <img id="mainProductImg" src="uniforme-1.webp" alt="Manto Pace & Beats Dry-Fit">
           </div>
           <div class="gallery-thumbs">
-            <div class="thumb-item active" onclick="setMainImage('poster-camisa.webp', this)">
-              <img src="poster-camisa.webp" alt="Visão Geral">
+            <div class="thumb-item active" onclick="setMainImage('uniforme-1.webp', this)">
+              <img src="uniforme-1.webp" alt="Manto Frente">
             </div>
-            <div class="thumb-item" onclick="setMainImage('colagem-galera.webp', this)">
-              <img src="colagem-galera.webp" alt="Uso em Treino">
+            <div class="thumb-item" onclick="setMainImage('uniforme-valores.webp', this)">
+              <img src="uniforme-valores.webp" alt="Detalhes e Medidas">
             </div>
             <div class="thumb-item" onclick="setMainImage('tosta-branco.webp', this)">
-              <img src="tosta-branco.webp" alt="Caimento no Corpo">
+              <img src="tosta-branco.webp" alt="Caimento Tosta">
+            </div>
+            <div class="thumb-item" onclick="setMainImage('poster-camisa.webp', this)">
+              <img src="poster-camisa.webp" alt="Poster Oficial">
             </div>
             <div class="thumb-item" onclick="setMainImage('staff-corre.webp', this)">
-              <img src="staff-corre.webp" alt="Detalhes">
+              <img src="staff-corre.webp" alt="Staff Detalhes">
             </div>
           </div>
         </div>
@@ -628,7 +645,7 @@
         <p style="color: var(--white-dim); font-size: 0.95rem;">Confira a largura e o comprimento antes de escolher o seu Manto.</p>
       </div>
 
-      <div style="background: var(--black-card); border: 1px solid var(--black-border); border-radius: var(--radius-lg); overflow: hidden;">
+      <div class="table-responsive" style="background: var(--black-card); border: 1px solid var(--black-border); border-radius: var(--radius-lg);">
         <table style="width: 100%; border-collapse: collapse; text-align: center; font-size: 0.95rem;">
           <thead>
             <tr style="background: rgba(255,107,0,0.1); color: var(--orange); border-bottom: 1px solid var(--black-border);">
