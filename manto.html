@@ -569,11 +569,11 @@
             <div>
               <span class="section-label" style="margin-bottom: 4px;">Valor Oficial</span>
               <div class="price-values">
-                <span class="original-price" id="displaySubtotal">R$ 149,90</span>
-                <span class="current-price" id="displayTotal">R$ 119,90</span>
+                <span class="original-price" id="displaySubtotal">R$ 119,90</span>
+                <span class="current-price" id="displayTotal">R$ 99,90</span>
               </div>
             </div>
-            <span class="discount-badge" id="displayBadge">1º Lote Oficial</span>
+            <span class="discount-badge" id="displayBadge">Pré-Venda (R$ 20 OFF)</span>
           </div>
 
           <!-- Seleção de Tamanho 1 -->
@@ -872,12 +872,12 @@
       if (!ENABLE_COMBOS_AND_COUPONS) {
         if (comboBox) comboBox.style.display = 'none';
         if (couponBox) couponBox.style.display = 'none';
-        document.getElementById('displaySubtotal').innerText = 'R$ 149,90';
-        document.getElementById('displayTotal').innerText = 'R$ 119,90';
+        document.getElementById('displaySubtotal').innerText = 'R$ 119,90';
+        document.getElementById('displayTotal').innerText = 'R$ 99,90';
         const badge = document.getElementById('displayBadge');
-        badge.innerText = '1º Lote Oficial';
-        badge.style.background = '#FF6B0020';
-        badge.style.color = '#FF6B00';
+        badge.innerText = 'Pré-Venda (R$ 20 OFF)';
+        badge.style.background = '#22c55e20';
+        badge.style.color = '#22c55e';
         return;
       }
 
