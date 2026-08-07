@@ -566,11 +566,75 @@
       document.getElementById('dashboard').style.display = 'block';
       renderTable();
       updateStats();
+      syncCloudSheetData();
     }
 
     function logout() {
       sessionStorage.removeItem('pb_auth');
       location.reload();
+    }
+
+    // ── Sincronizar Vendas do Google Sheets Central no CRM ──
+    async function syncCloudSheetData() {
+      const SHEET_ID = '1jFj6T_COiI2pF2Jwpf0SYGQwr6cmmF6jdEu52K6sS_o';
+      const url = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json`;
+
+      try {
+        const response = await fetch(url);
+        const text = await response.text();
+        const jsonText = text.substring(47, text.length - 2);
+        const json = JSON.parse(jsonText);
+        
+        const rows = json.table.rows;
+        if (!rows || rows.length === 0) return;
+
+        const localLeads = getLeads();
+        const existingIds = new Set(localLeads.map(l => l.id || l.phone));
+
+        let addedCount = 0;
+        rows.forEach(r => {
+          const c = r.c;
+          if (!c || c.length < 5) return;
+          const orderDate = c[0] ? c[0].v : '';
+          const orderId = c[1] ? String(c[1].v) : '';
+          const name = c[2] ? String(c[2].v) : '';
+          const phone = c[3] ? String(c[3].v) : '';
+          const email = c[4] ? String(c[4].v) : '';
+          const size = c[5] ? String(c[5].v) : '';
+          const coupon = c[6] ? String(c[6].v) : '';
+          const total = c[7] ? String(c[7].v) : '';
+          const status = c[8] ? String(c[8].v) : 'PENDENTE';
+
+          if (orderId && !existingIds.has(orderId)) {
+            existingIds.add(orderId);
+            localLeads.unshift({
+              id: orderId,
+              name: name || 'Cliente Manto',
+              phone: phone || '-',
+              email: email || '-',
+              type: 'Drop',
+              title: `Manto Pace & Beats (Tam: ${size || 'M'})`,
+              plan: `Drop Manto - Tam ${size || 'M'} [Cupom: ${coupon || 'PROMO'}]`,
+              subtotal: 119.90,
+              discount: 20.00,
+              total: total || '99.90',
+              coupon: coupon || 'PROMO',
+              size: size || 'M',
+              status: status,
+              date: orderDate || new Date().toLocaleDateString('pt-BR')
+            });
+            addedCount++;
+          }
+        });
+
+        if (addedCount > 0) {
+          saveLeads(localLeads);
+          renderTable();
+          updateStats();
+        }
+      } catch (err) {
+        console.log('Sync Cloud Sheets no CRM:', err);
+      }
     }
 
     // ── Leads CRUD ──
