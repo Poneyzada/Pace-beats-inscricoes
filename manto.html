@@ -942,8 +942,7 @@
     }
 
     function sendOrderToGoogleSheets(order, item) {
-      const GOOGLE_SHEET_WEBHOOK_URL = window.PACE_SHEET_WEBHOOK || '';
-      if (!GOOGLE_SHEET_WEBHOOK_URL) return;
+      const GOOGLE_SHEET_WEBHOOK_URL = 'https://script.google.com/macros/s/AKfycbxKI2hrblKnmru8Jri4Ehwd0ps-081YBYMyshSvriE2-JZagvDh-tutRkJ09Qqfpu3I/exec';
 
       const payload = {
         id: order.id,
