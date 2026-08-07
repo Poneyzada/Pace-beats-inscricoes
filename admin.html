@@ -519,6 +519,7 @@
             <th>Email</th>
             <th>Tipo</th>
             <th>Interesse / Plano</th>
+            <th>Status</th>
             <th>Data</th>
             <th>Ações</th>
           </tr>
@@ -747,6 +748,16 @@
           planBadge = `<span style="font-weight: 500; font-size: 0.85rem; color: #ec4899;">${lead.plan}</span>`;
         }
 
+        let statusBadge = '';
+        const st = (lead.status || 'PENDENTE').toUpperCase();
+        if (st.includes('PAGO') || st.includes('APROVADO')) {
+          statusBadge = `<span style="background: rgba(34, 197, 94, 0.2); border: 1px solid rgba(34, 197, 94, 0.4); color: #22c55e; padding: 4px 10px; border-radius: 50px; font-weight: 700; font-size: 0.75rem; text-transform: uppercase;">PAGO ✅</span>`;
+        } else if (st.includes('CANCEL') || st.includes('ABANDON') || st.includes('RECUSA')) {
+          statusBadge = `<span style="background: rgba(239, 68, 68, 0.2); border: 1px solid rgba(239, 68, 68, 0.4); color: #ef4444; padding: 4px 10px; border-radius: 50px; font-weight: 700; font-size: 0.75rem; text-transform: uppercase;">ABANDONO ❌</span>`;
+        } else {
+          statusBadge = `<span style="background: rgba(234, 179, 8, 0.2); border: 1px solid rgba(234, 179, 8, 0.4); color: #eab308; padding: 4px 10px; border-radius: 50px; font-weight: 700; font-size: 0.75rem; text-transform: uppercase;">PENDENTE ⏳</span>`;
+        }
+
         return `
           <tr>
             <td style="color: var(--white-dim);">${i + 1}</td>
@@ -755,6 +766,7 @@
             <td>${lead.email}</td>
             <td>${typeBadge}</td>
             <td>${planBadge}</td>
+            <td>${statusBadge}</td>
             <td>${lead.date} ${lead.time || ''}</td>
             <td>
               <button class="action-btn wpp" onclick="openWpp('${wppPhone}', '${lead.name}')" title="WhatsApp">💬</button>
