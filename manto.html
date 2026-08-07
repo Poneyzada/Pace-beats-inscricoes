@@ -933,9 +933,38 @@
 
         existingLeads.unshift(newLead);
         localStorage.setItem(STORAGE_KEY, JSON.stringify(existingLeads));
+
+        // Enviar também para o Webhook do Google Sheets do Tosta
+        sendOrderToGoogleSheets(order, item);
       } catch(e) {
         console.error("Erro ao registrar pedido no CRM local:", e);
       }
+    }
+
+    function sendOrderToGoogleSheets(order, item) {
+      const GOOGLE_SHEET_WEBHOOK_URL = window.PACE_SHEET_WEBHOOK || '';
+      if (!GOOGLE_SHEET_WEBHOOK_URL) return;
+
+      const payload = {
+        id: order.id,
+        nome: order.cliente_nome,
+        telefone: order.cliente_telefone,
+        email: order.cliente_email,
+        tamanho: item.tamanho_variacao,
+        cupom: order.codigo_promocional,
+        valor_pago: order.valor_total_pago,
+        status: order.status_pagamento,
+        data: new Date(order.criado_em).toLocaleString('pt-BR')
+      };
+
+      try {
+        fetch(GOOGLE_SHEET_WEBHOOK_URL, {
+          method: 'POST',
+          mode: 'no-cors',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload)
+        }).catch(err => console.log('Sheets sync:', err));
+      } catch(e) {}
     }
 
     // ══════════════════════════════════════════════
