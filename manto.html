@@ -545,10 +545,29 @@
             Desenvolvida em tecido Dry-Fit tecnológico de alta respirabilidade e secagem ultrarrápida. Caimento streetwear impecável para correr na rua ou dominar a cidade.
           </p>
 
+          <!-- Seletor de Oferta: Individual vs Combo 2 Camisas -->
+          <div style="margin-bottom: 24px;">
+            <span class="section-label" style="margin-bottom: 8px;">Escolha a Oferta:</span>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
+              <div id="optionSingleCard" onclick="selectOffer('single')" style="background: var(--black-card); border: 2px solid var(--orange); border-radius: var(--radius); padding: 14px; cursor: pointer; text-align: center; transition: var(--transition);">
+                <div style="font-weight: 800; font-size: 0.95rem; color: var(--white);">1x Manto Oficial</div>
+                <div style="font-size: 0.85rem; color: var(--orange); font-weight: 700; margin-top: 4px;">R$ 99,90</div>
+              </div>
+
+              <div id="optionComboCard" onclick="selectOffer('combo')" style="background: var(--black-card); border: 1px solid var(--black-border); border-radius: var(--radius); padding: 14px; cursor: pointer; text-align: center; transition: var(--transition); position: relative; overflow: hidden;">
+                <div style="position: absolute; top: 0; right: 0; background: var(--orange); color: #fff; font-size: 0.6rem; font-weight: 800; padding: 2px 8px; border-bottom-left-radius: 8px; text-transform: uppercase;">
+                  ECONOMIA MAX
+                </div>
+                <div style="font-weight: 800; font-size: 0.95rem; color: var(--white);">🔥 Combo 2 Mantos</div>
+                <div style="font-size: 0.85rem; color: var(--orange); font-weight: 700; margin-top: 4px;">R$ 190,00 <span style="font-size: 0.7rem; color: var(--white-dim);">(R$ 95/cada)</span></div>
+              </div>
+            </div>
+          </div>
+
           <!-- Caixa de Preço -->
           <div class="price-box">
             <div>
-              <span class="section-label" style="margin-bottom: 4px;">Valor Oficial</span>
+              <span class="section-label" style="margin-bottom: 4px;">Valor Total</span>
               <div class="price-values">
                 <span class="original-price" id="displaySubtotal">R$ 119,90</span>
                 <span class="current-price" id="displayTotal">R$ 99,90</span>
@@ -557,17 +576,30 @@
             <span class="discount-badge" id="displayBadge">Lote Promocional</span>
           </div>
 
-          <!-- Seleção de Tamanho -->
-          <div>
+          <!-- Seleção de Tamanho 1 -->
+          <div id="size1Container">
             <div class="section-label">
-              <span>Selecione o Tamanho (Variação):</span>
+              <span id="size1Label">Selecione o Tamanho (Variação):</span>
               <a href="#tabela-medidas" style="color: var(--orange); text-decoration: none; font-size: 0.75rem;">Ver Guia de Medidas 📏</a>
             </div>
-            <div class="size-grid">
-              <button type="button" class="size-btn" onclick="selectSize('P', this)">P</button>
-              <button type="button" class="size-btn active" onclick="selectSize('M', this)">M</button>
-              <button type="button" class="size-btn" onclick="selectSize('G', this)">G</button>
-              <button type="button" class="size-btn" onclick="selectSize('GG', this)">GG</button>
+            <div class="size-grid" id="sizeGrid1">
+              <button type="button" class="size-btn" onclick="selectSize1('P', this)">P</button>
+              <button type="button" class="size-btn active" onclick="selectSize1('M', this)">M</button>
+              <button type="button" class="size-btn" onclick="selectSize1('G', this)">G</button>
+              <button type="button" class="size-btn" onclick="selectSize1('GG', this)">GG</button>
+            </div>
+          </div>
+
+          <!-- Seleção de Tamanho 2 (Para o Combo) -->
+          <div id="size2Container" style="display: none; margin-top: -12px;">
+            <div class="section-label">
+              <span>Selecione o Tamanho da 2ª Camisa:</span>
+            </div>
+            <div class="size-grid" id="sizeGrid2">
+              <button type="button" class="size-btn" onclick="selectSize2('P', this)">P</button>
+              <button type="button" class="size-btn active" onclick="selectSize2('M', this)">M</button>
+              <button type="button" class="size-btn" onclick="selectSize2('G', this)">G</button>
+              <button type="button" class="size-btn" onclick="selectSize2('GG', this)">GG</button>
             </div>
           </div>
 
@@ -778,9 +810,11 @@
     };
 
     // Estado da Compra
-    let selectedSize = "M";
+    let selectedOffer = 'single'; // 'single' ou 'combo'
+    let selectedSize1 = 'M';
+    let selectedSize2 = 'M';
     let activeCoupon = null;
-    let appliedDiscount = 20.00; // Desconto inicial promocional de R$20 (119.90 -> 99.90)
+    let appliedDiscount = 20.00;
 
     // ── Alterar imagem principal na galeria ──
     function setMainImage(src, thumbElement) {
@@ -789,28 +823,63 @@
       if (thumbElement) thumbElement.classList.add('active');
     }
 
-    // ── Selecionar Tamanho (Variação P, M, G, GG) ──
-    function selectSize(size, btnElement) {
-      selectedSize = size;
-      document.querySelectorAll('.size-btn').forEach(el => el.classList.remove('active'));
+    // ── Selecionar Oferta (Single vs Combo) ──
+    function selectOffer(type) {
+      selectedOffer = type;
+      const singleCard = document.getElementById('optionSingleCard');
+      const comboCard = document.getElementById('optionComboCard');
+      const size2Container = document.getElementById('size2Container');
+      const size1Label = document.getElementById('size1Label');
+
+      if (type === 'combo') {
+        singleCard.style.borderColor = 'var(--black-border)';
+        comboCard.style.borderColor = 'var(--orange)';
+        size2Container.style.display = 'block';
+        size1Label.innerText = 'Selecione o Tamanho da 1ª Camisa:';
+      } else {
+        singleCard.style.borderColor = 'var(--orange)';
+        comboCard.style.borderColor = 'var(--black-border)';
+        size2Container.style.display = 'none';
+        size1Label.innerText = 'Selecione o Tamanho (Variação):';
+      }
+      updatePriceDisplay();
+    }
+
+    // ── Selecionar Tamanhos ──
+    function selectSize1(size, btnElement) {
+      selectedSize1 = size;
+      document.querySelectorAll('#sizeGrid1 .size-btn').forEach(el => el.classList.remove('active'));
+      if (btnElement) btnElement.classList.add('active');
+    }
+
+    function selectSize2(size, btnElement) {
+      selectedSize2 = size;
+      document.querySelectorAll('#sizeGrid2 .size-btn').forEach(el => el.classList.remove('active'));
       if (btnElement) btnElement.classList.add('active');
     }
 
     // ── Calcular e Atualizar Valores na Tela ──
     function updatePriceDisplay() {
-      const subtotal = PRODUCT_SPEC.priceSubtotal;
-      const total = Math.max(0, subtotal - appliedDiscount);
+      let subtotal = selectedOffer === 'combo' ? 239.80 : 119.90;
+      let baseTotal = selectedOffer === 'combo' ? 190.00 : 99.90;
+      let extraDiscount = activeCoupon ? activeCoupon.discount : 0;
+      let finalTotal = Math.max(0, baseTotal - (activeCoupon ? extraDiscount : 0));
+      let totalDiscount = subtotal - finalTotal;
 
       document.getElementById('displaySubtotal').innerText = `R$ ${subtotal.toFixed(2).replace('.', ',')}`;
-      document.getElementById('displayTotal').innerText = `R$ ${total.toFixed(2).replace('.', ',')}`;
+      document.getElementById('displayTotal').innerText = `R$ ${finalTotal.toFixed(2).replace('.', ',')}`;
 
       const badge = document.getElementById('displayBadge');
-      if (activeCoupon) {
-        badge.innerText = `Cupom ${activeCoupon.code} (-R$ ${appliedDiscount.toFixed(2).replace('.', ',')})`;
+      if (selectedOffer === 'combo') {
+        badge.innerText = activeCoupon ? `Combo + Cupom ${activeCoupon.code}` : `Combo Duplo (-R$ ${totalDiscount.toFixed(2).replace('.', ',')})`;
+        badge.style.background = '#FF6B0020';
+        badge.style.color = '#FF6B00';
+      } else if (activeCoupon) {
+        badge.innerText = `Cupom ${activeCoupon.code} (-R$ ${totalDiscount.toFixed(2).replace('.', ',')})`;
         badge.style.background = '#22c55e20';
         badge.style.color = '#22c55e';
       } else {
-        badge.innerText = `Lote Promocional (-R$ ${appliedDiscount.toFixed(2).replace('.', ',')})`;
+        badge.innerText = `Lote Promocional (-R$ ${totalDiscount.toFixed(2).replace('.', ',')})`;
       }
     }
 
@@ -848,7 +917,6 @@
       const refParam = urlParams.get('ref') || urlParams.get('cupom') || urlParams.get('staff');
 
       if (refParam) {
-        // Tentar formatar como STAFF + NOME se o usuário passou apenas o nome do vendedor
         let possibleCode = refParam.toUpperCase();
         if (VALID_COUPONS[possibleCode]) {
           applyCouponCode(possibleCode);
@@ -874,10 +942,16 @@
       document.getElementById('formError').style.display = 'none';
 
       const orderId = `ORD-MANTO-${Date.now()}`;
-      const subtotal = PRODUCT_SPEC.priceSubtotal;
-      const discount = appliedDiscount;
-      const totalPaid = Math.max(0, subtotal - discount);
-      const couponCode = activeCoupon ? activeCoupon.code : "PROMO_PREVENDA";
+      const subtotal = selectedOffer === 'combo' ? 239.80 : PRODUCT_SPEC.priceSubtotal;
+      const baseTotal = selectedOffer === 'combo' ? 190.00 : 99.90;
+      const extraDiscount = activeCoupon ? activeCoupon.discount : 0;
+      const totalPaid = Math.max(0, baseTotal - extraDiscount);
+      const totalDiscount = subtotal - totalPaid;
+      const couponCode = activeCoupon ? activeCoupon.code : (selectedOffer === 'combo' ? "COMBO_DUPLO" : "PROMO_PREVENDA");
+
+      const sizeVariation = selectedOffer === 'combo' 
+        ? `Combo 2x [1ª: ${selectedSize1}, 2ª: ${selectedSize2}]`
+        : selectedSize1;
 
       // Objeto congelado do Pedido (Tabela: pedidos)
       const orderRecord = {
@@ -886,7 +960,7 @@
         cliente_telefone: phone,
         cliente_email: email || "Não informado",
         valor_subtotal: subtotal,
-        valor_desconto: discount,
+        valor_desconto: totalDiscount,
         valor_total_pago: totalPaid,
         codigo_promocional: couponCode,
         status_pagamento: "PENDENTE",
@@ -898,8 +972,8 @@
         id: `ITEM-${Date.now()}`,
         pedido_id: orderId,
         produto_id: PRODUCT_SPEC.id,
-        quantidade: 1,
-        tamanho_variacao: selectedSize, // Regra de Variação (P, M, G, GG)
+        quantidade: selectedOffer === 'combo' ? 2 : 1,
+        tamanho_variacao: sizeVariation,
         preco_unitario_historico: subtotal
       };
 
