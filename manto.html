@@ -949,8 +949,8 @@
 
       const { order, item } = data;
 
-      // Link de Pagamento do Mercado Pago ou API Checkout Pro
-      const mercadopagoUrl = `https://www.mercadopago.com.br/checkout/v1/redirect?pref_id=DROP_MANTO_PACEBEATS&external_reference=${order.id}`;
+      // Link de Pagamento Oficial do Mercado Pago da Pace & Beats
+      const mercadopagoUrl = `https://mpago.la/1U5fJQF`;
 
         const couponDisplay = activeCoupon ? `${order.codigo_promocional} (Vendedor: ${activeCoupon.staffName})` : order.codigo_promocional;
 
