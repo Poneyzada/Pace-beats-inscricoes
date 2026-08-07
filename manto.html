@@ -809,10 +809,9 @@
       "CRIAVIP": { discount: 20.00, staffName: "Comunidade Cria" }
     };
 
-    // FLAG DE LIBERAÇÃO DE FASE:
-    // false = Fase 1: Preço Cheio (R$ 119,90 sem combo/cupom)
-    // true  = Fase 2: Liberação das 18h (Combo R$ 190,00 e Cupons dos Staffs Liberados)
-    const ENABLE_COMBOS_AND_COUPONS = false;
+    // FLAG DE LIBERAÇÃO DE OFERTAS:
+    const ENABLE_COMBOS = true;
+    const ENABLE_COUPONS = false; // Ativar no Drop 2
 
     // Estado da Compra
     let selectedOffer = 'single'; // 'single' ou 'combo'
@@ -830,7 +829,6 @@
 
     // ── Selecionar Oferta (Single vs Combo) ──
     function selectOffer(type) {
-      if (!ENABLE_COMBOS_AND_COUPONS) return;
       selectedOffer = type;
       const singleCard = document.getElementById('optionSingleCard');
       const comboCard = document.getElementById('optionComboCard');
@@ -869,20 +867,8 @@
       const comboBox = document.getElementById('comboSelectorBox');
       const couponBox = document.getElementById('couponCardBox');
 
-      if (!ENABLE_COMBOS_AND_COUPONS) {
-        if (comboBox) comboBox.style.display = 'none';
-        if (couponBox) couponBox.style.display = 'none';
-        document.getElementById('displaySubtotal').innerText = 'R$ 119,90';
-        document.getElementById('displayTotal').innerText = 'R$ 99,90';
-        const badge = document.getElementById('displayBadge');
-        badge.innerText = 'Pré-Venda (R$ 20 OFF)';
-        badge.style.background = '#22c55e20';
-        badge.style.color = '#22c55e';
-        return;
-      }
-
-      if (comboBox) comboBox.style.display = 'block';
-      if (couponBox) couponBox.style.display = 'block';
+      if (comboBox) comboBox.style.display = ENABLE_COMBOS ? 'block' : 'none';
+      if (couponBox) couponBox.style.display = ENABLE_COUPONS ? 'block' : 'none';
 
       let subtotal = selectedOffer === 'combo' ? 239.80 : 119.90;
       let baseTotal = selectedOffer === 'combo' ? 190.00 : 99.90;
@@ -895,7 +881,7 @@
 
       const badge = document.getElementById('displayBadge');
       if (selectedOffer === 'combo') {
-        badge.innerText = activeCoupon ? `Combo + Cupom ${activeCoupon.code}` : `Combo Duplo (-R$ ${totalDiscount.toFixed(2).replace('.', ',')})`;
+        badge.innerText = `Combo Duplo (Economize R$ ${totalDiscount.toFixed(2).replace('.', ',')})`;
         badge.style.background = '#FF6B0020';
         badge.style.color = '#FF6B00';
       } else if (activeCoupon) {
@@ -903,7 +889,9 @@
         badge.style.background = '#22c55e20';
         badge.style.color = '#22c55e';
       } else {
-        badge.innerText = `Lote Promocional (-R$ ${totalDiscount.toFixed(2).replace('.', ',')})`;
+        badge.innerText = `Pré-Venda (R$ 20 OFF)`;
+        badge.style.background = '#22c55e20';
+        badge.style.color = '#22c55e';
       }
     }
 
@@ -1076,7 +1064,9 @@
       const { order, item } = data;
 
       // Link de Pagamento Oficial do Mercado Pago da Pace & Beats
-      const mercadopagoUrl = `https://mpago.la/1U5fJQF`;
+      const mercadopagoUrl = selectedOffer === 'combo' 
+        ? `https://mpago.la/2bQjh4w` 
+        : `https://mpago.la/1U5fJQF`;
 
         const couponDisplay = activeCoupon ? `${order.codigo_promocional} (Vendedor: ${activeCoupon.staffName})` : order.codigo_promocional;
 
