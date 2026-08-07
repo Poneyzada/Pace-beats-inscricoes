@@ -545,8 +545,8 @@
             Desenvolvida em tecido Dry-Fit tecnológico de alta respirabilidade e secagem ultrarrápida. Caimento streetwear impecável para correr na rua ou dominar a cidade.
           </p>
 
-          <!-- Seletor de Oferta: Individual vs Combo 2 Camisas -->
-          <div style="margin-bottom: 24px;">
+          <!-- Seletor de Oferta: Individual vs Combo 2 Camisas (Oculto na Fase 1) -->
+          <div id="comboSelectorBox" style="margin-bottom: 24px; display: none;">
             <span class="section-label" style="margin-bottom: 8px;">Escolha a Oferta:</span>
             <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
               <div id="optionSingleCard" onclick="selectOffer('single')" style="background: var(--black-card); border: 2px solid var(--orange); border-radius: var(--radius); padding: 14px; cursor: pointer; text-align: center; transition: var(--transition);">
@@ -567,19 +567,19 @@
           <!-- Caixa de Preço -->
           <div class="price-box">
             <div>
-              <span class="section-label" style="margin-bottom: 4px;">Valor Total</span>
+              <span class="section-label" style="margin-bottom: 4px;">Valor Oficial</span>
               <div class="price-values">
-                <span class="original-price" id="displaySubtotal">R$ 119,90</span>
-                <span class="current-price" id="displayTotal">R$ 99,90</span>
+                <span class="original-price" id="displaySubtotal">R$ 149,90</span>
+                <span class="current-price" id="displayTotal">R$ 119,90</span>
               </div>
             </div>
-            <span class="discount-badge" id="displayBadge">Lote Promocional</span>
+            <span class="discount-badge" id="displayBadge">1º Lote Oficial</span>
           </div>
 
           <!-- Seleção de Tamanho 1 -->
           <div id="size1Container">
             <div class="section-label">
-              <span id="size1Label">Selecione o Tamanho (Variação):</span>
+              <span id="size1Label">Selecione o Tamanho:</span>
               <a href="#tabela-medidas" style="color: var(--orange); text-decoration: none; font-size: 0.75rem;">Ver Guia de Medidas 📏</a>
             </div>
             <div class="size-grid" id="sizeGrid1">
@@ -603,8 +603,8 @@
             </div>
           </div>
 
-          <!-- Cupom de Desconto / Staff -->
-          <div class="coupon-card">
+          <!-- Cupom de Desconto / Staff (Oculto na Fase 1) -->
+          <div class="coupon-card" id="couponCardBox" style="display: none;">
             <div class="section-label" style="margin-bottom: 8px;">
               <span>Possui Cupom ou Indicação de Staff?</span>
             </div>
@@ -809,12 +809,17 @@
       "CRIAVIP": { discount: 20.00, staffName: "Comunidade Cria" }
     };
 
+    // FLAG DE LIBERAÇÃO DE FASE:
+    // false = Fase 1: Preço Cheio (R$ 119,90 sem combo/cupom)
+    // true  = Fase 2: Liberação das 18h (Combo R$ 190,00 e Cupons dos Staffs Liberados)
+    const ENABLE_COMBOS_AND_COUPONS = false;
+
     // Estado da Compra
     let selectedOffer = 'single'; // 'single' ou 'combo'
     let selectedSize1 = 'M';
     let selectedSize2 = 'M';
     let activeCoupon = null;
-    let appliedDiscount = 20.00;
+    let appliedDiscount = 0;
 
     // ── Alterar imagem principal na galeria ──
     function setMainImage(src, thumbElement) {
@@ -825,6 +830,7 @@
 
     // ── Selecionar Oferta (Single vs Combo) ──
     function selectOffer(type) {
+      if (!ENABLE_COMBOS_AND_COUPONS) return;
       selectedOffer = type;
       const singleCard = document.getElementById('optionSingleCard');
       const comboCard = document.getElementById('optionComboCard');
@@ -840,7 +846,7 @@
         singleCard.style.borderColor = 'var(--orange)';
         comboCard.style.borderColor = 'var(--black-border)';
         size2Container.style.display = 'none';
-        size1Label.innerText = 'Selecione o Tamanho (Variação):';
+        size1Label.innerText = 'Selecione o Tamanho:';
       }
       updatePriceDisplay();
     }
@@ -860,6 +866,24 @@
 
     // ── Calcular e Atualizar Valores na Tela ──
     function updatePriceDisplay() {
+      const comboBox = document.getElementById('comboSelectorBox');
+      const couponBox = document.getElementById('couponCardBox');
+
+      if (!ENABLE_COMBOS_AND_COUPONS) {
+        if (comboBox) comboBox.style.display = 'none';
+        if (couponBox) couponBox.style.display = 'none';
+        document.getElementById('displaySubtotal').innerText = 'R$ 149,90';
+        document.getElementById('displayTotal').innerText = 'R$ 119,90';
+        const badge = document.getElementById('displayBadge');
+        badge.innerText = '1º Lote Oficial';
+        badge.style.background = '#FF6B0020';
+        badge.style.color = '#FF6B00';
+        return;
+      }
+
+      if (comboBox) comboBox.style.display = 'block';
+      if (couponBox) couponBox.style.display = 'block';
+
       let subtotal = selectedOffer === 'combo' ? 239.80 : 119.90;
       let baseTotal = selectedOffer === 'combo' ? 190.00 : 99.90;
       let extraDiscount = activeCoupon ? activeCoupon.discount : 0;
