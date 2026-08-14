@@ -59,9 +59,17 @@
 
   <!-- ═══════════ HERO ═══════════ -->
   <section class="hero" id="hero">
-    <!-- Video Backgrounds -->
+    <!-- Video Backgrounds (Separados: Desktop HD vs Mobile Ultra Leve) -->
     <div class="hero-video-bg">
-      <video autoplay muted loop playsinline id="heroVideo"></video>
+      <!-- Desktop (Mantido 100% Intacto) -->
+      <video class="d-desktop" autoplay muted loop playsinline id="heroVideoDesktop" preload="auto">
+        <source src="hero-principal-pro.mp4" type="video/mp4">
+      </video>
+
+      <!-- Mobile (Ultra Leve 2.3MB + Poster Instantâneo) -->
+      <video class="d-mobile" autoplay muted loop playsinline id="heroVideoMobile" poster="hero-mobile-poster.webp" preload="auto">
+        <source src="video-hero-pace-beats.mp4" type="video/mp4">
+      </video>
     </div>
     <div class="hero-fallback-bg"></div>
 
@@ -654,14 +662,14 @@
     const WHATSAPP_NUMBER = '5521982638587'; // formato: 55 + DDD + número (Jota / Geral)
     const WHATSAPP_COMERCIAL = '5571983988270'; // Número do comercial de Vendas (Pace Crew Vendas)
 
-    // ── Injetar vídeo do Hero apenas no Desktop para otimização mobile ──
-    const heroVideo = document.getElementById('heroVideo');
-    if (heroVideo && window.innerWidth >= 768) {
-      const source = document.createElement('source');
-      source.src = 'hero-principal-pro.mp4';
-      source.type = 'video/mp4';
-      heroVideo.appendChild(source);
-      heroVideo.load();
+    // ── Autoplay do Vídeo do Hero (Desktop e Mobile 100% Separados) ──
+    const heroVideoDesktop = document.getElementById('heroVideoDesktop');
+    const heroVideoMobile = document.getElementById('heroVideoMobile');
+    if (heroVideoDesktop && window.innerWidth >= 768) {
+      heroVideoDesktop.play().catch(() => {});
+    }
+    if (heroVideoMobile && window.innerWidth < 768) {
+      heroVideoMobile.play().catch(() => {});
     }
 
     // ── Navbar Scroll Effect ──
