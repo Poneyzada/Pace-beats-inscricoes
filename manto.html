@@ -923,10 +923,10 @@
 
       let subtotal = selectedOffer === 'combo' ? 239.80 : 119.90;
       let baseTotal = selectedOffer === 'combo' ? 190.00 : 99.90;
-      // No combo, com cupom do staff cada camisa sai por R$ 79,90 (Total R$ 159,80)
+      // No combo, com cupom do staff fica R$ 160,00 fechado (R$ 80,00/cada)
       let extraDiscount = 0;
       if (activeCoupon) {
-        extraDiscount = selectedOffer === 'combo' ? 30.20 : activeCoupon.discount;
+        extraDiscount = selectedOffer === 'combo' ? 30.00 : activeCoupon.discount;
       }
       let finalTotal = Math.max(0, baseTotal - extraDiscount);
       let totalDiscount = subtotal - finalTotal;
@@ -936,7 +936,7 @@
 
       const badge = document.getElementById('displayBadge');
       if (selectedOffer === 'combo') {
-        badge.innerText = activeCoupon ? `Combo com Indicação (R$ 79,90/cada)` : `Combo Duplo (Economize R$ ${totalDiscount.toFixed(2).replace('.', ',')})`;
+        badge.innerText = activeCoupon ? `Combo com Indicação (R$ 160,00)` : `Combo Duplo (Economize R$ ${totalDiscount.toFixed(2).replace('.', ',')})`;
         badge.style.background = '#FF6B0020';
         badge.style.color = '#FF6B00';
       } else if (activeCoupon) {
@@ -1013,7 +1013,7 @@
       const baseTotal = selectedOffer === 'combo' ? 190.00 : 99.90;
       let extraDiscount = 0;
       if (activeCoupon) {
-        extraDiscount = selectedOffer === 'combo' ? 30.20 : activeCoupon.discount;
+        extraDiscount = selectedOffer === 'combo' ? 30.00 : activeCoupon.discount;
       }
       const totalPaid = Math.max(0, baseTotal - extraDiscount);
       const totalDiscount = subtotal - totalPaid;
