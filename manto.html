@@ -923,7 +923,11 @@
 
       let subtotal = selectedOffer === 'combo' ? 239.80 : 119.90;
       let baseTotal = selectedOffer === 'combo' ? 190.00 : 99.90;
-      let extraDiscount = activeCoupon ? activeCoupon.discount : 0;
+      // No combo, com cupom do staff cada camisa sai por R$ 79,90 (Total R$ 159,80)
+      let extraDiscount = 0;
+      if (activeCoupon) {
+        extraDiscount = selectedOffer === 'combo' ? 30.20 : activeCoupon.discount;
+      }
       let finalTotal = Math.max(0, baseTotal - extraDiscount);
       let totalDiscount = subtotal - finalTotal;
 
@@ -932,7 +936,7 @@
 
       const badge = document.getElementById('displayBadge');
       if (selectedOffer === 'combo') {
-        badge.innerText = activeCoupon ? `Combo + Indicação ${activeCoupon.staffName} (-R$ ${totalDiscount.toFixed(2).replace('.', ',')})` : `Combo Duplo (Economize R$ ${totalDiscount.toFixed(2).replace('.', ',')})`;
+        badge.innerText = activeCoupon ? `Combo com Indicação (R$ 79,90/cada)` : `Combo Duplo (Economize R$ ${totalDiscount.toFixed(2).replace('.', ',')})`;
         badge.style.background = '#FF6B0020';
         badge.style.color = '#FF6B00';
       } else if (activeCoupon) {
@@ -1007,7 +1011,10 @@
       const orderId = `ORD-MANTO-${Date.now()}`;
       const subtotal = selectedOffer === 'combo' ? 239.80 : PRODUCT_SPEC.priceSubtotal;
       const baseTotal = selectedOffer === 'combo' ? 190.00 : 99.90;
-      const extraDiscount = activeCoupon ? activeCoupon.discount : 0;
+      let extraDiscount = 0;
+      if (activeCoupon) {
+        extraDiscount = selectedOffer === 'combo' ? 30.20 : activeCoupon.discount;
+      }
       const totalPaid = Math.max(0, baseTotal - extraDiscount);
       const totalDiscount = subtotal - totalPaid;
       const couponCode = activeCoupon ? activeCoupon.code : (selectedOffer === 'combo' ? "COMBO_DUPLO" : "PROMO_PREVENDA");
@@ -1115,9 +1122,9 @@
       const { order, item } = data;
 
       // Link de Pagamento Oficial do Mercado Pago da Pace & Beats
-      let mercadopagoUrl = `https://mpago.la/1U5fJQF`; // Padrao 1x Manto (R$ 99,90)
+      let mercadopagoUrl = `https://mpago.la/1U5fJQF`; // Padrão 1x Manto (R$ 99,90)
       if (selectedOffer === 'combo') {
-        mercadopagoUrl = `https://mpago.la/2bQjh4w`; // Combo 2 Mantos (R$ 190,00)
+        mercadopagoUrl = activeCoupon ? `https://mpago.la/1MJzvCp` : `https://mpago.la/2bQjh4w`; // Combo com cupom R$ 159,80 vs Combo normal R$ 190,00
       } else if (activeCoupon) {
         mercadopagoUrl = `https://mpago.la/2vVrNZh`; // 1x Manto com Cupom (R$ 79,90)
       }
