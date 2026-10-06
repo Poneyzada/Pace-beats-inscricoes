@@ -1388,3 +1388,247 @@ img {
     gap: 30px;
   }
 }
+
+/* ── Polaroid Line Carousel (Varal com Pregador) ── */
+.polaroid-line-container {
+  width: 100%;
+  max-width: 520px;
+  margin: 0 auto;
+}
+
+.pl-root {
+  position: relative;
+  width: 100%;
+  height: 440px;
+  overflow: hidden;
+  background: radial-gradient(circle at 50% 30%, rgba(255, 107, 0, 0.08) 0%, rgba(10, 10, 10, 0.8) 70%);
+  border: 1px solid var(--black-border);
+  border-radius: 24px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.7);
+  color: var(--white);
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: pan-y;
+  outline: none;
+  cursor: grab;
+}
+
+.pl-root[data-drag='1'] {
+  cursor: grabbing;
+}
+
+.pl-root:focus-visible {
+  box-shadow: inset 0 0 0 2px var(--orange);
+}
+
+.pl-string {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  overflow: visible;
+  filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.6));
+}
+
+.pl-cards-layer {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.pl-card {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: var(--pl-cw, 230px);
+  transform-origin: 50% 0;
+  will-change: transform;
+  cursor: inherit;
+  pointer-events: auto;
+}
+
+.pl-print {
+  margin-top: 14px;
+  background: #181818;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 4px;
+  padding: 10px 10px 0;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5), 0 24px 40px -12px rgba(0, 0, 0, 0.75);
+  transition: transform 0.45s cubic-bezier(0.2, 0.7, 0.2, 1), filter 0.45s ease, border-color 0.3s ease;
+}
+
+.pl-card[data-on='0'] .pl-print {
+  transform: scale(0.88);
+  filter: saturate(0.6) brightness(0.75);
+  border-color: rgba(255, 255, 255, 0.05);
+}
+
+.pl-card[data-on='1'] .pl-print {
+  border-color: rgba(255, 107, 0, 0.45);
+  box-shadow: 0 4px 15px rgba(255, 107, 0, 0.15), 0 25px 50px -10px rgba(0, 0, 0, 0.85);
+}
+
+.pl-shot {
+  position: relative;
+  aspect-ratio: 4 / 5;
+  overflow: hidden;
+  background: #0a0a0a;
+  border-radius: 2px;
+}
+
+.pl-shot img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  pointer-events: none;
+}
+
+.pl-note {
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 4px;
+  font-family: var(--font-body);
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--white-muted);
+  letter-spacing: 0.5px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.pl-note .pl-note-tag {
+  color: var(--orange);
+  font-size: 0.7rem;
+  letter-spacing: 1px;
+  font-weight: 700;
+}
+
+.pl-peg {
+  position: absolute;
+  left: 50%;
+  top: 0;
+  width: 12px;
+  height: 28px;
+  margin-left: -6px;
+  border-radius: 2px;
+  background: linear-gradient(90deg, #d4792c, #ff9e42 45%, #b55d14);
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.5);
+  z-index: 5;
+}
+
+.pl-peg::after {
+  content: '';
+  position: absolute;
+  left: 4px;
+  top: 9px;
+  width: 3px;
+  height: 8px;
+  background: rgba(30, 15, 5, 0.65);
+  border-radius: 1px;
+}
+
+.pl-bar {
+  position: absolute;
+  left: 20px;
+  right: 20px;
+  bottom: 16px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  cursor: default;
+  z-index: 10;
+  background: rgba(12, 12, 12, 0.7);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  padding: 8px 16px;
+  border-radius: 50px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.pl-cap {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.pl-title {
+  font-family: var(--font-display);
+  font-size: 0.95rem;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: var(--white);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.pl-sub {
+  font-size: 0.75rem;
+  color: var(--white-dim);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.pl-count {
+  font-family: monospace;
+  font-size: 0.8rem;
+  letter-spacing: 0.1em;
+  color: var(--white-dim);
+}
+
+.pl-count b {
+  color: var(--orange);
+  font-weight: 700;
+}
+
+.pl-btn {
+  appearance: none;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  background: rgba(255, 255, 255, 0.04);
+  color: var(--white);
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  flex-shrink: 0;
+}
+
+.pl-btn:hover {
+  background: var(--orange);
+  border-color: var(--orange);
+  color: var(--white);
+  transform: scale(1.08);
+}
+
+.pl-btn:active {
+  transform: scale(0.94);
+}
+
+@media (max-width: 768px) {
+  .polaroid-line-container {
+    max-width: 100%;
+  }
+  .pl-root {
+    height: 390px;
+  }
+  .pl-bar {
+    left: 12px;
+    right: 12px;
+    bottom: 12px;
+    padding: 6px 12px;
+  }
+}
