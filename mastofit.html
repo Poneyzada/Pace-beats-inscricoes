@@ -172,9 +172,26 @@
       max-width: 160px;
     }
 
+    .sunna-badge-wrap {
+      background: #fafbf7;
+      border-radius: 12px;
+      padding: 6px 14px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.35);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      transition: transform 0.25s ease;
+    }
+
+    .sunna-badge-wrap:hover {
+      transform: scale(1.04);
+    }
+
     .sunna-logo-img {
-      max-height: 44px;
-      max-width: 180px;
+      max-height: 34px;
+      max-width: 170px;
+      display: block;
     }
 
     .brand-collab-item .brand-tag {
@@ -612,9 +629,13 @@
         max-height: 46px;
         max-width: 150px;
       }
+      .sunna-badge-wrap {
+        padding: 5px 12px;
+        border-radius: 10px;
+      }
       .sunna-logo-img {
-        max-height: 38px;
-        max-width: 170px;
+        max-height: 28px;
+        max-width: 140px;
       }
     }
   </style>
@@ -671,8 +692,10 @@
 
           <!-- Sunna -->
           <div class="brand-collab-item">
-            <img src="logo-sunna-white.webp" alt="Sunna Beach Club" class="collab-logo sunna-logo-img">
-            <span class="brand-tag" style="color:var(--white-dim); margin-top:8px;">Beach Club • Pituaçu</span>
+            <div class="sunna-badge-wrap">
+              <img src="logo-sunna-color.webp" alt="Sunna Beach Club" class="collab-logo sunna-logo-img">
+            </div>
+            <span class="brand-tag" style="color:#e79d62; margin-top:8px;">Beach Club • Pituaçu</span>
           </div>
         </div>
       </div>
