@@ -1073,6 +1073,12 @@ SUNNA MOVEMENT CLUB (MASTOFIT · PACE &amp; BEATS · SUNNA)
 
       console.log('Registro realizado com sucesso:', record);
 
+      // 1. Salvar no CRM Central do site (admin.html)
+      saveRegistrationToCRM(record);
+
+      // 2. Enviar ao Google Sheets oficial integrado com tag OUTUBRO_ROSA
+      sendRegistrationToGoogleSheets(record);
+
       // Link para confirmação no WhatsApp
       const wppNumber = '5571983988270'; // Oficial Sunna Movement Club / Pace Salvador (71 98398-8270)
       const wppMsg = encodeURIComponent(
@@ -1092,6 +1098,69 @@ SUNNA MOVEMENT CLUB (MASTOFIT · PACE &amp; BEATS · SUNNA)
         submitBtn.innerHTML = '<span>FINALIZAR INSCRIÇÃO &amp; ASSINAR</span><span>→</span>';
         document.getElementById('successModal').style.display = 'flex';
       }, 600);
+    }
+
+    // Salvar inscrição no LocalStorage integrado com o CRM (admin.html)
+    function saveRegistrationToCRM(record) {
+      try {
+        const STORAGE_KEY = 'pacebeats_leads';
+        const existingLeads = JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
+
+        const newLead = {
+          id: record.protocolo,
+          name: record.nome,
+          phone: record.telefone,
+          email: record.email,
+          type: "Outubro Rosa",
+          title: `Sunna Movement Club • ${record.atividade}`,
+          plan: `Sunna Movement Club • ${record.atividade}`,
+          subtotal: 0,
+          discount: 0,
+          total: "0.00",
+          coupon: "OUTUBRO_ROSA",
+          size: record.atividade,
+          status: "INSCRITO (TERMO ASSINADO)",
+          date: new Date().toLocaleDateString('pt-BR'),
+          time: new Date().toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' }),
+          contatoEmergencia: record.contatoEmergencia,
+          telefoneEmergencia: record.telefoneEmergencia,
+          aptidao: record.aptidao,
+          restricao: record.restricao
+        };
+
+        existingLeads.unshift(newLead);
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(existingLeads));
+      } catch (e) {
+        console.error("Erro ao registrar lead no CRM local:", e);
+      }
+    }
+
+    // Disparar lead para a Planilha Central do Google Sheets via Webhook
+    function sendRegistrationToGoogleSheets(record) {
+      const GOOGLE_SHEET_WEBHOOK_URL = 'https://script.google.com/macros/s/AKfycbxKI2hrblKnmru8Jri4Ehwd0ps-081YBYMyshSvriE2-JZagvDh-tutRkJ09Qqfpu3I/exec';
+
+      const payload = {
+        id: record.protocolo,
+        nome: record.nome,
+        telefone: record.telefone,
+        email: record.email,
+        tamanho: record.atividade,
+        cupom: 'OUTUBRO_ROSA',
+        valor_pago: 0.00,
+        status: 'INSCRITO (TERMO ASSINADO)',
+        data: new Date().toLocaleString('pt-BR')
+      };
+
+      try {
+        fetch(GOOGLE_SHEET_WEBHOOK_URL, {
+          method: 'POST',
+          mode: 'no-cors',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload)
+        }).catch(err => console.log('Sheets sync erro:', err));
+      } catch (e) {
+        console.log('Sheets sync erro catch:', e);
+      }
     }
 
     function closeSuccessModal() {
