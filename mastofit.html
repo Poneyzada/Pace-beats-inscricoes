@@ -143,24 +143,42 @@
       text-align: center;
     }
 
-    .brand-collab-item img {
-      max-height: 48px;
+    .collab-border-x {
+      border-left: 1px solid rgba(255, 255, 255, 0.08);
+      border-right: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .collab-logo {
+      height: 48px;
       max-width: 90%;
       object-fit: contain;
       filter: drop-shadow(0 4px 10px rgba(0,0,0,0.5));
+      transition: transform 0.25s ease;
     }
 
-    .brand-collab-item .brand-name {
-      font-family: var(--font-display);
-      font-size: 1.25rem;
-      letter-spacing: 1px;
-      color: var(--white);
-      margin-top: 6px;
+    .collab-logo:hover {
+      transform: scale(1.05);
+    }
+
+    .masto-logo-img {
+      max-height: 48px;
+      max-width: 220px;
+    }
+
+    .pace-logo-img {
+      max-height: 52px;
+      max-width: 160px;
+    }
+
+    .sunna-logo-img {
+      max-height: 44px;
+      max-width: 180px;
     }
 
     .brand-collab-item .brand-tag {
-      font-size: 0.7rem;
+      font-size: 0.72rem;
       letter-spacing: 1.5px;
+      font-weight: 700;
       text-transform: uppercase;
       color: var(--white-dim);
     }
@@ -571,10 +589,30 @@
       }
       .brand-collab-row {
         grid-template-columns: 1fr;
-        gap: 20px;
+        gap: 16px;
+        padding: 22px 18px;
       }
-      .brand-collab-item img {
-        max-height: 40px;
+      .collab-border-x {
+        border-left: none !important;
+        border-right: none !important;
+        border-top: 1px solid rgba(255,255,255,0.08);
+        border-bottom: 1px solid rgba(255,255,255,0.08);
+        padding: 16px 0 !important;
+      }
+      .collab-logo {
+        height: 42px;
+      }
+      .masto-logo-img {
+        max-height: 42px;
+        max-width: 210px;
+      }
+      .pace-logo-img {
+        max-height: 46px;
+        max-width: 150px;
+      }
+      .sunna-logo-img {
+        max-height: 38px;
+        max-width: 170px;
       }
     }
   </style>
@@ -619,24 +657,20 @@
         <div class="brand-collab-row">
           <!-- Mastofit -->
           <div class="brand-collab-item">
-            <img src="logo-mastofit-pink.webp" alt="Mastofit Oficial">
+            <img src="logo-mastofit-official.webp" alt="Mastofit Oficial" class="collab-logo masto-logo-img">
             <span class="brand-tag" style="color:#ff7ebb; margin-top:8px;">Movimento &amp; Saúde</span>
           </div>
 
           <!-- Pace & Beats -->
-          <div class="brand-collab-item" style="border-left: 1px solid rgba(255,255,255,0.08); border-right: 1px solid rgba(255,255,255,0.08);">
-            <div style="font-family: var(--font-display); font-size: 1.6rem; letter-spacing: 2px; color: var(--orange);">
-              PACE &amp; BEATS
-            </div>
-            <span class="brand-tag">Running Club Salvador</span>
+          <div class="brand-collab-item collab-border-x">
+            <img src="logo-pace-beats.webp" alt="Pace &amp; Beats Running Club" class="collab-logo pace-logo-img">
+            <span class="brand-tag" style="color:var(--orange); margin-top:8px;">Running Club Salvador</span>
           </div>
 
           <!-- Sunna -->
           <div class="brand-collab-item">
-            <div style="font-family: var(--font-display); font-size: 1.6rem; letter-spacing: 2px; color: var(--white);">
-              SUNNA
-            </div>
-            <span class="brand-tag">Beach Club • Pituaçu</span>
+            <img src="logo-sunna-white.webp" alt="Sunna Beach Club" class="collab-logo sunna-logo-img">
+            <span class="brand-tag" style="color:var(--white-dim); margin-top:8px;">Beach Club • Pituaçu</span>
           </div>
         </div>
       </div>
@@ -1053,59 +1087,70 @@ SUNNA MOVEMENT CLUB (MASTOFIT · PACE &amp; BEATS · SUNNA)
       let dpr = 1;
       let isVisible = true;
 
-      // Pontos com distribuição biológica (Dois lobos anatômicos Outubro Rosa + campo ambiente)
+      // Pontos com distribuição estratificada proporcional e lobos biológicos Outubro Rosa
       const points = [];
 
       function setupPoints() {
         points.length = 0;
-        
-        // Lobo Esquerdo (24 pontos - silhueta orgânica)
-        for (let i = 0; i < 24; i++) {
+
+        // Calibração de densidade para obter células no tamanho exato da referência (21st.dev):
+        // No celular: colSize ~ 52px, rowSize ~ 86px -> polígonos bem definidos de ~50-65px (não são blocos gigantes!)
+        // No desktop: colSize ~ 72px, rowSize ~ 94px -> polígonos elegantes de ~65-80px
+        const isMobile = width < 768;
+        const colSize = isMobile ? 52 : 72;
+        const rowSize = isMobile ? 86 : 94;
+
+        const cols = Math.max(Math.round(width / colSize), 6);
+        const rows = Math.max(Math.round(height / rowSize), 16);
+
+        // 1. Grade estratificada com jitter orgânico
+        for (let r = 0; r < rows; r++) {
+          for (let c = 0; c < cols; c++) {
+            const bx = (c + 0.5 + (Math.random() - 0.5) * 0.7) / cols;
+            const by = (r + 0.5 + (Math.random() - 0.5) * 0.7) / rows;
+            points.push({
+              baseX: Math.max(0.02, Math.min(0.98, bx)),
+              baseY: Math.max(0.02, Math.min(0.98, by)),
+              ampX: 2.5 + Math.random() * 3.5,
+              ampY: 2.5 + Math.random() * 3.5,
+              speedX: 0.35 + Math.random() * 0.45,
+              speedY: 0.35 + Math.random() * 0.45,
+              phase: Math.random() * Math.PI * 2,
+              isLobe: false
+            });
+          }
+        }
+
+        // 2. Dois Lobos Anatômicos (Outubro Rosa) na região superior visível do cabeçalho
+        const lobeY = Math.min(270 / height, 0.22);
+        for (let i = 0; i < 15; i++) {
           const angle = Math.random() * Math.PI * 2;
-          const r = Math.pow(Math.random(), 0.7) * 0.16;
+          const r = Math.pow(Math.random(), 0.75) * (isMobile ? 0.14 : 0.10);
           points.push({
-            baseX: 0.35 + Math.cos(angle) * r * 1.15,
-            baseY: 0.28 + Math.sin(angle) * r * 0.95,
-            ampX: 5 + Math.random() * 8,
-            ampY: 5 + Math.random() * 8,
-            speedX: 0.35 + Math.random() * 0.5,
-            speedY: 0.35 + Math.random() * 0.5,
+            baseX: 0.35 + Math.cos(angle) * r,
+            baseY: lobeY + Math.sin(angle) * (r * 0.75),
+            ampX: 3, ampY: 3,
+            speedX: 0.4 + Math.random() * 0.3,
+            speedY: 0.4 + Math.random() * 0.3,
+            phase: Math.random() * Math.PI * 2,
+            isLobe: true
+          });
+        }
+        for (let i = 0; i < 15; i++) {
+          const angle = Math.random() * Math.PI * 2;
+          const r = Math.pow(Math.random(), 0.75) * (isMobile ? 0.14 : 0.10);
+          points.push({
+            baseX: 0.65 + Math.cos(angle) * r,
+            baseY: lobeY + Math.sin(angle) * (r * 0.75),
+            ampX: 3, ampY: 3,
+            speedX: 0.4 + Math.random() * 0.3,
+            speedY: 0.4 + Math.random() * 0.3,
             phase: Math.random() * Math.PI * 2,
             isLobe: true
           });
         }
 
-        // Lobo Direito (24 pontos - silhueta orgânica)
-        for (let i = 0; i < 24; i++) {
-          const angle = Math.random() * Math.PI * 2;
-          const r = Math.pow(Math.random(), 0.7) * 0.16;
-          points.push({
-            baseX: 0.65 + Math.cos(angle) * r * 1.15,
-            baseY: 0.28 + Math.sin(angle) * r * 0.95,
-            ampX: 5 + Math.random() * 8,
-            ampY: 5 + Math.random() * 8,
-            speedX: 0.35 + Math.random() * 0.5,
-            speedY: 0.35 + Math.random() * 0.5,
-            phase: Math.random() * Math.PI * 2,
-            isLobe: true
-          });
-        }
-
-        // Campo Ambiente (36 pontos espalhados suavemente)
-        for (let i = 0; i < 36; i++) {
-          points.push({
-            baseX: 0.04 + Math.random() * 0.92,
-            baseY: 0.04 + Math.random() * 0.92,
-            ampX: 6 + Math.random() * 10,
-            ampY: 6 + Math.random() * 10,
-            speedX: 0.25 + Math.random() * 0.45,
-            speedY: 0.25 + Math.random() * 0.45,
-            phase: Math.random() * Math.PI * 2,
-            isLobe: false
-          });
-        }
-
-        // Âncoras perimetrais nas bordas (8 pontos) para fechar as células sem distorção
+        // 3. Âncoras perimetrais nas bordas
         const borderAnchors = [
           [-0.05, -0.05], [0.5, -0.05], [1.05, -0.05],
           [1.05, 0.5], [1.05, 1.05], [0.5, 1.05],
@@ -1133,6 +1178,7 @@ SUNNA MOVEMENT CLUB (MASTOFIT · PACE &amp; BEATS · SUNNA)
         vCanvas.style.height = height + 'px';
         vCtx.setTransform(1, 0, 0, 1, 0, 0);
         vCtx.scale(dpr, dpr);
+        setupPoints();
       }
 
       // Interação via Pointer (Mouse & Touch)
@@ -1163,7 +1209,6 @@ SUNNA MOVEMENT CLUB (MASTOFIT · PACE &amp; BEATS · SUNNA)
         observer.observe(hero);
       }
 
-      setupPoints();
       resize();
       window.addEventListener('resize', resize, { passive: true });
 
@@ -1204,10 +1249,10 @@ SUNNA MOVEMENT CLUB (MASTOFIT · PACE &amp; BEATS · SUNNA)
         if (isPointerOver && timeSincePointer < 3000 && pointerX >= 0 && pointerX <= width && pointerY >= 0 && pointerY <= height) {
           hoveredIndex = delaunay.find(pointerX, pointerY);
         } else {
-          // Pulso biológico autônomo suave deslizando entre os dois lobos
+          // Pulso biológico autônomo suave navegando entre os dois lobos no cabeçalho
           const waveT = elapsed * 0.75;
-          const idleX = width * (0.5 + Math.sin(waveT) * 0.22);
-          const idleY = height * (0.28 + Math.cos(waveT * 1.5) * 0.1);
+          const idleX = width * (0.5 + Math.sin(waveT) * 0.24);
+          const idleY = Math.min(height * 0.18, 300) + Math.cos(waveT * 1.5) * 60;
           hoveredIndex = delaunay.find(idleX, idleY);
         }
 
@@ -1217,30 +1262,28 @@ SUNNA MOVEMENT CLUB (MASTOFIT · PACE &amp; BEATS · SUNNA)
           }
         }
 
-        // Gradientes correspondentes ao 21st.dev Visx:
-        // GradientPinkRed base: #ff2a85 para magenta/deep red
-        // GradientOrangeRed interação: #ff6b00 (laranja) para #ff2a85 (rosa choque)
-        const pinkGrad = vCtx.createLinearGradient(0, 0, width, height);
-        pinkGrad.addColorStop(0, 'rgba(255, 42, 133, 0.24)');
-        pinkGrad.addColorStop(0.5, 'rgba(244, 63, 94, 0.18)');
-        pinkGrad.addColorStop(1, 'rgba(159, 18, 57, 0.12)');
+        // Gradientes correspondentes ao 21st.dev Visx
+        const pinkGrad = vCtx.createLinearGradient(0, 0, width, Math.min(height * 0.5, 900));
+        pinkGrad.addColorStop(0, 'rgba(255, 42, 133, 0.34)');
+        pinkGrad.addColorStop(0.5, 'rgba(230, 30, 85, 0.28)');
+        pinkGrad.addColorStop(1, 'rgba(160, 18, 60, 0.18)');
 
-        const orangeGrad = vCtx.createLinearGradient(0, 0, width, height);
-        orangeGrad.addColorStop(0, 'rgba(255, 107, 0, 0.72)');
-        orangeGrad.addColorStop(0.5, 'rgba(255, 42, 133, 0.65)');
-        orangeGrad.addColorStop(1, 'rgba(225, 29, 72, 0.52)');
+        const orangeGrad = vCtx.createLinearGradient(0, 0, width, Math.min(height * 0.5, 900));
+        orangeGrad.addColorStop(0, 'rgba(255, 115, 0, 0.88)');
+        orangeGrad.addColorStop(0.5, 'rgba(255, 42, 133, 0.78)');
+        orangeGrad.addColorStop(1, 'rgba(225, 29, 72, 0.65)');
 
         const activeGrad = vCtx.createRadialGradient(
           hoveredIndex >= 0 ? coords[hoveredIndex][0] : width / 2,
-          hoveredIndex >= 0 ? coords[hoveredIndex][1] : height * 0.3,
+          hoveredIndex >= 0 ? coords[hoveredIndex][1] : 260,
           0,
           hoveredIndex >= 0 ? coords[hoveredIndex][0] : width / 2,
-          hoveredIndex >= 0 ? coords[hoveredIndex][1] : height * 0.3,
-          160
+          hoveredIndex >= 0 ? coords[hoveredIndex][1] : 260,
+          130
         );
-        activeGrad.addColorStop(0, 'rgba(255, 140, 0, 0.95)');
-        activeGrad.addColorStop(0.6, 'rgba(255, 42, 133, 0.85)');
-        activeGrad.addColorStop(1, 'rgba(190, 18, 60, 0.45)');
+        activeGrad.addColorStop(0, 'rgba(255, 150, 0, 0.98)');
+        activeGrad.addColorStop(0.6, 'rgba(255, 42, 133, 0.90)');
+        activeGrad.addColorStop(1, 'rgba(190, 18, 60, 0.55)');
 
         // 1. Renderiza Polígonos Voronoi
         for (let i = 0; i < coords.length; i++) {
@@ -1253,20 +1296,20 @@ SUNNA MOVEMENT CLUB (MASTOFIT · PACE &amp; BEATS · SUNNA)
           if (isHovered) {
             vCtx.fillStyle = activeGrad;
             vCtx.fill();
-            vCtx.strokeStyle = 'rgba(255, 255, 255, 0.9)';
-            vCtx.lineWidth = 1.8;
+            vCtx.strokeStyle = 'rgba(255, 255, 255, 0.95)';
+            vCtx.lineWidth = 1.6;
             vCtx.stroke();
           } else if (isNeighbor) {
             vCtx.fillStyle = orangeGrad;
             vCtx.fill();
-            vCtx.strokeStyle = 'rgba(255, 210, 190, 0.5)';
+            vCtx.strokeStyle = 'rgba(255, 230, 200, 0.70)';
             vCtx.lineWidth = 1.2;
             vCtx.stroke();
           } else {
             vCtx.fillStyle = pinkGrad;
             vCtx.fill();
-            vCtx.strokeStyle = 'rgba(255, 255, 255, 0.09)';
-            vCtx.lineWidth = 0.8;
+            vCtx.strokeStyle = 'rgba(255, 255, 255, 0.35)'; // Contornos brancos visíveis e elegantes
+            vCtx.lineWidth = 0.9;
             vCtx.stroke();
           }
         }
@@ -1280,14 +1323,14 @@ SUNNA MOVEMENT CLUB (MASTOFIT · PACE &amp; BEATS · SUNNA)
 
           vCtx.beginPath();
           if (isHovered) {
-            vCtx.arc(x, y, 4.2, 0, Math.PI * 2);
+            vCtx.arc(x, y, 3.5, 0, Math.PI * 2);
             vCtx.fillStyle = '#ff007f';
           } else if (isNeighbor) {
-            vCtx.arc(x, y, 2.6, 0, Math.PI * 2);
+            vCtx.arc(x, y, 2.4, 0, Math.PI * 2);
             vCtx.fillStyle = '#ffa500';
           } else {
-            vCtx.arc(x, y, 1.8, 0, Math.PI * 2);
-            vCtx.fillStyle = 'rgba(255, 255, 255, 0.65)';
+            vCtx.arc(x, y, 1.5, 0, Math.PI * 2);
+            vCtx.fillStyle = 'rgba(255, 255, 255, 0.70)';
           }
           vCtx.fill();
         }
