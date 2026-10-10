@@ -11,6 +11,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@300;400;500;600;700;800;900&family=Outfit:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <script src="d3-delaunay.min.js"></script>
 
   <style>
     :root {
@@ -41,10 +42,35 @@
         #09090b;
     }
 
+    /* Voronoi Generative Cellular Mesh (Outubro Rosa × Mastologia) */
+    .voronoi-mesh-wrap {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      pointer-events: none;
+      z-index: 1;
+      opacity: 0.52;
+      mask-image: radial-gradient(ellipse 95% 85% at 50% 28%, black 45%, rgba(0,0,0,0.3) 80%, transparent 100%);
+      -webkit-mask-image: radial-gradient(ellipse 95% 85% at 50% 28%, black 45%, rgba(0,0,0,0.3) 80%, transparent 100%);
+    }
+
+    #voronoiCanvas {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      display: block;
+    }
+
     .masto-container {
       max-width: 960px;
       margin: 0 auto;
       padding: 0 20px;
+      position: relative;
+      z-index: 2;
     }
 
     /* Header Collab Bar */
@@ -570,7 +596,12 @@
   </nav>
 
   <!-- ═══════════ HERO PRINCIPAL ═══════════ -->
-  <section class="masto-hero">
+  <section class="masto-hero" id="mastoHero">
+    <!-- Malha Voronoi Generativa & Biológica (Outubro Rosa) -->
+    <div class="voronoi-mesh-wrap" aria-hidden="true">
+      <canvas id="voronoiCanvas"></canvas>
+    </div>
+
     <div class="masto-container">
       
       <div class="collab-header">
@@ -1009,6 +1040,263 @@ SUNNA MOVEMENT CLUB (MASTOFIT · PACE &amp; BEATS · SUNNA)
       document.getElementById('mastoForm').reset();
       clearSignature();
     }
+
+    // ═══════════ MALHA VORONOI GENERATIVA (OUTUBRO ROSA × MASTOLOGIA) ═══════════
+    (function initVoronoiMesh() {
+      const hero = document.getElementById('mastoHero');
+      const vCanvas = document.getElementById('voronoiCanvas');
+      if (!hero || !vCanvas) return;
+
+      const vCtx = vCanvas.getContext('2d');
+      let width = 0;
+      let height = 0;
+      let dpr = 1;
+      let isVisible = true;
+
+      // Pontos com distribuição biológica (Dois lobos anatômicos Outubro Rosa + campo ambiente)
+      const points = [];
+
+      function setupPoints() {
+        points.length = 0;
+        
+        // Lobo Esquerdo (24 pontos - silhueta orgânica)
+        for (let i = 0; i < 24; i++) {
+          const angle = Math.random() * Math.PI * 2;
+          const r = Math.pow(Math.random(), 0.7) * 0.16;
+          points.push({
+            baseX: 0.35 + Math.cos(angle) * r * 1.15,
+            baseY: 0.28 + Math.sin(angle) * r * 0.95,
+            ampX: 5 + Math.random() * 8,
+            ampY: 5 + Math.random() * 8,
+            speedX: 0.35 + Math.random() * 0.5,
+            speedY: 0.35 + Math.random() * 0.5,
+            phase: Math.random() * Math.PI * 2,
+            isLobe: true
+          });
+        }
+
+        // Lobo Direito (24 pontos - silhueta orgânica)
+        for (let i = 0; i < 24; i++) {
+          const angle = Math.random() * Math.PI * 2;
+          const r = Math.pow(Math.random(), 0.7) * 0.16;
+          points.push({
+            baseX: 0.65 + Math.cos(angle) * r * 1.15,
+            baseY: 0.28 + Math.sin(angle) * r * 0.95,
+            ampX: 5 + Math.random() * 8,
+            ampY: 5 + Math.random() * 8,
+            speedX: 0.35 + Math.random() * 0.5,
+            speedY: 0.35 + Math.random() * 0.5,
+            phase: Math.random() * Math.PI * 2,
+            isLobe: true
+          });
+        }
+
+        // Campo Ambiente (36 pontos espalhados suavemente)
+        for (let i = 0; i < 36; i++) {
+          points.push({
+            baseX: 0.04 + Math.random() * 0.92,
+            baseY: 0.04 + Math.random() * 0.92,
+            ampX: 6 + Math.random() * 10,
+            ampY: 6 + Math.random() * 10,
+            speedX: 0.25 + Math.random() * 0.45,
+            speedY: 0.25 + Math.random() * 0.45,
+            phase: Math.random() * Math.PI * 2,
+            isLobe: false
+          });
+        }
+
+        // Âncoras perimetrais nas bordas (8 pontos) para fechar as células sem distorção
+        const borderAnchors = [
+          [-0.05, -0.05], [0.5, -0.05], [1.05, -0.05],
+          [1.05, 0.5], [1.05, 1.05], [0.5, 1.05],
+          [-0.05, 1.05], [-0.05, 0.5]
+        ];
+        for (let i = 0; i < borderAnchors.length; i++) {
+          points.push({
+            baseX: borderAnchors[i][0],
+            baseY: borderAnchors[i][1],
+            ampX: 0, ampY: 0, speedX: 0, speedY: 0, phase: 0,
+            isAnchor: true
+          });
+        }
+      }
+
+      function resize() {
+        const rect = hero.getBoundingClientRect();
+        width = Math.max(rect.width, 320);
+        height = Math.max(rect.height, 400);
+        dpr = Math.min(window.devicePixelRatio || 1, 2);
+
+        vCanvas.width = Math.floor(width * dpr);
+        vCanvas.height = Math.floor(height * dpr);
+        vCanvas.style.width = width + 'px';
+        vCanvas.style.height = height + 'px';
+        vCtx.setTransform(1, 0, 0, 1, 0, 0);
+        vCtx.scale(dpr, dpr);
+      }
+
+      // Interação via Pointer (Mouse & Touch)
+      let pointerX = -9999;
+      let pointerY = -9999;
+      let isPointerOver = false;
+      let lastPointerTime = 0;
+
+      hero.addEventListener('pointermove', (e) => {
+        const rect = hero.getBoundingClientRect();
+        pointerX = e.clientX - rect.left;
+        pointerY = e.clientY - rect.top;
+        isPointerOver = true;
+        lastPointerTime = performance.now();
+      }, { passive: true });
+
+      hero.addEventListener('pointerleave', () => {
+        isPointerOver = false;
+      });
+
+      // Pausa animação quando a seção não estiver visível na tela
+      if ('IntersectionObserver' in window) {
+        const observer = new IntersectionObserver((entries) => {
+          entries.forEach(entry => {
+            isVisible = entry.isIntersecting;
+          });
+        }, { threshold: 0.05 });
+        observer.observe(hero);
+      }
+
+      setupPoints();
+      resize();
+      window.addEventListener('resize', resize, { passive: true });
+
+      const startTime = performance.now();
+
+      function drawVoronoi(now) {
+        if (!isVisible) {
+          requestAnimationFrame(drawVoronoi);
+          return;
+        }
+
+        if (typeof d3 === 'undefined' || !d3.Delaunay) {
+          requestAnimationFrame(drawVoronoi);
+          return;
+        }
+
+        const elapsed = (now - startTime) / 1000;
+        vCtx.clearRect(0, 0, width, height);
+
+        // Atualiza coordenadas dos pontos com movimento suave de respiração biológica
+        const coords = [];
+        for (let i = 0; i < points.length; i++) {
+          const p = points[i];
+          const px = (p.baseX * width) + (p.ampX ? Math.sin(elapsed * p.speedX + p.phase) * p.ampX : 0);
+          const py = (p.baseY * height) + (p.ampY ? Math.cos(elapsed * p.speedY + p.phase) * p.ampY : 0);
+          coords.push([px, py]);
+        }
+
+        // Delaunay & Voronoi tessellation
+        const delaunay = d3.Delaunay.from(coords);
+        const voronoi = delaunay.voronoi([-20, -20, width + 20, height + 20]);
+
+        // Determina célula ativa e vizinhas
+        let hoveredIndex = -1;
+        const neighborSet = new Set();
+
+        const timeSincePointer = now - lastPointerTime;
+        if (isPointerOver && timeSincePointer < 3000 && pointerX >= 0 && pointerX <= width && pointerY >= 0 && pointerY <= height) {
+          hoveredIndex = delaunay.find(pointerX, pointerY);
+        } else {
+          // Pulso biológico autônomo suave deslizando entre os dois lobos
+          const waveT = elapsed * 0.75;
+          const idleX = width * (0.5 + Math.sin(waveT) * 0.22);
+          const idleY = height * (0.28 + Math.cos(waveT * 1.5) * 0.1);
+          hoveredIndex = delaunay.find(idleX, idleY);
+        }
+
+        if (hoveredIndex >= 0) {
+          for (const n of voronoi.neighbors(hoveredIndex)) {
+            neighborSet.add(n);
+          }
+        }
+
+        // Gradientes correspondentes ao 21st.dev Visx:
+        // GradientPinkRed base: #ff2a85 para magenta/deep red
+        // GradientOrangeRed interação: #ff6b00 (laranja) para #ff2a85 (rosa choque)
+        const pinkGrad = vCtx.createLinearGradient(0, 0, width, height);
+        pinkGrad.addColorStop(0, 'rgba(255, 42, 133, 0.24)');
+        pinkGrad.addColorStop(0.5, 'rgba(244, 63, 94, 0.18)');
+        pinkGrad.addColorStop(1, 'rgba(159, 18, 57, 0.12)');
+
+        const orangeGrad = vCtx.createLinearGradient(0, 0, width, height);
+        orangeGrad.addColorStop(0, 'rgba(255, 107, 0, 0.72)');
+        orangeGrad.addColorStop(0.5, 'rgba(255, 42, 133, 0.65)');
+        orangeGrad.addColorStop(1, 'rgba(225, 29, 72, 0.52)');
+
+        const activeGrad = vCtx.createRadialGradient(
+          hoveredIndex >= 0 ? coords[hoveredIndex][0] : width / 2,
+          hoveredIndex >= 0 ? coords[hoveredIndex][1] : height * 0.3,
+          0,
+          hoveredIndex >= 0 ? coords[hoveredIndex][0] : width / 2,
+          hoveredIndex >= 0 ? coords[hoveredIndex][1] : height * 0.3,
+          160
+        );
+        activeGrad.addColorStop(0, 'rgba(255, 140, 0, 0.95)');
+        activeGrad.addColorStop(0.6, 'rgba(255, 42, 133, 0.85)');
+        activeGrad.addColorStop(1, 'rgba(190, 18, 60, 0.45)');
+
+        // 1. Renderiza Polígonos Voronoi
+        for (let i = 0; i < coords.length; i++) {
+          const isHovered = (i === hoveredIndex);
+          const isNeighbor = neighborSet.has(i);
+
+          vCtx.beginPath();
+          voronoi.renderCell(i, vCtx);
+
+          if (isHovered) {
+            vCtx.fillStyle = activeGrad;
+            vCtx.fill();
+            vCtx.strokeStyle = 'rgba(255, 255, 255, 0.9)';
+            vCtx.lineWidth = 1.8;
+            vCtx.stroke();
+          } else if (isNeighbor) {
+            vCtx.fillStyle = orangeGrad;
+            vCtx.fill();
+            vCtx.strokeStyle = 'rgba(255, 210, 190, 0.5)';
+            vCtx.lineWidth = 1.2;
+            vCtx.stroke();
+          } else {
+            vCtx.fillStyle = pinkGrad;
+            vCtx.fill();
+            vCtx.strokeStyle = 'rgba(255, 255, 255, 0.09)';
+            vCtx.lineWidth = 0.8;
+            vCtx.stroke();
+          }
+        }
+
+        // 2. Renderiza Pontos (Nódulos Celulares / Sementes Voronoi)
+        for (let i = 0; i < coords.length; i++) {
+          if (points[i].isAnchor) continue;
+          const [x, y] = coords[i];
+          const isHovered = (i === hoveredIndex);
+          const isNeighbor = neighborSet.has(i);
+
+          vCtx.beginPath();
+          if (isHovered) {
+            vCtx.arc(x, y, 4.2, 0, Math.PI * 2);
+            vCtx.fillStyle = '#ff007f';
+          } else if (isNeighbor) {
+            vCtx.arc(x, y, 2.6, 0, Math.PI * 2);
+            vCtx.fillStyle = '#ffa500';
+          } else {
+            vCtx.arc(x, y, 1.8, 0, Math.PI * 2);
+            vCtx.fillStyle = 'rgba(255, 255, 255, 0.65)';
+          }
+          vCtx.fill();
+        }
+
+        requestAnimationFrame(drawVoronoi);
+      }
+
+      requestAnimationFrame(drawVoronoi);
+    })();
   </script>
 
 </body>
